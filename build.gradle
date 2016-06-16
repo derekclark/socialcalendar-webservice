@@ -11,6 +11,8 @@ buildscript {
        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
    }
 }
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
 
 shadowJar {
     archiveName = 'socialeggbox-ws.jar'
@@ -33,10 +35,18 @@ sourceSets {
 
 repositories {
   mavenCentral()
+  jcenter()
+
 }
 
 
 dependencies {
-   testCompile     group: 'junit',                             name: 'junit',                      version: '4.11'
+   compile 'io.dropwizard:dropwizard-core:0.9.1'
+   compile group: 'io.dropwizard',           name: 'dropwizard-jdbi',            version: '0.8.1'
+   compile group: 'de.thomaskrille',         name: 'dropwizard-template-config', version: '1.1.0'
+   compile 'org.jdbi:jdbi:2.73'
+   testCompile 'junit:junit-dep:4.11'
+   compile group: 'com.h2database', name: 'h2', version: '1.4.192'
+   compile  group:  'mysql',                  name: 'mysql-connector-java', version: '5.1.34'
 }
 
