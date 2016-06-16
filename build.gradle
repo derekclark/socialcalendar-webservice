@@ -1,0 +1,22 @@
+apply plugin: 'idea'
+apply plugin: 'maven'
+apply plugin: 'java'
+
+sourceSets {
+  main {
+    java { srcDirs }
+  }
+  test {
+    java { srcDirs }
+  }
+}
+
+repositories {
+  mavenCentral()
+}
+
+
+dependencies {
+   testCompile     group: 'junit',                             name: 'junit',                      version: '4.11'
+}
+
