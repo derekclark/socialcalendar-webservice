@@ -5,7 +5,8 @@ apply plugin: 'com.github.johnrengelman.shadow'
 buildscript {
     dependencies {
        repositories {
-        jcenter()
+           mavenCentral()
+           jcenter()
        }
 
        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
@@ -14,6 +15,15 @@ buildscript {
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
+project.ext {
+    runInMemory = true
+}
+
+idea{
+    module {
+        testSourceDirs += file('src/bddtest/java')
+    }
+}
 shadowJar {
     archiveName = 'socialeggbox-ws.jar'
     classifier = ''
@@ -24,13 +34,32 @@ shadowJar {
     manifest { attributes 'Main-Class': 'application.SocialEggboxApplication' }
 }
 
+configurations {
+    outputDirs
+
+    compile.extendsFrom common
+
+    testCompile.extendsFrom commonTest
+
+    bddtestCompile.extendsFrom common, commonTest, commonCucumber
+}
+
 sourceSets {
+
   main {
     java { srcDirs }
   }
   test {
     java { srcDirs }
   }
+
+  bddtest {
+      compileClasspath = sourceSets.main.output + configurations.bddtestCompile
+      runtimeClasspath = output + compileClasspath + configurations.bddtestRuntime
+      java { srcDirs = ['src/bddtest/java']}
+      resources { srcDirs = ['src/bddtest/resources']}
+  }
+
 }
 
 repositories {
@@ -45,11 +74,60 @@ dependencies {
    compile group: 'io.dropwizard',           name: 'dropwizard-jdbi',            version: '0.8.1'
    compile group: 'de.thomaskrille',         name: 'dropwizard-template-config', version: '1.1.0'
    compile 'org.jdbi:jdbi:2.73'
-   testCompile 'junit:junit-dep:4.11'
    compile group: 'com.h2database', name: 'h2', version: '1.4.192'
    compile  group:  'mysql',                  name: 'mysql-connector-java', version: '5.1.34'
-   testCompile        group: 'org.assertj',                       name: 'assertj-core',               version: '3.0.0', changing: true
    compile  group:  'org.flywaydb',           name: 'flyway-core',          version: '3.1'
 
+   testCompile 'junit:junit-dep:4.11'
+   testCompile group: 'org.assertj',                       name: 'assertj-core',               version: '3.0.0', changing: true
+
+   commonCucumber 'info.cukes:cucumber-java:1.2.0'
+   commonCucumber 'info.cukes:cucumber-junit:1.2.0'
+   commonCucumber  group: 'io.dropwizard',                     name: 'dropwizard-testing',         version: '0.8.1'
+    bddtestCompile	group: 'org.apache.httpcomponents',			name: 'httpclient',					version: '4.2.3'
 }
 
+task cucumber(type: JavaExec){
+    main = "cucumber.api.cli.Main"
+    classpath = configurations.bddtestRuntime + sourceSets.main.output + sourceSets.bddtest.output
+    jvmArgs = [
+            "-DserverUrl=${hostname()}:9000",
+            "-DrunInMemory=${runInMemory}"
+    ]
+    args = [
+            '-p',
+            'pretty',
+            '-p',
+            'json:build/reports/cucumberResults.json',
+            '--glue',
+            'uk.co.socialeggbox.stepdefs',
+            'src/bddtest/resources'
+//            '--tags',
+//            '~@wip'
+    ]
+}
+
+def hostname() {
+    def docker_host = "$System.env.DOCKER_HOST"
+
+    if (is_blank(docker_host)) {
+        return "http://localhost"
+    }
+
+    return strip_port(docker_host.replaceAll("tcp", "http"))
+}
+
+def is_blank(hostname) {
+    return hostname == "null" || "".equals(hostname)
+}
+
+def strip_port(hostname) {
+    def port_index = hostname.lastIndexOf(":")
+    return hostname.substring(0, port_index)
+}
+
+task copyResources(type: Copy) {
+    from sourceSets.bddtest.resources
+    from sourceSets.main.resources
+    into "$buildDir/resources/bddtest"
+}
