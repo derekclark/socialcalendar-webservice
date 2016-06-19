@@ -21,13 +21,13 @@ public class SocialEggboxRepresentationTest {
     }
 
     @Test
-    public void getUserByIdWhichExistsShouldReturn200Status(){
+    public void getUserByIdShouldReturn200StatusIfExists(){
         Response response = representation.getUserById("email");
         assertEquals(200, response.getStatus());
     }
 
     @Test
-    public void getUserByIdWhichExistsShouldReturnUserInBody(){
+    public void getUserByIdShouldReturnUserInBodyIfExists(){
         Response response = representation.getUserById("email");
         User user = new User("email","name","facebookId");
         assertEquals(user, response.getEntity());

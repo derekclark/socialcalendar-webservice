@@ -11,14 +11,19 @@ public class SocialEggboxRepresentationV1 {
 
     public Response getUserById(String userId) {
         User user = userRepository.read(userId);
-        Response.ResponseBuilder builder;
         if (user != null){
-            builder= Response.status(200).entity(new User("email","name","facebookId"));
+            return okStatus(user);
         }
         else {
-            builder= Response.status(404).entity(null);
+            return notFoundStatus();
         }
+    }
 
-        return builder.build();
+    private Response okStatus(User user){
+        return Response.status(200).entity(user).build();
+    }
+
+    private Response notFoundStatus(){
+        return Response.status(404).entity(null).build();
     }
 }
