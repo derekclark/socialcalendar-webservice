@@ -10,7 +10,6 @@ public class UserDAOTest {
     public void canSaveUser(){
         User user = new User("email","name","facebookId");
         UserDAO repo = new UserDAO();
-
         assertTrue(repo.save(user));
     }
 
@@ -18,9 +17,10 @@ public class UserDAOTest {
     public void canReadUser(){
         User user = new User("email","name","facebookId");
         UserDAO repo = new UserDAO();
-
         repo.save(user);
         User returnedUser = repo.read("email");
         assertEquals(user, returnedUser);
     }
+
+
 }
