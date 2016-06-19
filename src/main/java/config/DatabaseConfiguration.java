@@ -4,6 +4,7 @@ import database.DBUser;
 import database.Repository;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.setup.Environment;
+import org.flywaydb.core.Flyway;
 import org.h2.jdbcx.JdbcDataSource;
 import org.skife.jdbi.v2.DBI;
 
@@ -13,14 +14,20 @@ public class DatabaseConfiguration extends DataSourceFactory{
     public Repository createBranchRepository(Environment environment) {
         DBI dbi = getDBI(environment);
         return new Repository(dbi.onDemand(DBUser.class));
-//        return new Repository();
     }
 
     private DBI getDBI(Environment environment) {
         DataSource dataSource = getDatasource(environment);
-//        migrate(dataSource);
-//        createInMemoryData(dataSource);
+        migrate(dataSource);
+        createInMemoryData(dataSource);
         return new DBI(dataSource);
+    }
+
+    private void migrate(DataSource dataSource) {
+        Flyway flyway = new Flyway();
+        flyway.setDataSource(dataSource);
+        flyway.setLocations("db/migration");
+        flyway.migrate();
     }
 
     private DataSource getDatasource(Environment environment) {
