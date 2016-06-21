@@ -1,5 +1,8 @@
 package representation;
 
+import database.DBUser;
+import database.InMemoryDBCreator;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,14 +13,21 @@ import static org.junit.Assert.assertNull;
 
 public class SocialEggboxRepresentationTest {
     SocialEggboxRepresentationV1 representation;
+    DBUser repo;
 
     @Before
     public void setup(){
+        repo = new InMemoryDBCreator().create(DBUser.class);
+        UserDAO userDAO = new UserDAO(repo);
         User user = new User("email","name","facebookId");
-        UserDAO repo = new UserDAO();
         repo.save(user);
 
-        representation = new SocialEggboxRepresentationV1(repo);
+        representation = new SocialEggboxRepresentationV1(userDAO);
+    }
+
+    @After
+    public void teardown(){
+        new InMemoryDBCreator().clean();
     }
 
     @Test

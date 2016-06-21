@@ -1,14 +1,19 @@
 package representation;
 
-public class UserDAO {
-    DBUserInMemory dbUserDatabase = new DBUserInMemory();
+import database.DBUser;
 
-    public boolean save(User user) {
-        dbUserDatabase.save(user);
-        return true;
+public class UserDAO {
+    private DBUser dbUser;
+
+    public UserDAO(DBUser dbUser) {
+        this.dbUser = dbUser;
+    }
+
+    public int save(User user) {
+        return dbUser.save(user);
     }
 
     public User read(String id) {
-        return dbUserDatabase.read(id);
+        return dbUser.findById(id);
     }
 }

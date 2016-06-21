@@ -2,9 +2,9 @@ package config;
 
 import com.codahale.metrics.MetricRegistry;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import database.Repository;
 import io.dropwizard.setup.Environment;
 import org.junit.Test;
+import representation.UserDAO;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -20,6 +20,6 @@ public class SocialEggboxConfigurationTest {
     @Test
     public void createsRepository(){
         Environment environment = new Environment("test", new ObjectMapper(), null, new MetricRegistry(), null);
-        assert(config.createRepository(environment) instanceof Repository);
+        assert(config.createRepository(environment) instanceof UserDAO);
     }
 }

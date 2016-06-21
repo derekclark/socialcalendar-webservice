@@ -1,6 +1,5 @@
 package config;
 
-import database.Repository;
 import io.dropwizard.Configuration;
 import io.dropwizard.setup.Environment;
 import representation.SocialEggboxRepresentationV1;
@@ -10,10 +9,10 @@ public class SocialEggboxConfiguration extends Configuration{
     DatabaseConfiguration databaseConfiguration = new DatabaseConfiguration();
 
     public SocialEggboxRepresentationV1 createEndpointV1(Environment environment) {
-        return new SocialEggboxRepresentationV1(new UserDAO());
+        return new SocialEggboxRepresentationV1(createRepository(environment));
     }
 
-    public Repository createRepository(Environment environment) {
-        return databaseConfiguration.createBranchRepository(environment);
+    public UserDAO createRepository(Environment environment) {
+        return databaseConfiguration.createRepository(environment);
     }
 }

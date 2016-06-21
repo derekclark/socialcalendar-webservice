@@ -1,7 +1,6 @@
 package database;
 
-import org.skife.jdbi.v2.sqlobject.Bind;
-import org.skife.jdbi.v2.sqlobject.SqlQuery;
+import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import representation.User;
 
@@ -12,6 +11,9 @@ public interface DBUser {
     int count();
 
     @SqlQuery("SELECT * FROM UserHibernateModel WHERE email = :email")
-    User find(@Bind("email") String email);
+    User findById(@Bind("email") String email);
+
+    @SqlUpdate("INSERT INTO UserHibernateModel (email, name, facebook_Id) VALUES (:user.email, :user.name, :user.facebookId)")
+    int save(@BindBean("user") User user);
 }
 
