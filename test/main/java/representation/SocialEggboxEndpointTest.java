@@ -11,8 +11,8 @@ import javax.ws.rs.core.Response;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-public class SocialEggboxRepresentationTest {
-    SocialEggboxRepresentationV1 representation;
+public class SocialEggboxEndpointTest {
+    SocialEggboxEndpointV1 representation;
     DBUser repo;
 
     @Before
@@ -22,7 +22,7 @@ public class SocialEggboxRepresentationTest {
         User user = new User("email","name","facebookId");
         repo.save(user);
 
-        representation = new SocialEggboxRepresentationV1(userDAO);
+        representation = new SocialEggboxEndpointV1(userDAO);
     }
 
     @After

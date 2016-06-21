@@ -8,10 +8,10 @@ import javax.ws.rs.core.Response;
 
 @Path("/social/v1/")
 @Produces(MediaType.APPLICATION_JSON)
-public class SocialEggboxRepresentationV1 {
+public class SocialEggboxEndpointV1 {
     UserDAO userRepository;
 
-    public SocialEggboxRepresentationV1(UserDAO userRepository) {
+    public SocialEggboxEndpointV1(UserDAO userRepository) {
         this.userRepository = userRepository;
     }
 

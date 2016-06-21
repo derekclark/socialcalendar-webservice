@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import config.SocialEggboxConfiguration;
 import io.dropwizard.setup.Environment;
 import org.junit.Test;
-import representation.SocialEggboxRepresentationV1;
+import representation.SocialEggboxEndpointV1;
 
 import java.util.Set;
 
@@ -19,7 +19,7 @@ public class SocialEggboxApplicationTest {
         SocialEggboxApplication application = new SocialEggboxApplication();
         SocialEggboxConfiguration config = new SocialEggboxConfiguration();
         application.run(config, environment);
-        assertThat(registeredSingletons(environment)).hasAtLeastOneElementOfType(SocialEggboxRepresentationV1.class);
+        assertThat(registeredSingletons(environment)).hasAtLeastOneElementOfType(SocialEggboxEndpointV1.class);
     }
 
     private Set<Object> registeredSingletons(Environment env) {
