@@ -19,7 +19,6 @@ public class DatabaseConfiguration extends DataSourceFactory{
     private DBI getDBI(Environment environment) {
         DataSource dataSource = getDatasource(environment);
         migrate(dataSource);
-//        createInMemoryData(dataSource);
         return new DBI(dataSource);
     }
 
@@ -39,17 +38,4 @@ public class DatabaseConfiguration extends DataSourceFactory{
         dataSource.setUrl("jdbc:h2:mem:branch;DB_CLOSE_DELAY=-1");
         return dataSource;
     }
-
-//    private void createInMemoryData(DataSource dataSource) {
-//        DBI dbi = new DBI(dataSource);
-//        org.skife.jdbi.v2.Handle h = dbi.open();
-//
-//        h.execute("insert into USERHIBERNATEMODEL  (email, name, facebook_Id) values (?, ?, ?)", "derekclark14@googlemail.com", "Derek Clark", "inmem");
-//        h.execute("insert into USERHIBERNATEMODEL  (email, name, facebook_Id) values (?, ?, ?)", "amiclark1976@gmail.com", "Alfie Clark", "100007212617286");
-//        h.execute("insert into USERHIBERNATEMODEL  (email, name, facebook_Id) values (?, ?, ?)", "amiclark1974@gmail.com", "Billy Clark", "100004697869160");
-//        h.execute("insert into USERHIBERNATEMODEL  (email, name, facebook_Id) values (?, ?, ?)", "amiclark1975@gmail.com", "Ami Clark", "100007212617286");
-//
-//    }
-
-
 }
