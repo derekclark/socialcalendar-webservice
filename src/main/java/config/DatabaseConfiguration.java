@@ -1,5 +1,6 @@
 package config;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import database.DBUser;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.setup.Environment;
@@ -11,6 +12,9 @@ import representation.UserDAO;
 import javax.sql.DataSource;
 
 public class DatabaseConfiguration extends DataSourceFactory{
+    @JsonProperty("in_memory")
+    private boolean inMemory = false;
+
     public UserDAO createRepository(Environment environment) {
         DBI dbi = getDBI(environment);
         return new UserDAO(dbi.onDemand(DBUser.class));
@@ -30,7 +34,13 @@ public class DatabaseConfiguration extends DataSourceFactory{
     }
 
     private DataSource getDatasource(Environment environment) {
-        return getInMemory();
+        if (inMemory) {
+            System.out.println("in memory database selected");
+            return getInMemory();
+        }else{
+            System.out.println("real database selected");
+            return build(environment.metrics(), "database");
+        }
     }
 
     private DataSource getInMemory() {

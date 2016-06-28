@@ -5,3 +5,10 @@ server:
   adminConnectors:
   - type: http
     port: 9001
+database:
+  driverClass: com.mysql.jdbc.Driver
+  url: jdbc:mysql://localhost:3306/socialeggboxDB
+  user: derekclark14
+  password: smarti3pants
+  #0=false; 1=true
+  in_memory: 0
