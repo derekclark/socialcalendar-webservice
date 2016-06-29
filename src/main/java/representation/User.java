@@ -21,6 +21,8 @@ public class User {
         this.facebookId = facebookId;
     }
 
+    public User() {
+    }
 
     @Override
     public boolean equals(Object obj){
