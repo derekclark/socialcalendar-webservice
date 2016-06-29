@@ -43,9 +43,13 @@ public class SocialEggboxEndpointTest {
         endpointV1 = new SocialEggboxEndpointV1(userDAO);
     }
 
+    private void saveUser(User user){
+        repo.save(user);
+    }
+
     private UserDAO getUserDAO() {
         UserDAO userDAO = new UserDAO(repo);
-        repo.save(savedUser);
+
         return userDAO;
     }
 
@@ -56,12 +60,14 @@ public class SocialEggboxEndpointTest {
 
     @Test
     public void getUserByIdShouldReturn200StatusIfExists(){
+        saveUser(savedUser);
         Response response = endpointV1.getUserById(EMAIL);
         assertEquals(HTTP_STATUS_OK, response.getStatus());
     }
 
     @Test
     public void getUserByIdShouldReturnUserInBodyIfExists(){
+        saveUser(savedUser);
         String expectedJson = JSON_STRING;
         Response response = endpointV1.getUserById(EMAIL);
         assertEquals(expectedJson, response.getEntity());
@@ -87,7 +93,7 @@ public class SocialEggboxEndpointTest {
     }
 
     @Test
-    public void saveUserShouldReturn400IfNoPayload(){
+    public void saveUserShouldReturn400IfNoPayload() throws IOException {
         String userPayload = "";
         Response response = endpointV1.saveUser(userPayload);
         assertEquals(HTTP_STATUS_BAD_REQUEST, response.getStatus());
@@ -99,4 +105,16 @@ public class SocialEggboxEndpointTest {
         Response response = endpointV1.saveUser(userPayload);
         assertEquals(userPayload, response.getEntity());
     }
+
+    @Test
+    public void checkUserIsSaved() throws IOException {
+        String userPayload = new JsonUtility().toJson(user);
+        Response response = endpointV1.saveUser(userPayload);
+
+        response = endpointV1.getUserById(EMAIL);
+        assertEquals(HTTP_STATUS_OK, response.getStatus());
+        assertEquals(userPayload, response.getEntity());
+
+    }
+
 }

@@ -46,10 +46,13 @@ public class SocialEggboxEndpointV1 {
         return Response.status(HTTP_STATUS_NOT_FOUND).entity(null).build();
     }
 
-    public Response saveUser(String userPayload) {
+    public Response saveUser(String userPayload) throws IOException {
         if (userPayload.isEmpty())
             return Response.status(HTTP_STATUS_BAD_REQUEST).build();
-        else
+        else {
+            User user = new JsonUtility().unMarshallJson(userPayload, User.class);
+            userRepository.save(user);
             return Response.status(HTTP_STATUS_OK).entity(userPayload).build();
+        }
     }
 }
