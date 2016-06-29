@@ -31,9 +31,9 @@ public class UserRepresentationTest {
     public void canMarshallToJson() throws IOException {
         String expectedJson = "{\n" +
                 "  \"user\" : {\n" +
-                "    \"email\" : \"email\",\n" +
-                "    \"name\" : \"name\",\n" +
-                "    \"facebookId\" : \"facebookId\"\n" +
+                "    \"email\" : \"" + EMAIL + "\",\n" +
+                "    \"name\" : \""+NAME+"\",\n" +
+                "    \"facebookId\" : \""+FACEBOOK_ID+"\"\n" +
                 "  }\n" +
                 "}";
 
