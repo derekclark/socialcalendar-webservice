@@ -15,19 +15,27 @@ public class SocialEggboxEndpointTest {
     public static final int HTTP_STATUS_OK = 200;
     public static final int HTTP_STATUS_NOT_FOUND = 404;
     public static final String EMAIL = "email";
-    public static final String USER_NAME = "name";
+    public static final String NAME = "name";
     public static final String FACEBOOK_ID = "facebookId";
+
+    public static final String JSON_STRING= "{\n" +
+            "  \"email\" : \"" + EMAIL + "\",\n" +
+            "  \"name\" : \""+NAME+"\",\n" +
+            "  \"facebookId\" : \""+FACEBOOK_ID+"\"\n" +
+            "}";
+
+
     public static final String UNKNOWN_USER_ID = "unknownUserId";
-    SocialEggboxEndpointV1 representation;
+    SocialEggboxEndpointV1 endpointV1;
     DBUser repo;
-    User savedUser = new User(EMAIL, USER_NAME, FACEBOOK_ID);
+    User savedUser = new User(EMAIL, NAME, FACEBOOK_ID);
 
     @Before
     public void setup(){
         repo = new InMemoryDBCreator().create(DBUser.class);
         UserDAO userDAO = getUserDAO();
 
-        representation = new SocialEggboxEndpointV1(userDAO);
+        endpointV1 = new SocialEggboxEndpointV1(userDAO);
     }
 
     private UserDAO getUserDAO() {
@@ -43,40 +51,33 @@ public class SocialEggboxEndpointTest {
 
     @Test
     public void getUserByIdShouldReturn200StatusIfExists(){
-        Response response = representation.getUserById(EMAIL);
+        Response response = endpointV1.getUserById(EMAIL);
         assertEquals(HTTP_STATUS_OK, response.getStatus());
     }
 
     @Test
     public void getUserByIdShouldReturnUserInBodyIfExists(){
-        String expectedJson = "{\n" +
-                "  \"user\" : {\n" +
-                "    \"email\" : \"" + EMAIL + "\",\n" +
-                "    \"name\" : \""+USER_NAME+"\",\n" +
-                "    \"facebookId\" : \""+FACEBOOK_ID+"\"\n" +
-                "  }\n" +
-                "}";
-
-        Response response = representation.getUserById(EMAIL);
+        String expectedJson = JSON_STRING;
+        Response response = endpointV1.getUserById(EMAIL);
         assertEquals(expectedJson, response.getEntity());
     }
 
     @Test
     public void getUserByIdShouldReturn404IfNotFound(){
-        Response response = representation.getUserById(UNKNOWN_USER_ID);
+        Response response = endpointV1.getUserById(UNKNOWN_USER_ID);
         assertEquals(HTTP_STATUS_NOT_FOUND, response.getStatus());
     }
 
     @Test
     public void getUserByIdShouldReturnEmptyBodyIfNotFound(){
-        Response response = representation.getUserById(UNKNOWN_USER_ID);
+        Response response = endpointV1.getUserById(UNKNOWN_USER_ID);
         assertNull(response.getEntity());
     }
 
 //    @Test
 //    public void saveUserShouldReturn200Status(){
 //        User user =
-//        Response response = representation.saveUser(UNKNOWN_USER_ID);
+//        Response response = endpointV1.saveUser(UNKNOWN_USER_ID);
 //    }
 
 }

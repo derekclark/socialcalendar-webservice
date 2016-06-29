@@ -1,5 +1,7 @@
 package representation;
 
+import utilities.JsonUtility;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -30,7 +32,7 @@ public class SocialEggboxEndpointV1 {
 
     private Response okStatus(User user){
         try {
-            return Response.status(200).entity(new UserRepresentation(user).toJson()).build();
+            return Response.status(200).entity(new JsonUtility().toJson(user)).build();
         } catch (IOException e) {
             e.printStackTrace();
         }
