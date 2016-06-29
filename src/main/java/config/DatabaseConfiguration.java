@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 
 public class DatabaseConfiguration extends DataSourceFactory{
     @JsonProperty("in_memory")
-    private boolean inMemory = false;
+    private boolean inMemory = true;
 
     public UserDAO createRepository(Environment environment) {
         DBI dbi = getDBI(environment);

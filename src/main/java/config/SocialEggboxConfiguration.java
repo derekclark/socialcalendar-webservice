@@ -10,6 +10,10 @@ public class SocialEggboxConfiguration extends Configuration{
     @JsonProperty("database")
     private DatabaseConfiguration databaseConfiguration;
 
+    public void setDatabaseConfiguration(DatabaseConfiguration databaseConfiguration) {
+        this.databaseConfiguration = databaseConfiguration;
+    }
+
     public SocialEggboxEndpointV1 createEndpointV1(Environment environment) {
         return new SocialEggboxEndpointV1(createRepository(environment));
     }
