@@ -19,11 +19,7 @@ project.ext {
     runInMemory = true
 }
 
-idea{
-    module {
-        testSourceDirs += file('src/bddtest/java')
-    }
-}
+
 shadowJar {
     archiveName = 'socialeggbox-ws.jar'
     classifier = ''
@@ -39,9 +35,22 @@ configurations {
 
     compile.extendsFrom common
 
-    testCompile.extendsFrom commonTest
+  //  testCompile.extendsFrom commonTest
 
-    bddtestCompile.extendsFrom common, commonTest, commonCucumber
+//    bddtestCompile.extendsFrom compile
+
+//    bddtestRuntime.extendsFrom runtime, bddtestCompile
+
+
+  bddtestCompile.extendsFrom compile
+  bddtestRuntime.extendsFrom runtime, bddtestCompile
+
+  bddtestUsageCompile.extendsFrom bddtestCompile, outputDirs
+  bddtestUsageRuntime.extendsFrom bddtestRuntime
+
+  // Assume that the project wants to use the fixtures for its tests
+  testCompile.extendsFrom bddtestUsageCompile
+  testRuntime.extendsFrom bddtestUsageRuntime
 }
 
 sourceSets {
@@ -81,10 +90,10 @@ dependencies {
    testCompile 'junit:junit-dep:4.11'
    testCompile group: 'org.assertj',                       name: 'assertj-core',               version: '3.0.0', changing: true
 
-   commonCucumber 'info.cukes:cucumber-java:1.2.0'
-   commonCucumber 'info.cukes:cucumber-junit:1.2.0'
-   commonCucumber  group: 'io.dropwizard',                     name: 'dropwizard-testing',         version: '0.8.1'
-    bddtestCompile	group: 'org.apache.httpcomponents',			name: 'httpclient',					version: '4.2.3'
+   bddtestCompile 'info.cukes:cucumber-java:1.2.0'
+   bddtestCompile 'info.cukes:cucumber-junit:1.2.0'
+   bddtestCompile  group: 'io.dropwizard',                     name: 'dropwizard-testing',         version: '0.8.1'
+   bddtestCompile	group: 'org.apache.httpcomponents',			name: 'httpclient',					version: '4.2.3'
 }
 
 task cucumber(type: JavaExec){
@@ -131,3 +140,18 @@ task copyResources(type: Copy) {
     from sourceSets.main.resources
     into "$buildDir/resources/bddtest"
 }
+
+/*
+idea {
+
+    module{
+        name = 'socialeggbox-webservice'
+
+        testSourceDirs += file('src/bddtest/java')
+
+        scopes.TEST.plus += [ configurations.bddtestCompile ]
+        scopes.COMPILE.plus += [configurations.bddtestCompile]
+    }
+ }
+
+*/
