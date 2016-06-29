@@ -19,7 +19,7 @@ public class GetUserById {
     }
 
     @Then("^the user 'decla' is returned and a http status of (\\d+) is returned$")
-    public void the_user_decla_is_returned_and_a_http_status_of_is_returned(int arg1) throws Throwable {
+    public void the_user_decla_is_returned_and_a_http_status_of_is_returned(int expectedHttpStatus) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
