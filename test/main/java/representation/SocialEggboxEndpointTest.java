@@ -93,4 +93,10 @@ public class SocialEggboxEndpointTest {
         assertEquals(HTTP_STATUS_BAD_REQUEST, response.getStatus());
     }
 
+    @Test
+    public void shouldReturnSavedUserPayload() throws IOException {
+        String userPayload = new JsonUtility().toJson(user);
+        Response response = endpointV1.saveUser(userPayload);
+        assertEquals(userPayload, response.getEntity());
+    }
 }

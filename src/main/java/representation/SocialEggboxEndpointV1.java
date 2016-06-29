@@ -50,6 +50,6 @@ public class SocialEggboxEndpointV1 {
         if (userPayload.isEmpty())
             return Response.status(HTTP_STATUS_BAD_REQUEST).build();
         else
-            return Response.status(HTTP_STATUS_OK).build();
+            return Response.status(HTTP_STATUS_OK).entity(userPayload).build();
     }
 }
