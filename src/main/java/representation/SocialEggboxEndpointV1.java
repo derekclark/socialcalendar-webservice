@@ -12,6 +12,9 @@ import java.io.IOException;
 @Path("/social/v1/")
 @Produces(MediaType.APPLICATION_JSON)
 public class SocialEggboxEndpointV1 {
+    public static final int HTTP_STATUS_OK = 200;
+    public static final int HTTP_STATUS_NOT_FOUND = 404;
+    public static final int HTTP_STATUS_BAD_REQUEST = 400;
     UserDAO userRepository;
 
     public SocialEggboxEndpointV1(UserDAO userRepository) {
@@ -32,7 +35,7 @@ public class SocialEggboxEndpointV1 {
 
     private Response okStatus(User user){
         try {
-            return Response.status(200).entity(new JsonUtility().toJson(user)).build();
+            return Response.status(HTTP_STATUS_OK).entity(new JsonUtility().toJson(user)).build();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,6 +43,13 @@ public class SocialEggboxEndpointV1 {
     }
 
     private Response notFoundStatus(){
-        return Response.status(404).entity(null).build();
+        return Response.status(HTTP_STATUS_NOT_FOUND).entity(null).build();
+    }
+
+    public Response saveUser(String userPayload) {
+        if (userPayload.isEmpty())
+            return Response.status(HTTP_STATUS_BAD_REQUEST).build();
+        else
+            return Response.status(HTTP_STATUS_OK).build();
     }
 }
