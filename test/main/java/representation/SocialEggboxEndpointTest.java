@@ -49,8 +49,16 @@ public class SocialEggboxEndpointTest {
 
     @Test
     public void getUserByIdShouldReturnUserInBodyIfExists(){
+        String expectedJson = "{\n" +
+                "  \"user\" : {\n" +
+                "    \"email\" : \"" + EMAIL + "\",\n" +
+                "    \"name\" : \""+USER_NAME+"\",\n" +
+                "    \"facebookId\" : \""+FACEBOOK_ID+"\"\n" +
+                "  }\n" +
+                "}";
+
         Response response = representation.getUserById(EMAIL);
-        assertEquals(savedUser, response.getEntity());
+        assertEquals(expectedJson, response.getEntity());
     }
 
     @Test
@@ -64,5 +72,11 @@ public class SocialEggboxEndpointTest {
         Response response = representation.getUserById(UNKNOWN_USER_ID);
         assertNull(response.getEntity());
     }
+
+//    @Test
+//    public void saveUserShouldReturn200Status(){
+//        User user =
+//        Response response = representation.saveUser(UNKNOWN_USER_ID);
+//    }
 
 }

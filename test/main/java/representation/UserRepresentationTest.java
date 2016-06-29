@@ -37,7 +37,7 @@ public class UserRepresentationTest {
                 "  }\n" +
                 "}";
 
-        assertEquals(expectedJson, getJsonString(representation));
+        assertEquals(expectedJson, representation.toJson());
     }
 
     private String getJsonString (Object object) throws IOException {
