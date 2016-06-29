@@ -26,20 +26,24 @@ public class SocialEggboxEndpointV1 {
     public Response getUserById(String userId) {
         User user = userRepository.read(userId);
         if (user != null){
-            return okStatus(user);
+            return okOnRead(user);
         }
         else {
             return notFoundStatus();
         }
     }
 
-    private Response okStatus(User user){
+    private Response okOnRead(User user){
         try {
-            return Response.status(HTTP_STATUS_OK).entity(new JsonUtility().toJson(user)).build();
+            return Response.status(HTTP_STATUS_OK).entity(marshall(user)).build();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private String marshall(User user) throws IOException {
+        return new JsonUtility().toJson(user);
     }
 
     private Response notFoundStatus(){
@@ -48,11 +52,23 @@ public class SocialEggboxEndpointV1 {
 
     public Response saveUser(String userPayload) throws IOException {
         if (userPayload.isEmpty())
-            return Response.status(HTTP_STATUS_BAD_REQUEST).build();
+            return badRequestOnSave();
         else {
-            User user = new JsonUtility().unMarshallJson(userPayload, User.class);
-            userRepository.save(user);
-            return Response.status(HTTP_STATUS_OK).entity(userPayload).build();
+            return okSave(userPayload);
         }
+    }
+
+    private Response okSave(String userPayload) throws IOException {
+        User user = unmarshall(userPayload);
+        userRepository.save(user);
+        return Response.status(HTTP_STATUS_OK).entity(userPayload).build();
+    }
+
+    private Response badRequestOnSave() {
+        return Response.status(HTTP_STATUS_BAD_REQUEST).build();
+    }
+
+    private User unmarshall(String userPayload) throws IOException {
+        return new JsonUtility().unMarshallJson(userPayload, User.class);
     }
 }
