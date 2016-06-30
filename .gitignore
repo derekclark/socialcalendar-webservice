@@ -1,6 +1,6 @@
 .gradle
 .idea/
 build/
-socialcalendar-webservice.iml
+*.iml
 *.ipr
 *.iws

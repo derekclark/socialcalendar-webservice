@@ -1,3 +1,6 @@
+This service uses the dropwizard framework. See [here] (http://www.dropwizard.io/0.9.3/docs/getting-started.html) as to how to get started with dropwizard.
+
+
 ## to build jar...
 ```
 ./gradlew shadowjar
