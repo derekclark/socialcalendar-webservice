@@ -77,6 +77,7 @@ sourceSets {
 repositories {
   mavenCentral()
   jcenter()
+  maven { url 'http://bc1nxs01.tpplc.local:8081/nexus/content/groups/public' }
 
 }
 
@@ -103,6 +104,8 @@ dependencies {
    bddtestCompile 'info.cukes:cucumber-junit:1.2.0'
    bddtestCompile  group: 'io.dropwizard',                     name: 'dropwizard-testing',         version: '0.8.1'
    bddtestCompile	group: 'org.apache.httpcomponents',			name: 'httpclient',					version: '4.2.3'
+   bddtestCompile  (group:'uk.co.tpplc.library', name: 'httpclient',    version: '1.1.4')
+    { exclude group: 'org.springframework' }
 }
 
 task cucumber(type: JavaExec){
@@ -171,5 +174,6 @@ mainClassName = "application.SocialEggboxApplication"
 // Configure the run task to start the Dropwizard service
 run {
     args 'server', configPath + 'socialeggbox.yml'
-
 }
+
+run.dependsOn shadowJar

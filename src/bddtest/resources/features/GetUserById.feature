@@ -1,6 +1,6 @@
 Feature: Get User By Id
 
   Scenario: Get User By Id
-    Given user 'decla' exists
-    When a request is made to get user 'decla'
-    Then the user 'decla' is returned and a http status of 200 is returned
+    Given user exists with email "decla", name "derek" and facebookId "1234"
+    When a request is made to get user with email "decla"
+    Then the payload is returned with email "decla", name "derek", facebookId "1234" and a http status of 200

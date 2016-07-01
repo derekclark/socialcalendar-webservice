@@ -14,6 +14,7 @@ public class UserDAO {
     }
 
     public User read(String id) {
+        System.out.println("in read id="+id);
         return dbUser.findById(id);
     }
 }
