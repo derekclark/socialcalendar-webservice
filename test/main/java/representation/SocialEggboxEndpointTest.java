@@ -117,4 +117,11 @@ public class SocialEggboxEndpointTest {
 
     }
 
+    @Test
+    public void deleteExistingUserShouldReturn200Status(){
+        saveUser(savedUser);
+        Response response = endpointV1.delete(EMAIL);
+        assertEquals(HTTP_STATUS_OK, response.getStatus());
+    }
+
 }

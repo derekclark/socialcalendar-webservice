@@ -73,4 +73,19 @@ public class SocialEggboxEndpointV1 {
     private User unmarshall(String userPayload) throws IOException {
         return new JsonUtility().unMarshallJson(userPayload, User.class);
     }
+
+    public Response delete(String email) {
+        boolean ok = userRepository.delete(email);
+        if (ok){
+            return okOnDelete();
+        }
+        else {
+            return notFoundStatus();
+        }
+    }
+
+    private Response okOnDelete() {
+        return Response.status(HTTP_STATUS_OK).build();
+    }
+
 }
