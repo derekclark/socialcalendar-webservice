@@ -124,4 +124,11 @@ public class SocialEggboxEndpointTest {
         assertEquals(HTTP_STATUS_OK, response.getStatus());
     }
 
+    @Test
+    public void deleteNonExistingUserShouldReturn404Status(){
+        Response response = endpointV1.delete(EMAIL);
+        assertEquals(HTTP_STATUS_NOT_FOUND, response.getStatus());
+    }
+
+
 }

@@ -19,7 +19,12 @@ public class UserDAO {
     }
 
     public boolean delete(String email) {
-        dbUser.delete(email);
-        return true;
+        User user = read(email);
+        if (user != null){
+            dbUser.delete(email);
+            return true;
+        }else
+            return false;
     }
+
 }
