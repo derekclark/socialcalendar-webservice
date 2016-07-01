@@ -13,13 +13,15 @@ import static org.junit.Assert.assertEquals;
 
 public class UserCrud {
     public static final String URL = "http://localhost:9000/social/v1/user/";
+    public static final int HTTP_STATUS_OK = 200;
+    public static final int HTTP_STATUS_NOT_FOUND = 404;
     Response response;
 
     @After
     public void teardown(){
         response = new SimpleHttpClient().delete(URL+"decla");
 
-        if (response.getStatus() == 200){
+        if (response.getStatus() == HTTP_STATUS_OK){
             response = new SimpleHttpClient().delete(URL+"decla");
         }
     }
@@ -29,14 +31,13 @@ public class UserCrud {
                                                            String name, String facebookId) throws Throwable {
         response = new SimpleHttpClient().post(URL,
                 new JsonUtility().toJson(new User(email, name, facebookId)));
-        assertEquals(200, response.getStatus());
+        assertEquals(HTTP_STATUS_OK, response.getStatus());
     }
 
     @When("^a request is made to get user with email \"(.*?)\"$")
     public void a_request_is_made_to_get_user_with_email(String email) throws Throwable {
         response = new SimpleHttpClient().get(URL+email);
     }
-
 
     @Then("^the payload is returned with email \"(.*?)\", name \"(.*?)\", facebookId \"(.*?)\"$")
     public void the_payload_is_returned_with_email_name_facebookId(String email, String name, String facebookId) throws Throwable {
@@ -50,8 +51,7 @@ public class UserCrud {
 
     @When("^a request is made to delete user with email \"(.*?)\"$")
     public void a_request_is_made_to_get_delete_user_with_email(String email) throws Throwable {
-        String url = URL + email;
-        response = new SimpleHttpClient().delete(url);
+        response = new SimpleHttpClient().delete(URL + email);
     }
 
     @Then("^a http code status of (\\d+) is returned$")
@@ -62,7 +62,7 @@ public class UserCrud {
     @Then("^the user with email \"(.*?)\" does not exist$")
     public void the_user_with_email_does_not_exist(String email) throws Throwable {
         response = new SimpleHttpClient().get(URL+email);
-        assertEquals(404, response.getStatus());
+        assertEquals(HTTP_STATUS_NOT_FOUND, response.getStatus());
     }
 
 }
