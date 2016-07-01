@@ -42,6 +42,20 @@ public class SocialEggboxEndpointV1 {
         }
     }
 
+    @DELETE
+    @Path("user/{id}")
+    public Response delete(@PathParam("id") String email) {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!deleting id="+email);
+        boolean ok = userRepository.delete(email);
+        if (ok){
+            return okOnDelete();
+        }
+        else {
+            return notFoundStatus();
+        }
+    }
+
+
     private Response okOnRead(User user){
         try {
             return Response.status(HTTP_STATUS_OK).entity(marshall(user)).build();
@@ -74,15 +88,6 @@ public class SocialEggboxEndpointV1 {
         return new JsonUtility().unMarshallJson(userPayload, User.class);
     }
 
-    public Response delete(String email) {
-        boolean ok = userRepository.delete(email);
-        if (ok){
-            return okOnDelete();
-        }
-        else {
-            return notFoundStatus();
-        }
-    }
 
     private Response okOnDelete() {
         return Response.status(HTTP_STATUS_OK).build();
