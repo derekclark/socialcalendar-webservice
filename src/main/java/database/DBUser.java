@@ -15,5 +15,8 @@ public interface DBUser {
 
     @SqlUpdate("INSERT INTO UserHibernateModel (email, name, facebook_Id) VALUES (:user.email, :user.name, :user.facebookId)")
     int save(@BindBean("user") User user);
+
+    @SqlUpdate("DELETE FROM UserHibernateModel WHERE `email`= :email")
+    int delete(@Bind("email") String email);
 }
 
