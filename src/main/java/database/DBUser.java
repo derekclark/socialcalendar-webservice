@@ -7,9 +7,6 @@ import representation.User;
 @RegisterMapper(UserMapper.class)
 
 public interface DBUser {
-    @SqlQuery("SELECT COUNT(email) FROM UserHibernateModel")
-    int count();
-
     @SqlQuery("SELECT * FROM UserHibernateModel WHERE email = :email")
     User findById(@Bind("email") String email);
 

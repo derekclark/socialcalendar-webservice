@@ -1,8 +1,12 @@
+import com.wiredforcode.gradle.spawn.SpawnProcessTask
+import com.wiredforcode.gradle.spawn.KillProcessTask
+
 apply plugin: 'idea'
 apply plugin: 'maven'
 apply plugin: 'java'
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'application'
+apply plugin: 'com.wiredforcode.spawn'
 
 buildscript {
     dependencies {
@@ -12,6 +16,7 @@ buildscript {
        }
 
        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
+       classpath 'com.wiredforcode:gradle-spawn-plugin:0.6.0'
    }
 }
 sourceCompatibility = '1.8'
@@ -108,7 +113,18 @@ dependencies {
     { exclude group: 'org.springframework' }
 }
 
+task startServer(type: SpawnProcessTask) {
+    dependsOn shadowJar
+    run
+    command 'java -jar build/libs/socialeggbox-ws.jar server config/socialeggbox.yml'
+    ready 'org.eclipse.jetty.server.Server: Started'
+}
+
+task stopServer(type: KillProcessTask)
+
 task cucumber(type: JavaExec){
+    dependsOn startServer
+    finalizedBy stopServer
     main = "cucumber.api.cli.Main"
     classpath = configurations.bddtestRuntime + sourceSets.main.output + sourceSets.bddtest.output
     jvmArgs = [
@@ -122,11 +138,12 @@ task cucumber(type: JavaExec){
             'json:build/reports/cucumberResults.json',
             '--glue',
             'uk.co.socialeggbox.stepdefs',
-            'src/bddtest/resources'
-//            '--tags',
-//            '~@wip'
+            'src/bddtest/resources',
+            '--tags',
+            '~@wip'
     ]
 }
+
 
 def hostname() {
     def docker_host = "$System.env.DOCKER_HOST"

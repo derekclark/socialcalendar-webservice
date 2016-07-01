@@ -12,10 +12,15 @@ This service uses the dropwizard framework. See [here] (http://www.dropwizard.io
 ./gradlew run
 ```
 
-or to run the fatjar manually...
+or to run the fat jar manually...
 
 ```
 java -jar build/libs/socialeggbox-ws.jar  server config/socialeggbox.yml
 ```
 
 see [here] (https://karollotkowski.wordpress.com/2015/10/13/run-dropwizard-with-gradle) for gradle + dropwizard integration 
+
+## to run the cucumber tests...
+```
+./gradlew cucumber
+```
