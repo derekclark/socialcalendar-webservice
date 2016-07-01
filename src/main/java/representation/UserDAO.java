@@ -17,4 +17,9 @@ public class UserDAO {
         System.out.println("in read id="+id);
         return dbUser.findById(id);
     }
+
+    public boolean delete(String email) {
+        dbUser.delete(email);
+        return true;
+    }
 }

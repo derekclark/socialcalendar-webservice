@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class UserDAOTest {
     DBUser repo;
@@ -36,5 +37,16 @@ public class UserDAOTest {
         repo.save(user);
         User returnedUser = userDAO.read(user.getEmail());
         assertEquals(user, returnedUser);
+    }
+
+    @Test
+    public void canDeleteUser(){
+        repo.save(user);
+        boolean result = userDAO.delete(user.getEmail());
+        assertTrue(result);
+
+        User returnedUser = userDAO.read(user.getEmail());
+        assertEquals(null, returnedUser);
+
     }
 }
