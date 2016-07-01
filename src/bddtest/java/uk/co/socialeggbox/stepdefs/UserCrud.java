@@ -11,7 +11,7 @@ import utilities.JsonUtility;
 
 import static org.junit.Assert.assertEquals;
 
-public class GetUserById {
+public class UserCrud {
     public static final String URL = "http://localhost:9000/social/v1/user/";
     Response response;
 

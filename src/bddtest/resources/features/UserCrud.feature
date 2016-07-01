@@ -1,4 +1,4 @@
-Feature: Get User By Id
+Feature: User CRUD
 
   Scenario: Save and Get User By Id
     Given user exists with email "decla", name "derek" and facebookId "1234"
