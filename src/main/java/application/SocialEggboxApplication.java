@@ -2,7 +2,6 @@ package application;
 
 import config.SocialEggboxConfiguration;
 import io.dropwizard.Application;
-import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
 public class SocialEggboxApplication  extends Application<SocialEggboxConfiguration> {
@@ -13,10 +12,4 @@ public class SocialEggboxApplication  extends Application<SocialEggboxConfigurat
     public static void main(String[] args) throws Exception{
         new SocialEggboxApplication().run(args);
     }
-
-    @Override
-    public void initialize(Bootstrap<SocialEggboxConfiguration> bootstrap){
-    }
-
-
 }

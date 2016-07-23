@@ -64,5 +64,4 @@ public class UserCrud {
         response = new SimpleHttpClient().get(URL+email);
         assertEquals(HTTP_STATUS_NOT_FOUND, response.getStatus());
     }
-
 }
