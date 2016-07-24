@@ -10,6 +10,6 @@ public class AvailabilityDAO {
     }
 
     public int save (Availability availability){
-        return dbAvailability.save(availability,availability.getStartDate());
+        return dbAvailability.save(availability,availability.getStartDate(),availability.getEndDate());
     }
 }

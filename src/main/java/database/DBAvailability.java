@@ -14,6 +14,7 @@ public interface DBAvailability {
             "VALUES (:start_date, :availability.ownerName," +
             ":availability.ownerEmail, :availability.status, :availability.title)")
     int save(@BindBean("availability") Availability availability,
-             @Bind(value = "start_date", binder = LocalDateTimeBinder.class) LocalDateTime createdDate);
+             @Bind(value = "start_date", binder = LocalDateTimeBinder.class) LocalDateTime startDate,
+             @Bind(value = "end_date", binder = LocalDateTimeBinder.class) LocalDateTime endDate);
 
 }
