@@ -13,8 +13,13 @@ public class Availability {
     private String status;
     private Set<User> sharedList;
 
-    public Availability(String title, LocalDateTime startDate, LocalDateTime endDate, String ownerEmail,
-                        String ownerName, String status, Set<User> sharedList) {
+    public Availability(String title,
+                        LocalDateTime startDate,
+                        LocalDateTime endDate,
+                        String ownerEmail,
+                        String ownerName,
+                        String status,
+                        Set<User> sharedList) {
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;

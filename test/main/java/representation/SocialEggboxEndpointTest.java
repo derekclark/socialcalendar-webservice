@@ -1,5 +1,6 @@
 package representation;
 
+import database.DBAvailability;
 import database.DBUser;
 import database.InMemoryDBCreator;
 import org.junit.After;
@@ -10,6 +11,8 @@ import utilities.JsonUtility;
 import javax.ws.rs.core.Response;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -28,29 +31,40 @@ public class SocialEggboxEndpointTest {
             "  \"facebookId\" : \""+FACEBOOK_ID+"\"\n" +
             "}";
 
+    public static final LocalDateTime START_DATE = LocalDateTime.of(2015, 1, 2, 0, 0, 0);
+    public static final LocalDateTime END_DATE = LocalDateTime.now();
+    public static final String STATUS = "status";
+    public static final String TITLE = "title";
+    Set<User> sharedList;
 
     public static final String UNKNOWN_USER_ID = "unknownUserId";
     SocialEggboxEndpointV1 endpointV1;
-    DBUser repo;
+    DBUser userRepo;
+    DBAvailability availabilityRepo;
+
     User savedUser = new User(EMAIL, NAME, FACEBOOK_ID);
     User user = new User(EMAIL, NAME, FACEBOOK_ID);
 
     @Before
     public void setup(){
-        repo = new InMemoryDBCreator().create(DBUser.class);
-        UserDAO userDAO = getUserDAO();
+        userRepo = new InMemoryDBCreator().create(DBUser.class);
+        availabilityRepo = new InMemoryDBCreator().create(DBAvailability.class);
 
-        endpointV1 = new SocialEggboxEndpointV1(userDAO);
+        endpointV1 = new SocialEggboxEndpointV1(getUserDAO());
+        endpointV1.setAvailabilityRepository(getAvailabilityDAO());
     }
 
     private void saveUser(User user){
-        repo.save(user);
+        userRepo.save(user);
     }
 
     private UserDAO getUserDAO() {
-        UserDAO userDAO = new UserDAO(repo);
+        return new UserDAO(userRepo);
+    }
 
-        return userDAO;
+    private AvailabilityDAO getAvailabilityDAO(){
+        return new AvailabilityDAO(availabilityRepo);
+
     }
 
     @After
@@ -128,6 +142,15 @@ public class SocialEggboxEndpointTest {
     public void deleteNonExistingUserShouldReturn404Status(){
         Response response = endpointV1.delete(EMAIL);
         assertEquals(HTTP_STATUS_NOT_FOUND, response.getStatus());
+    }
+
+    @Test
+    public void createAvailabilityShouldReturn200Status() throws IOException {
+        AvailabilityRepresentation representation = new AvailabilityRepresentation(TITLE,START_DATE,
+                END_DATE, EMAIL, NAME, STATUS, sharedList);
+        Response response = endpointV1.createAvailability(representation);
+        assertEquals(HTTP_STATUS_OK, response.getStatus());
+
     }
 
 

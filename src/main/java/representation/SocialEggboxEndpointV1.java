@@ -15,6 +15,11 @@ public class SocialEggboxEndpointV1 {
     public static final int HTTP_STATUS_NOT_FOUND = 404;
     public static final int HTTP_STATUS_BAD_REQUEST = 400;
     UserDAO userRepository;
+    AvailabilityDAO availabilityRepository;
+
+    public void setAvailabilityRepository(AvailabilityDAO availabilityRepository) {
+        this.availabilityRepository = availabilityRepository;
+    }
 
     public SocialEggboxEndpointV1(UserDAO userRepository) {
         this.userRepository = userRepository;
@@ -94,4 +99,13 @@ public class SocialEggboxEndpointV1 {
         return Response.status(HTTP_STATUS_OK).build();
     }
 
+    public Response createAvailability(AvailabilityRepresentation representation) throws IOException {
+        return okAvailabilitySave(representation);
+    }
+
+    private Response okAvailabilitySave(AvailabilityRepresentation representation) throws IOException {
+        Availability availability = representation.asAvailability();
+        availabilityRepository.save(availability);
+        return Response.status(HTTP_STATUS_OK).entity(availability).build();
+    }
 }
