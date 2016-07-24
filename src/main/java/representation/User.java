@@ -42,8 +42,7 @@ public class User {
     }
 
     @Override
-    public int hashCode(){
-        int hash = 7;
+    public int hashCode(){int hash = 7;
         hash = 31 * hash + email.hashCode() + name.hashCode() + facebookId.hashCode();
         return hash;
     }
