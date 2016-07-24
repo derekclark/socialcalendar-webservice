@@ -24,3 +24,13 @@ see [here] (https://karollotkowski.wordpress.com/2015/10/13/run-dropwizard-with-
 ```
 ./gradlew cucumber
 ```
+
+#To look at later...
+##java.time LocalDateTime binding to MySQL Timestamp
+Was getting this error 
+```
+org.skife.jdbi.v2.exceptions.UnableToExecuteStatementException: 
+org.h2.jdbc.JdbcSQLException: Cannot parse "TIMESTAMP" constant 
+```
+
+This [link] (http://clearthehaze.com/2016/06/jdbi-binders-java-8-times/) explains how to fix error, but I'm not happy with the solution - see DBAvailability.save method - I have to individually bind the start and end date, rather than going through the @BindBean. The moethod signature looks clumsy
