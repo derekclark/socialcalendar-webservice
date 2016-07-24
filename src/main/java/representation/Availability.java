@@ -1,7 +1,6 @@
 package representation;
 
-import org.joda.time.LocalDateTime;
-
+import java.time.LocalDateTime;
 import java.util.Set;
 
 public class Availability {
@@ -9,7 +8,6 @@ public class Availability {
     private String title;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-
     private String ownerEmail;
     private String ownerName;
     private String status;
@@ -57,7 +55,6 @@ public class Availability {
     public Set<User> getSharedList() {
         return sharedList;
     }
-
 
     @Override
     public boolean equals(Object o) {

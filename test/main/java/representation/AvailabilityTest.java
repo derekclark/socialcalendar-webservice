@@ -1,10 +1,12 @@
 package representation;
 
 
-import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,8 +14,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public class AvailabilityTest {
-    public static final LocalDateTime START_DATE = new LocalDateTime(2015, 1, 2, 0, 0, 0);
-    public static final LocalDateTime END_DATE = new LocalDateTime(2015, 1, 2, 1, 2, 30);
+    public static final LocalDateTime START_DATE = LocalDateTime.now();
+    public static final LocalDateTime END_DATE = LocalDateTime.now();
     public static final String STATUS = "status";
     public static final String OWNER_NAME = "ownerName";
     public static final String OWNER_EMAIL = "ownerEmail";
@@ -22,8 +24,8 @@ public class AvailabilityTest {
     public static final String DIFFERENT_STATUS = "different";
     public static final String DIFFERENT_OWNER_EMAIL = "different";
     public static final String DIFFERENT_OWNER_NAME = "different";
-    public static final LocalDateTime DIFFERENT_START_DATE = new LocalDateTime(2000, 1, 2, 0, 0, 0);
-    public static final LocalDateTime DIFFERENT_END_DATE = new LocalDateTime(2000, 1, 2, 0, 0, 0);
+    public static final LocalDateTime DIFFERENT_START_DATE = LocalDateTime.of(2015, 1, 2, 0, 0, 0);
+    public static final LocalDateTime DIFFERENT_END_DATE = LocalDateTime.of(2000, 1, 2, 0, 0, 0);
 
     Availability availability;
     Availability availabilityWithSameValues;
@@ -38,6 +40,9 @@ public class AvailabilityTest {
         differentSharedList = new HashSet<User>();
         differentSharedList.add(new User("email","name","facebookId"));
         differentSharedList.add(new User("another email","name","facebookId"));
+
+        Date dt = new Date();
+        LocalDateTime.ofInstant(dt.toInstant(), ZoneId.systemDefault());
 
         availability = new Availability(TITLE,START_DATE,
                 END_DATE, OWNER_EMAIL, OWNER_NAME, STATUS,sharedList);
