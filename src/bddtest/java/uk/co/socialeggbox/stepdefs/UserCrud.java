@@ -29,6 +29,7 @@ public class UserCrud {
     @Given("^user exists with email \"(.*?)\", name \"(.*?)\" and facebookId \"(.*?)\"$")
     public void user_exists_with_email_name_and_facebookId(String email,
                                                            String name, String facebookId) throws Throwable {
+        System.out.println(new JsonUtility().toJson(new User(email, name, facebookId)));
         response = new SimpleHttpClient().post(URL,
                 new JsonUtility().toJson(new User(email, name, facebookId)));
         assertEquals(HTTP_STATUS_OK, response.getStatus());

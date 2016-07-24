@@ -35,8 +35,10 @@ public class SocialEggboxEndpointV1 {
     @POST
     @Path("user")
     public Response saveUser(String userPayload) throws IOException {
-        if (userPayload.isEmpty())
+        if (userPayload.isEmpty()) {
+            System.out.println("payload is empty");
             return badRequestOnSave();
+        }
         else {
             return okSave(userPayload);
         }
