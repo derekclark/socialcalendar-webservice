@@ -15,24 +15,26 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class AvailabilityDAOTest {
+    public static final String FACEBOOK_ID = "facebookId";
+    public static final String ANOTHER_EMAIL = "another email";
     DBAvailability repo;
     Availability availability;
     AvailabilityDAO availabilityDAO;
     public static final LocalDateTime START_DATE = LocalDateTime.now();
     public static final LocalDateTime END_DATE = LocalDateTime.now();
     public static final String STATUS = "status";
-    public static final String OWNER_NAME = "ownerName";
-    public static final String OWNER_EMAIL = "ownerEmail";
+    public static final String NAME = "ownerName";
+    public static final String EMAIL = "ownerEmail";
     public static final String TITLE = "title";
 
     @Before
     public void setup(){
         repo = new InMemoryDBCreator().create(DBAvailability.class);
         Set<User> userSharedList = new HashSet<User>();
-        userSharedList.add(new User("email", "name", "facebookId"));
-        userSharedList.add(new User("another email", "name", "facebookId"));
+        userSharedList.add(new User(EMAIL, NAME, FACEBOOK_ID));
+        userSharedList.add(new User(ANOTHER_EMAIL, NAME, FACEBOOK_ID));
         availability = new Availability(TITLE,START_DATE,
-                END_DATE, OWNER_EMAIL, OWNER_NAME, STATUS, userSharedList);
+                END_DATE, EMAIL, NAME, STATUS, userSharedList);
         availabilityDAO = new AvailabilityDAO(repo);
     }
 
@@ -59,7 +61,6 @@ public class AvailabilityDAOTest {
         System.out.println(availabilityDAO.deleteById(id));
         Availability availability = availabilityDAO.read(id);
         assertNull(availability);
-
     }
 
 }
