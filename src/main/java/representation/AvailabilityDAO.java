@@ -12,4 +12,9 @@ public class AvailabilityDAO {
     public int save (Availability availability){
         return dbAvailability.save(availability,availability.getStartDate(),availability.getEndDate());
     }
+
+    public Availability read(int id) {
+        return dbAvailability.findById(id);
+
+    }
 }

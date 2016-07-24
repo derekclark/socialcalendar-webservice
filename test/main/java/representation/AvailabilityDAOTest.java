@@ -44,4 +44,10 @@ public class AvailabilityDAOTest {
         assertNotNull(availabilityDAO.save(availability));
     }
 
+    @Test
+    public void canRetrieveAvailability(){
+        int id = availabilityDAO.save(availability);
+        Availability availability = availabilityDAO.read(id);
+    }
+
 }
