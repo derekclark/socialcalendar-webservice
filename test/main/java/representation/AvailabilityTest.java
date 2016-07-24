@@ -72,7 +72,4 @@ public class AvailabilityTest {
     public void shouldNotBeEqualIfComparingAgainstDifferentClass(){
         assertNotEquals(availability, "");
     }
-
-
-
 }

@@ -1,5 +1,6 @@
 package representation;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -13,64 +14,62 @@ public class UserTest {
     public static final String DIFFERENT_NAME = "differentName";
     public static final String DIFFERENT_FACEBOOK_ID = "differentFacebookId";
 
+    User user, userWithDifferentFacebookId, userWithDifferentEmail,
+            userWithDifferentName, userWithSameValues;
+
+    @Before
+    public void setup(){
+        user = new User(EMAIL, NAME, FACEBOOK_ID);
+        userWithSameValues = new User(EMAIL, NAME, FACEBOOK_ID);
+        userWithDifferentFacebookId = new User(EMAIL, NAME, DIFFERENT_FACEBOOK_ID);
+        userWithDifferentEmail = new User(DIFFERENT_EMAIL, NAME, FACEBOOK_ID);
+        userWithDifferentName = new User(EMAIL, DIFFERENT_NAME, FACEBOOK_ID);
+    }
+
     @Test
     public void canCreateUser(){
-        User user = new User(EMAIL, NAME, FACEBOOK_ID);
         assertEquals(EMAIL,user.getEmail());
         assertEquals(NAME, user.getName());
         assertEquals(FACEBOOK_ID, user.getFacebookId());
     }
 
     @Test
-    public void shouldBeEqual(){
-        User user1 = new User(EMAIL, NAME, FACEBOOK_ID);
-        User user2 = new User(EMAIL, NAME, FACEBOOK_ID);
-        assertEquals(user1, user2);
+    public void shouldBeEqualIfObjectsHaveSameValues(){
+        assertEquals(user, userWithSameValues);
     }
 
     @Test
     public void shouldBeEqualIfSameObject(){
-        User user1 = new User(EMAIL, NAME, FACEBOOK_ID);
-        assertEquals(user1, user1);
+        assertEquals(user, user);
     }
 
     @Test
     public void shouldNotBeEqual(){
-        User user1 = new User(EMAIL, NAME, FACEBOOK_ID);
-        User differentEmail = new User(DIFFERENT_EMAIL, NAME, FACEBOOK_ID);
-        assertNotEquals(user1, differentEmail);
-
-        User differentName = new User(EMAIL, DIFFERENT_NAME, FACEBOOK_ID);
-        assertNotEquals(user1, differentName);
-
-        User differentFacebookId = new User(EMAIL, NAME, DIFFERENT_FACEBOOK_ID);
-        assertNotEquals(user1, differentFacebookId);
+        assertNotEquals(user, userWithDifferentFacebookId);
+        assertNotEquals(user, userWithDifferentEmail);
+        assertNotEquals(user, userWithDifferentName);
     }
 
     @Test
     public void shouldNotBeEqualIfComparingAgainstNull(){
-        User user1 = new User(EMAIL, NAME, FACEBOOK_ID);
-        assertNotEquals(user1,null);
+        assertNotEquals(user,null);
     }
 
     @Test
     public void shouldNotBeEqualIfComparingDifferentClassObject(){
-        User user1 = new User(EMAIL, NAME, FACEBOOK_ID);
-        assertNotEquals(user1, new String(""));
+        assertNotEquals(user, "");
     }
 
     @Test
     public void shouldHaveSameHashCodes(){
-        User user = new User(EMAIL, NAME, FACEBOOK_ID);
-        User sameValuesAsUser = new User(EMAIL, NAME, FACEBOOK_ID);
         assertEquals(user.hashCode(), user.hashCode());
-        assertEquals(user.hashCode(), sameValuesAsUser.hashCode());
+        assertEquals(user.hashCode(), userWithSameValues.hashCode());
     }
 
     @Test
-    public void shouldHaveDifferentHasCodes(){
-        User user = new User(EMAIL, NAME, FACEBOOK_ID);
-        User differentValues = new User(DIFFERENT_EMAIL, NAME, FACEBOOK_ID);
-        assertNotEquals(user.hashCode(), differentValues.hashCode());
+    public void shouldHaveDifferentHashCodes(){
+        assertNotEquals(user.hashCode(), userWithDifferentEmail.hashCode());
+        assertNotEquals(user.hashCode(), userWithDifferentFacebookId.hashCode());
+        assertNotEquals(user.hashCode(), userWithDifferentName.hashCode());
     }
 }
