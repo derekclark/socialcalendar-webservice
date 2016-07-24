@@ -17,4 +17,8 @@ public class AvailabilityDAO {
         return dbAvailability.findById(id);
 
     }
+
+    public int deleteById(int id) {
+        return dbAvailability.deleteById(id);
+    }
 }

@@ -20,4 +20,9 @@ public interface DBAvailability {
 
     @SqlQuery("SELECT * FROM AVAILABILITY WHERE id = :id")
     Availability findById(@Bind("id") int id);
+
+    @SqlUpdate("DELETE FROM AVAILABILITY WHERE `id`= :id")
+    int deleteById(@Bind("id") int id);
+
+
 }

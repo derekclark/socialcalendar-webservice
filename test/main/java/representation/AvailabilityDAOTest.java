@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import static junit.framework.TestCase.assertNull;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class AvailabilityDAOTest {
@@ -45,9 +47,19 @@ public class AvailabilityDAOTest {
     }
 
     @Test
-    public void canRetrieveAvailability(){
+    public void canRetrieveAvailabilityById(){
         int id = availabilityDAO.save(availability);
+        Availability retrievedAvailability = availabilityDAO.read(id);
+        assertEquals(availability.getTitle(), retrievedAvailability.getTitle());
+    }
+
+    @Test
+    public void canDeleteAvailability(){
+        int id = availabilityDAO.save(availability);
+        System.out.println(availabilityDAO.deleteById(id));
         Availability availability = availabilityDAO.read(id);
+        assertNull(availability);
+
     }
 
 }
