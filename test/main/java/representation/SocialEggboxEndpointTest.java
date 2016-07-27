@@ -146,8 +146,7 @@ public class SocialEggboxEndpointTest {
 
     @Test
     public void createAvailabilityShouldReturn200Status() throws IOException {
-        AvailabilityRepresentation representation = new AvailabilityRepresentation(TITLE,START_DATE,
-                END_DATE, EMAIL, NAME, STATUS, sharedList);
+        AvailabilityRepresentation representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS);
         Response response = endpointV1.createAvailability(representation);
         assertEquals(HTTP_STATUS_OK, response.getStatus());
 
