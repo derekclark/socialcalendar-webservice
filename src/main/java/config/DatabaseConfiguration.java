@@ -1,7 +1,7 @@
 package config;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import database.DBUser;
+import database.DBSocial;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.setup.Environment;
 import org.flywaydb.core.Flyway;
@@ -17,7 +17,7 @@ public class DatabaseConfiguration extends DataSourceFactory{
 
     public UserDAO createRepository(Environment environment) {
         DBI dbi = getDBI(environment);
-        return new UserDAO(dbi.onDemand(DBUser.class));
+        return new UserDAO(dbi.onDemand(DBSocial.class));
     }
 
     private DBI getDBI(Environment environment) {

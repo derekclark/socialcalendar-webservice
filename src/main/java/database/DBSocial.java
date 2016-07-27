@@ -6,7 +6,7 @@ import representation.User;
 
 @RegisterMapper(UserMapper.class)
 
-public interface DBUser {
+public interface DBSocial {
     @SqlQuery("SELECT * FROM UserHibernateModel WHERE email = :email")
     User findById(@Bind("email") String email);
 
