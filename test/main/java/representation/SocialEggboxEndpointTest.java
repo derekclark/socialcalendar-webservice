@@ -55,7 +55,7 @@ public class SocialEggboxEndpointTest {
     }
 
     private void saveUser(User user){
-        userRepo.save(user);
+        userRepo.createUser(user);
     }
 
     private UserDAO getUserDAO() {

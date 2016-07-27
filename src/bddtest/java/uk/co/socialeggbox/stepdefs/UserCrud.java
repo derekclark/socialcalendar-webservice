@@ -49,7 +49,7 @@ public class UserCrud {
         assertEquals(expectedJson,response.getBody());
     }
 
-    @When("^a request is made to delete user with email \"(.*?)\"$")
+    @When("^a request is made to deleteUser user with email \"(.*?)\"$")
     public void a_request_is_made_to_get_delete_user_with_email(String email) throws Throwable {
         response = new SimpleHttpClient().delete(URL + email);
     }

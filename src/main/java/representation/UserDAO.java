@@ -10,17 +10,17 @@ public class UserDAO {
     }
 
     public int save(User user) {
-        return dbSocial.save(user);
+        return dbSocial.createUser(user);
     }
 
     public User read(String id) {
-        return dbSocial.findById(id);
+        return dbSocial.findUserById(id);
     }
 
     public boolean delete(String email) {
         User user = read(email);
         if (user != null){
-            dbSocial.delete(email);
+            dbSocial.deleteUser(email);
             return true;
         }else
             return false;

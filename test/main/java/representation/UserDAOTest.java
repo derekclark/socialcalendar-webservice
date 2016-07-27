@@ -34,14 +34,14 @@ public class UserDAOTest {
 
     @Test
     public void canReadUser(){
-        repo.save(user);
+        repo.createUser(user);
         User returnedUser = userDAO.read(user.getEmail());
         assertEquals(user, returnedUser);
     }
 
     @Test
     public void canDeleteUser(){
-        repo.save(user);
+        repo.createUser(user);
         boolean result = userDAO.delete(user.getEmail());
         assertTrue(result);
 
