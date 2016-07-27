@@ -10,15 +10,15 @@ public class AvailabilityDAO {
     }
 
     public int save (Availability availability){
-        return dbAvailability.save(availability);
+        return dbAvailability.createAvailability(availability);
     }
 
     public Availability read(int id) {
-        return dbAvailability.findById(id);
+        return dbAvailability.findAvailabilityById(id);
 
     }
 
     public int deleteById(int id) {
-        return dbAvailability.deleteById(id);
+        return dbAvailability.deleteAvailabilityById(id);
     }
 }
