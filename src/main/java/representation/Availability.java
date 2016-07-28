@@ -7,6 +7,9 @@ public class Availability {
     private String ownerName;
     private String status;
 
+    public Availability() {
+    }
+
     public Availability(String title,
                         String ownerEmail,
                         String ownerName,
