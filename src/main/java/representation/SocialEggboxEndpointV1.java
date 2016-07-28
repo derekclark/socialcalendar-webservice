@@ -81,13 +81,6 @@ public class SocialEggboxEndpointV1 {
         return Response.status(HTTP_STATUS_NOT_FOUND).entity(null).build();
     }
 
-
-    private Response okSave(String userPayload) throws IOException {
-        User user = unmarshall(userPayload);
-        userRepository.save(user);
-        return Response.status(HTTP_STATUS_OK).entity(userPayload).build();
-    }
-
     private Response badRequestOnSave() {
         return Response.status(HTTP_STATUS_BAD_REQUEST).build();
     }
@@ -101,9 +94,15 @@ public class SocialEggboxEndpointV1 {
         return Response.status(HTTP_STATUS_OK).build();
     }
 
+    private Response okSave(String userPayload) throws IOException {
+        User user = unmarshall(userPayload);
+        userRepository.save(user);
+        return Response.status(HTTP_STATUS_OK).entity(userPayload).build();
+    }
+
     private Response okAvailabilitySave(AvailabilityRepresentation representation) throws IOException {
         Availability availability = representation.asAvailability();
         availabilityRepository.save(availability);
-        return Response.status(HTTP_STATUS_OK).entity(availability).build();
+        return Response.status(HTTP_STATUS_OK).entity(new AvailabilityRepresentation(availability)).build();
     }
 }

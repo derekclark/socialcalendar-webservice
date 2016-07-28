@@ -3,9 +3,6 @@ package representation;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.time.LocalDateTime;
-import java.util.Set;
-
 public class AvailabilityRepresentation {
     @JsonProperty("id")
     private int id;
@@ -27,6 +24,14 @@ public class AvailabilityRepresentation {
         this.ownerEmail = ownerEmail;
         this.ownerName = ownerName;
         this.status = status;
+    }
+
+    public AvailabilityRepresentation(Availability availability){
+        this.id = availability.getId();
+        this.title = availability.getTitle();
+        this.ownerEmail = availability.getOwnerEmail();
+        this.ownerName = availability.getOwnerName();
+        this.status = availability.getStatus();
     }
 
     public Availability asAvailability() {

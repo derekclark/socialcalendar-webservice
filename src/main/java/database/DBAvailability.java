@@ -1,9 +1,6 @@
 package database;
 
-import org.skife.jdbi.v2.sqlobject.Bind;
-import org.skife.jdbi.v2.sqlobject.BindBean;
-import org.skife.jdbi.v2.sqlobject.SqlQuery;
-import org.skife.jdbi.v2.sqlobject.SqlUpdate;
+import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import representation.Availability;
 
@@ -12,6 +9,7 @@ public interface DBAvailability {
     @SqlUpdate("INSERT INTO AVAILABILITY (owner_name, owner_email, status, title) " +
             "VALUES (:availability.ownerName," +
             ":availability.ownerEmail, :availability.status, :availability.title)")
+    @GetGeneratedKeys()
     int create(@BindBean("availability") Availability availability);
 
     @SqlQuery("SELECT * FROM AVAILABILITY WHERE id = :id")

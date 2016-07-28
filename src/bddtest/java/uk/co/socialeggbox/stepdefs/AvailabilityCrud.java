@@ -9,8 +9,7 @@ import uk.co.tpplc.http.SimpleHttpClient;
 import utilities.JsonUtility;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-//import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertTrue;
 
 public class AvailabilityCrud{
     public static final String STATUS = "status";
@@ -24,7 +23,6 @@ public class AvailabilityCrud{
             "\"ownerName\" : \"Derek\"," +
             "\"status\" : \"status\"" +
             "}";
-
     Availability availability;
     Response response;
 
@@ -48,6 +46,6 @@ public class AvailabilityCrud{
         System.out.println("response body="+response.getBody().toString());
         Availability availability = new JsonUtility().unMarshallJson(response.getBody(), Availability.class);
 
-//        assertThat(availability.getId(), greater);
+        assertTrue(availability.getId() > 0);
     }
 }
