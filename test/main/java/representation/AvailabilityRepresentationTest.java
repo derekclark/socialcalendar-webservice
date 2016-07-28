@@ -20,4 +20,12 @@ public class AvailabilityRepresentationTest {
                 EMAIL,NAME, STATUS);
         assertEquals(expectedAvailability, availability);
     }
+
+    @Test
+    public void buildRepresentationFromAvailabilityObject(){
+        Availability availability = new Availability(TITLE, EMAIL, NAME, STATUS);
+        AvailabilityRepresentation availabilityRepresentation = new AvailabilityRepresentation(availability);
+        assertEquals(availability, availabilityRepresentation.asAvailability());
+    }
+
 }
