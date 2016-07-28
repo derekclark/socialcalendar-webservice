@@ -86,7 +86,7 @@ public class SocialEggboxEndpointV1 {
     private Response badRequest() {
         return Response.status(HTTP_STATUS_BAD_REQUEST).build();
     }
-    
+
     private Response okOnDelete() {
         return Response.status(HTTP_STATUS_OK).build();
     }
