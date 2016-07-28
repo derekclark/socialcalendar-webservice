@@ -9,7 +9,6 @@ import org.junit.Test;
 import utilities.JsonUtility;
 
 import javax.ws.rs.core.Response;
-
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -44,6 +43,7 @@ public class SocialEggboxEndpointTest {
 
     User savedUser = new User(EMAIL, NAME, FACEBOOK_ID);
     User user = new User(EMAIL, NAME, FACEBOOK_ID);
+    UserRepresentation userRepresentation;
 
     @Before
     public void setup(){
@@ -51,6 +51,7 @@ public class SocialEggboxEndpointTest {
         availabilityRepo = new InMemoryDBCreator().create(DBAvailability.class);
 
         endpointV1 = new SocialEggboxEndpointV1(getUserDAO(),getAvailabilityDAO());
+        userRepresentation = new UserRepresentation(user);
     }
 
     private void saveUser(User user){
@@ -100,34 +101,29 @@ public class SocialEggboxEndpointTest {
 
     @Test
     public void saveUserShouldReturn200Status() throws IOException {
-        String userPayload = new JsonUtility().toJson(user);
-        Response response = endpointV1.saveUser(userPayload);
+        Response response = endpointV1.saveUser(userRepresentation);
         assertEquals(HTTP_STATUS_OK, response.getStatus());
     }
 
     @Test
     public void saveUserShouldReturn400IfNoPayload() throws IOException {
-        String userPayload = "";
-        Response response = endpointV1.saveUser(userPayload);
+        Response response = endpointV1.saveUser(null);
         assertEquals(HTTP_STATUS_BAD_REQUEST, response.getStatus());
     }
 
     @Test
     public void shouldReturnSavedUserPayload() throws IOException {
-        String userPayload = new JsonUtility().toJson(user);
-        Response response = endpointV1.saveUser(userPayload);
-        assertEquals(userPayload, response.getEntity());
+        Response response = endpointV1.saveUser(userRepresentation);
+        assertEquals(user, response.getEntity());
     }
 
     @Test
     public void checkUserIsSaved() throws IOException {
-        String userPayload = new JsonUtility().toJson(user);
-        Response response = endpointV1.saveUser(userPayload);
-
-        response = endpointV1.getUserById(EMAIL);
+        endpointV1.saveUser(userRepresentation);
+        Response response = endpointV1.getUserById(EMAIL);
         assertEquals(HTTP_STATUS_OK, response.getStatus());
-        assertEquals(userPayload, response.getEntity());
-
+        String expectedPayload = new JsonUtility().toJson(user);
+        assertEquals(expectedPayload, response.getEntity());
     }
 
     @Test
@@ -148,6 +144,13 @@ public class SocialEggboxEndpointTest {
         AvailabilityRepresentation representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS);
         Response response = endpointV1.createAvailability(representation);
         assertEquals(HTTP_STATUS_OK, response.getStatus());
+
+    }
+
+    @Test
+    public void createAvailabilityWithEmptyPayloadShouldReturn400Status() throws IOException {
+        Response response = endpointV1.createAvailability(null);
+        assertEquals(HTTP_STATUS_BAD_REQUEST, response.getStatus());
 
     }
 

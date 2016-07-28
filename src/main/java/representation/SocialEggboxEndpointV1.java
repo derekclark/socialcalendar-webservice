@@ -36,13 +36,12 @@ public class SocialEggboxEndpointV1 {
 
     @POST
     @Path("user")
-    public Response saveUser(String userPayload) throws IOException {
-        if (userPayload.isEmpty()) {
-            System.out.println("payload is empty");
-            return badRequestOnSave();
+    public Response saveUser(UserRepresentation userRepresentation) throws IOException {
+        if (userRepresentation == null) {
+            return badRequest();
         }
         else {
-            return okSave(userPayload);
+            return okSave(userRepresentation);
         }
     }
 
@@ -61,7 +60,10 @@ public class SocialEggboxEndpointV1 {
     @POST
     @Path("availability")
     public Response createAvailability(AvailabilityRepresentation representation) throws IOException {
-        return okAvailabilitySave(representation);
+        if (representation == null)
+            return badRequest();
+        else
+            return okAvailabilitySave(representation);
     }
 
     private Response okOnRead(User user){
@@ -81,7 +83,7 @@ public class SocialEggboxEndpointV1 {
         return Response.status(HTTP_STATUS_NOT_FOUND).entity(null).build();
     }
 
-    private Response badRequestOnSave() {
+    private Response badRequest() {
         return Response.status(HTTP_STATUS_BAD_REQUEST).build();
     }
 
@@ -94,10 +96,10 @@ public class SocialEggboxEndpointV1 {
         return Response.status(HTTP_STATUS_OK).build();
     }
 
-    private Response okSave(String userPayload) throws IOException {
-        User user = unmarshall(userPayload);
+    private Response okSave(UserRepresentation userRepresentation) throws IOException {
+        User user = userRepresentation.asUser();
         userRepository.save(user);
-        return Response.status(HTTP_STATUS_OK).entity(userPayload).build();
+        return Response.status(HTTP_STATUS_OK).entity(user).build();
     }
 
     private Response okAvailabilitySave(AvailabilityRepresentation representation) throws IOException {
