@@ -41,7 +41,7 @@ public class SocialEggboxEndpointV1 {
             return badRequest();
         }
         else {
-            return okSave(userRepresentation);
+            return okUserSave(userRepresentation);
         }
     }
 
@@ -86,17 +86,12 @@ public class SocialEggboxEndpointV1 {
     private Response badRequest() {
         return Response.status(HTTP_STATUS_BAD_REQUEST).build();
     }
-
-    private User unmarshall(String userPayload) throws IOException {
-        return new JsonUtility().unMarshallJson(userPayload, User.class);
-    }
-
-
+    
     private Response okOnDelete() {
         return Response.status(HTTP_STATUS_OK).build();
     }
 
-    private Response okSave(UserRepresentation userRepresentation) throws IOException {
+    private Response okUserSave(UserRepresentation userRepresentation) throws IOException {
         User user = userRepresentation.asUser();
         userRepository.save(user);
         return Response.status(HTTP_STATUS_OK).entity(user).build();
