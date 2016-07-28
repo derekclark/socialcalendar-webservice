@@ -62,6 +62,11 @@ public class SocialEggboxEndpointV1 {
         }
     }
 
+    @POST
+    @Path("availability")
+    public Response createAvailability(AvailabilityRepresentation representation) throws IOException {
+        return okAvailabilitySave(representation);
+    }
 
     private Response okOnRead(User user){
         try {
@@ -98,10 +103,6 @@ public class SocialEggboxEndpointV1 {
 
     private Response okOnDelete() {
         return Response.status(HTTP_STATUS_OK).build();
-    }
-
-    public Response createAvailability(AvailabilityRepresentation representation) throws IOException {
-        return okAvailabilitySave(representation);
     }
 
     private Response okAvailabilitySave(AvailabilityRepresentation representation) throws IOException {
