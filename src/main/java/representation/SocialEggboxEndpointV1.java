@@ -52,7 +52,7 @@ public class SocialEggboxEndpointV1 {
 
     @DELETE
     @Path("user/{id}")
-    public Response delete(@PathParam("id") String email) {
+    public Response deleteUser(@PathParam("id") String email) {
         boolean ok = userRepository.delete(email);
         if (ok){
             return okOnDelete();

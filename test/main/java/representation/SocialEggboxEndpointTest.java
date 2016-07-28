@@ -133,13 +133,13 @@ public class SocialEggboxEndpointTest {
     @Test
     public void deleteExistingUserShouldReturn200Status(){
         saveUser(savedUser);
-        Response response = endpointV1.delete(EMAIL);
+        Response response = endpointV1.deleteUser(EMAIL);
         assertEquals(HTTP_STATUS_OK, response.getStatus());
     }
 
     @Test
     public void deleteNonExistingUserShouldReturn404Status(){
-        Response response = endpointV1.delete(EMAIL);
+        Response response = endpointV1.deleteUser(EMAIL);
         assertEquals(HTTP_STATUS_NOT_FOUND, response.getStatus());
     }
 
