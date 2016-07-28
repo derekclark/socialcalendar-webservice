@@ -1,26 +1,26 @@
 package representation;
 
-import database.DBSocial;
+import database.DBUser;
 
 public class UserDAO {
-    private DBSocial dbSocial;
+    private DBUser dbUser;
 
-    public UserDAO(DBSocial dbSocial) {
-        this.dbSocial = dbSocial;
+    public UserDAO(DBUser dbUser) {
+        this.dbUser = dbUser;
     }
 
     public int save(User user) {
-        return dbSocial.createUser(user);
+        return dbUser.create(user);
     }
 
     public User read(String id) {
-        return dbSocial.findUserById(id);
+        return dbUser.findById(id);
     }
 
     public boolean delete(String email) {
         User user = read(email);
         if (user != null){
-            dbSocial.deleteUser(email);
+            dbUser.delete(email);
             return true;
         }else
             return false;

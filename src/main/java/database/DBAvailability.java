@@ -12,13 +12,13 @@ public interface DBAvailability {
     @SqlUpdate("INSERT INTO AVAILABILITY (owner_name, owner_email, status, title) " +
             "VALUES (:availability.ownerName," +
             ":availability.ownerEmail, :availability.status, :availability.title)")
-    int createAvailability(@BindBean("availability") Availability availability);
+    int create(@BindBean("availability") Availability availability);
 
     @SqlQuery("SELECT * FROM AVAILABILITY WHERE id = :id")
-    Availability findAvailabilityById(@Bind("id") int id);
+    Availability findById(@Bind("id") int id);
 
     @SqlUpdate("DELETE FROM AVAILABILITY WHERE `id`= :id")
-    int deleteAvailabilityById(@Bind("id") int id);
+    int deleteById(@Bind("id") int id);
 
 
 }

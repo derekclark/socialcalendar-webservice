@@ -1,12 +1,14 @@
 package config;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import database.DBSocial;
+import database.DBAvailability;
+import database.DBUser;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.setup.Environment;
 import org.flywaydb.core.Flyway;
 import org.h2.jdbcx.JdbcDataSource;
 import org.skife.jdbi.v2.DBI;
+import representation.AvailabilityDAO;
 import representation.UserDAO;
 
 import javax.sql.DataSource;
@@ -15,9 +17,14 @@ public class DatabaseConfiguration extends DataSourceFactory{
     @JsonProperty("in_memory")
     private boolean inMemory = true;
 
-    public UserDAO createRepository(Environment environment) {
+    public UserDAO createUserRepository(Environment environment) {
         DBI dbi = getDBI(environment);
-        return new UserDAO(dbi.onDemand(DBSocial.class));
+        return new UserDAO(dbi.onDemand(DBUser.class));
+    }
+
+    public AvailabilityDAO createAvailabilityRepository(Environment environment) {
+        DBI dbi = getDBI(environment);
+        return new AvailabilityDAO(dbi.onDemand(DBAvailability.class));
     }
 
     private DBI getDBI(Environment environment) {

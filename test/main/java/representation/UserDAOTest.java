@@ -1,6 +1,6 @@
 package representation;
 
-import database.DBSocial;
+import database.DBUser;
 import database.InMemoryDBCreator;
 import org.junit.After;
 import org.junit.Before;
@@ -11,13 +11,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class UserDAOTest {
-    DBSocial repo;
+    DBUser repo;
     User user;
     UserDAO userDAO;
 
     @Before
     public void setup(){
-        repo = new InMemoryDBCreator().create(DBSocial.class);
+        repo = new InMemoryDBCreator().create(DBUser.class);
         user = new User("email","name","facebookId");
         userDAO = new UserDAO(repo);
     }
@@ -34,14 +34,14 @@ public class UserDAOTest {
 
     @Test
     public void canReadUser(){
-        repo.createUser(user);
+        repo.create(user);
         User returnedUser = userDAO.read(user.getEmail());
         assertEquals(user, returnedUser);
     }
 
     @Test
     public void canDeleteUser(){
-        repo.createUser(user);
+        repo.create(user);
         boolean result = userDAO.delete(user.getEmail());
         assertTrue(result);
 

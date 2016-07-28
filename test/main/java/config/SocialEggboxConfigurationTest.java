@@ -26,6 +26,6 @@ public class SocialEggboxConfigurationTest {
     @Test
     public void createsRepository(){
         Environment environment = new Environment("test", new ObjectMapper(), null, new MetricRegistry(), null);
-        assert(config.createRepository(environment) instanceof UserDAO);
+        assert(config.createUserRepository(environment) instanceof UserDAO);
     }
 }

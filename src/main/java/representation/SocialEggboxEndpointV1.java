@@ -21,8 +21,9 @@ public class SocialEggboxEndpointV1 {
         this.availabilityRepository = availabilityRepository;
     }
 
-    public SocialEggboxEndpointV1(UserDAO userRepository) {
+    public SocialEggboxEndpointV1(UserDAO userRepository, AvailabilityDAO availabilityRepository) {
         this.userRepository = userRepository;
+        this.availabilityRepository = availabilityRepository;
     }
 
     @GET

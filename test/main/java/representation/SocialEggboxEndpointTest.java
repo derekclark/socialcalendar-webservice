@@ -1,7 +1,7 @@
 package representation;
 
 import database.DBAvailability;
-import database.DBSocial;
+import database.DBUser;
 import database.InMemoryDBCreator;
 import org.junit.After;
 import org.junit.Before;
@@ -39,7 +39,7 @@ public class SocialEggboxEndpointTest {
 
     public static final String UNKNOWN_USER_ID = "unknownUserId";
     SocialEggboxEndpointV1 endpointV1;
-    DBSocial userRepo;
+    DBUser userRepo;
     DBAvailability availabilityRepo;
 
     User savedUser = new User(EMAIL, NAME, FACEBOOK_ID);
@@ -47,15 +47,14 @@ public class SocialEggboxEndpointTest {
 
     @Before
     public void setup(){
-        userRepo = new InMemoryDBCreator().create(DBSocial.class);
+        userRepo = new InMemoryDBCreator().create(DBUser.class);
         availabilityRepo = new InMemoryDBCreator().create(DBAvailability.class);
 
-        endpointV1 = new SocialEggboxEndpointV1(getUserDAO());
-        endpointV1.setAvailabilityRepository(getAvailabilityDAO());
+        endpointV1 = new SocialEggboxEndpointV1(getUserDAO(),getAvailabilityDAO());
     }
 
     private void saveUser(User user){
-        userRepo.createUser(user);
+        userRepo.create(user);
     }
 
     private UserDAO getUserDAO() {
