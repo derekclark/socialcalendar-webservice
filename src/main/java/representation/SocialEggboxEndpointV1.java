@@ -17,10 +17,6 @@ public class SocialEggboxEndpointV1 {
     UserDAO userRepository;
     AvailabilityDAO availabilityRepository;
 
-    public void setAvailabilityRepository(AvailabilityDAO availabilityRepository) {
-        this.availabilityRepository = availabilityRepository;
-    }
-
     public SocialEggboxEndpointV1(UserDAO userRepository, AvailabilityDAO availabilityRepository) {
         this.userRepository = userRepository;
         this.availabilityRepository = availabilityRepository;
