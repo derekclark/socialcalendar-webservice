@@ -1,18 +1,18 @@
 package utilities;
 
-import org.codehaus.jackson.annotate.JsonAutoDetect;
-import org.codehaus.jackson.annotate.JsonMethod;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 
 import java.io.IOException;
 
 public class JsonUtility {
     public String toJson (Object object) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.enable(SerializationConfig.Feature.INDENT_OUTPUT);
-        objectMapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
-        return objectMapper.writeValueAsString(object);
+        objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        objectMapper.registerModule(new JodaModule());
+        return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
     }
 
     public <T> T unMarshallJson(String jsonString, Class<T> clazz) throws IOException {

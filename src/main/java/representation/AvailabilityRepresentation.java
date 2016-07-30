@@ -2,6 +2,9 @@ package representation;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.joda.time.DateTime;
+import utilities.CustomDateSerializer;
 
 import java.util.Set;
 
@@ -18,19 +21,38 @@ public class AvailabilityRepresentation {
     private String status;
     @JsonProperty("sharedWithUsers")
     private Set<User> sharedWithUsers;
+    @JsonProperty("startDateTime")
+    private DateTime startDateTime;
+
+//    @JsonCreator
+//    public AvailabilityRepresentation(@JsonProperty("title")String title,
+//                                      @JsonProperty("ownerEmail")String ownerEmail,
+//                                      @JsonProperty("ownerName")String ownerName,
+//                                      @JsonProperty("status")String status,
+//                                      @JsonProperty("sharedWithUsers") Set<User> sharedWithUsers) {
+//        this.title = title;
+//        this.ownerEmail = ownerEmail;
+//        this.ownerName = ownerName;
+//        this.status = status;
+//        this.sharedWithUsers = sharedWithUsers;
+//    }
+
 
     @JsonCreator
     public AvailabilityRepresentation(@JsonProperty("title")String title,
                                       @JsonProperty("ownerEmail")String ownerEmail,
                                       @JsonProperty("ownerName")String ownerName,
                                       @JsonProperty("status")String status,
-                                      @JsonProperty("sharedWithUsers") Set<User> sharedWithUsers) {
+                                      @JsonProperty("sharedWithUsers") Set<User> sharedWithUsers,
+                                      @JsonProperty("startDateTime") DateTime startDateTime) {
         this.title = title;
         this.ownerEmail = ownerEmail;
         this.ownerName = ownerName;
         this.status = status;
         this.sharedWithUsers = sharedWithUsers;
+        this.startDateTime = startDateTime;
     }
+
 
     public AvailabilityRepresentation(Availability availability){
         this.id = availability.getId();
@@ -39,10 +61,16 @@ public class AvailabilityRepresentation {
         this.ownerName = availability.getOwnerName();
         this.status = availability.getStatus();
         this.sharedWithUsers = availability.getSharedWithUsers();
+        this.startDateTime = availability.getStartDateTime();
     }
 
     public Availability asAvailability() {
-        return new Availability(title, ownerEmail, ownerName, status);
+        return new Availability(title, ownerEmail, ownerName, status, sharedWithUsers, startDateTime);
+    }
+
+    @JsonSerialize(using = CustomDateSerializer.class)
+    public DateTime getStartDateTime() {
+        return startDateTime;
     }
 
     @Override
@@ -56,6 +84,8 @@ public class AvailabilityRepresentation {
         if (ownerEmail != null ? !ownerEmail.equals(that.ownerEmail) : that.ownerEmail != null) return false;
         if (ownerName != null ? !ownerName.equals(that.ownerName) : that.ownerName != null) return false;
         if (sharedWithUsers != null ? !sharedWithUsers.equals(that.sharedWithUsers) : that.sharedWithUsers != null)
+            return false;
+        if (startDateTime != null ? !startDateTime.equals(that.startDateTime) : that.startDateTime != null)
             return false;
         if (status != null ? !status.equals(that.status) : that.status != null) return false;
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
@@ -71,6 +101,7 @@ public class AvailabilityRepresentation {
         result = 31 * result + (ownerName != null ? ownerName.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (sharedWithUsers != null ? sharedWithUsers.hashCode() : 0);
+        result = 31 * result + (startDateTime != null ? startDateTime.hashCode() : 0);
         return result;
     }
 

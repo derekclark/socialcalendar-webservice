@@ -97,8 +97,11 @@ dependencies {
    compile  group:  'org.flywaydb',           name: 'flyway-core',          version: '3.1'
    compile 'com.fasterxml.jackson.core:jackson-core:2.7.0'
    compile 'com.fasterxml.jackson.core:jackson-annotations:2.7.0'
-   compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
-   compile 'joda-time:joda-time:2.3'
+   compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.7.0'
+   compile 'com.fasterxml.jackson.core:jackson-databind:2.7.0'
+
+   //compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
+   compile 'joda-time:joda-time:2.7'
 
    testCompile 'junit:junit-dep:4.11'
    testCompile group: 'org.assertj',                       name: 'assertj-core',               version: '3.0.0', changing: true

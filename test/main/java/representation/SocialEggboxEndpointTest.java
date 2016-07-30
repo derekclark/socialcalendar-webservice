@@ -3,6 +3,7 @@ package representation;
 import database.DBAvailability;
 import database.DBUser;
 import database.InMemoryDBCreator;
+import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,6 +37,7 @@ public class SocialEggboxEndpointTest {
     public static final String STATUS = "status";
     public static final String TITLE = "title";
     Set<User> sharedList;
+    public static final DateTime START_DATE_TIME = new DateTime(2016,1,1,12,0);
 
     public static final String UNKNOWN_USER_ID = "unknownUserId";
     SocialEggboxEndpointV1 endpointV1;
@@ -146,14 +148,16 @@ public class SocialEggboxEndpointTest {
 
     @Test
     public void createAvailabilityShouldReturn200Status() throws IOException {
-        AvailabilityRepresentation representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS, sharedList);
+        AvailabilityRepresentation representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS,
+                sharedList, START_DATE_TIME);
         Response response = endpointV1.createAvailability(representation);
         assertEquals(HTTP_STATUS_OK, response.getStatus());
     }
 
     @Test
     public void createAvailabilityShouldReturnAvailabilityInBody() throws IOException {
-        AvailabilityRepresentation representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS, sharedList);
+        AvailabilityRepresentation representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS,
+                sharedList, START_DATE_TIME);
         Response response = endpointV1.createAvailability(representation);
         Availability expectedAvailability = new Availability(1,TITLE,EMAIL,NAME,STATUS);
         AvailabilityRepresentation expectedRepresentation = new AvailabilityRepresentation(expectedAvailability);
