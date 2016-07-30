@@ -7,6 +7,7 @@ import utilities.JsonUtility;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class UserRepresentationTest {
     public static final String EMAIL = "email";
@@ -43,5 +44,26 @@ public class UserRepresentationTest {
         UserRepresentation representation = new UserRepresentation(user);
         String actualJson = new JsonUtility().toJson(representation);
         assertEquals(expectedJson, actualJson);
+    }
+
+    @Test
+    public void shouldBeEqual(){
+        UserRepresentation representation = new UserRepresentation(user);
+        UserRepresentation sameContent = new UserRepresentation(new User(EMAIL, NAME, FACEBOOK_ID));
+        assertEquals(representation, sameContent);
+        assertEquals(representation, representation);
+    }
+
+    @Test
+    public void shouldNotBeEqual(){
+        UserRepresentation representation = new UserRepresentation(user);
+        UserRepresentation differentEmail = new UserRepresentation(new User("", NAME, FACEBOOK_ID));
+        UserRepresentation differentName = new UserRepresentation(new User(EMAIL, "", FACEBOOK_ID));
+        UserRepresentation differentFacebook = new UserRepresentation(new User(EMAIL, NAME, ""));
+
+        assertNotEquals(representation, differentEmail);
+        assertNotEquals(representation, differentName);
+        assertNotEquals(representation, differentFacebook);
+
     }
 }
