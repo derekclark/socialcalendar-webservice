@@ -99,7 +99,14 @@ public class SocialEggboxEndpointV1 {
 
     private Response okAvailabilitySave(AvailabilityRepresentation representation) throws IOException {
         Availability availability = representation.asAvailability();
-        availabilityRepository.save(availability);
-        return Response.status(HTTP_STATUS_OK).entity(new AvailabilityRepresentation(availability)).build();
+        int id = availabilityRepository.save(availability);
+        Availability availabilityDecoratedWithNewId = decorateAvailabilityWithSavedId(availability, id);
+        return Response.status(HTTP_STATUS_OK).entity
+                (new AvailabilityRepresentation(availabilityDecoratedWithNewId)).build();
+    }
+
+    private Availability decorateAvailabilityWithSavedId(Availability availability, int id) {
+        return new Availability(id, availability.getTitle(),
+                    availability.getOwnerEmail(), availability.getOwnerName(),availability.getStatus());
     }
 }

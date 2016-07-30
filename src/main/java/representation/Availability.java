@@ -10,6 +10,14 @@ public class Availability {
     public Availability() {
     }
 
+    public Availability(int id, String title, String ownerEmail, String ownerName, String status) {
+        this.id = id;
+        this.title = title;
+        this.ownerEmail = ownerEmail;
+        this.ownerName = ownerName;
+        this.status = status;
+    }
+
     public Availability(String title,
                         String ownerEmail,
                         String ownerName,

@@ -144,7 +144,15 @@ public class SocialEggboxEndpointTest {
         AvailabilityRepresentation representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS);
         Response response = endpointV1.createAvailability(representation);
         assertEquals(HTTP_STATUS_OK, response.getStatus());
+    }
 
+    @Test
+    public void createAvailabilityShouldReturnAvailabilityInBody() throws IOException {
+        AvailabilityRepresentation representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS);
+        Response response = endpointV1.createAvailability(representation);
+        Availability expectedAvailability = new Availability(1,TITLE,EMAIL,NAME,STATUS);
+        AvailabilityRepresentation expectedRepresentation = new AvailabilityRepresentation(expectedAvailability);
+        assertEquals(expectedRepresentation, response.getEntity());
     }
 
     @Test
