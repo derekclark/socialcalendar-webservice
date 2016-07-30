@@ -11,6 +11,7 @@ import utilities.JsonUtility;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -52,6 +53,10 @@ public class SocialEggboxEndpointTest {
 
         endpointV1 = new SocialEggboxEndpointV1(getUserDAO(),getAvailabilityDAO());
         userRepresentation = new UserRepresentation(user);
+
+        Set<User> sharedList = new HashSet<User>();
+        sharedList.add(new User(EMAIL, NAME, FACEBOOK_ID));
+
     }
 
     private void saveUser(User user){
@@ -141,14 +146,14 @@ public class SocialEggboxEndpointTest {
 
     @Test
     public void createAvailabilityShouldReturn200Status() throws IOException {
-        AvailabilityRepresentation representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS);
+        AvailabilityRepresentation representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS, sharedList);
         Response response = endpointV1.createAvailability(representation);
         assertEquals(HTTP_STATUS_OK, response.getStatus());
     }
 
     @Test
     public void createAvailabilityShouldReturnAvailabilityInBody() throws IOException {
-        AvailabilityRepresentation representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS);
+        AvailabilityRepresentation representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS, sharedList);
         Response response = endpointV1.createAvailability(representation);
         Availability expectedAvailability = new Availability(1,TITLE,EMAIL,NAME,STATUS);
         AvailabilityRepresentation expectedRepresentation = new AvailabilityRepresentation(expectedAvailability);

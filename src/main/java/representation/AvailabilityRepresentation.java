@@ -18,17 +18,6 @@ public class AvailabilityRepresentation {
     private String status;
     @JsonProperty("sharedWithUsers")
     private Set<User> sharedWithUsers;
-//
-//    @JsonCreator
-//    public AvailabilityRepresentation(@JsonProperty("title")String title,
-//                                      @JsonProperty("ownerEmail")String ownerEmail,
-//                                      @JsonProperty("ownerName")String ownerName,
-//                                      @JsonProperty("status")String status) {
-//        this.title = title;
-//        this.ownerEmail = ownerEmail;
-//        this.ownerName = ownerName;
-//        this.status = status;
-//    }
 
     @JsonCreator
     public AvailabilityRepresentation(@JsonProperty("title")String title,
