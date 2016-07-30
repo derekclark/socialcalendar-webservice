@@ -1,11 +1,22 @@
 package representation;
 
+import java.util.Set;
+
 public class Availability {
     private int id;
     private String title;
     private String ownerEmail;
     private String ownerName;
     private String status;
+    Set<User> sharedWithUsers;
+
+    public Availability(String title, String ownerEmail, String ownerName, String status, Set<User> sharedWithUsers) {
+        this.title = title;
+        this.ownerEmail = ownerEmail;
+        this.ownerName = ownerName;
+        this.status = status;
+        this.sharedWithUsers = sharedWithUsers;
+    }
 
     public Availability() {
     }
@@ -28,6 +39,7 @@ public class Availability {
         this.status = status;
     }
 
+
     public int getId() {
         return id;
     }
@@ -48,6 +60,10 @@ public class Availability {
         return status;
     }
 
+    public Set<User> getSharedWithUsers() {
+        return sharedWithUsers;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,6 +74,8 @@ public class Availability {
         if (id != that.id) return false;
         if (ownerEmail != null ? !ownerEmail.equals(that.ownerEmail) : that.ownerEmail != null) return false;
         if (ownerName != null ? !ownerName.equals(that.ownerName) : that.ownerName != null) return false;
+        if (sharedWithUsers != null ? !sharedWithUsers.equals(that.sharedWithUsers) : that.sharedWithUsers != null)
+            return false;
         if (status != null ? !status.equals(that.status) : that.status != null) return false;
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
 
@@ -71,6 +89,19 @@ public class Availability {
         result = 31 * result + (ownerEmail != null ? ownerEmail.hashCode() : 0);
         result = 31 * result + (ownerName != null ? ownerName.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (sharedWithUsers != null ? sharedWithUsers.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Availability{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", ownerEmail='" + ownerEmail + '\'' +
+                ", ownerName='" + ownerName + '\'' +
+                ", status='" + status + '\'' +
+                ", sharedWithUsers=" + sharedWithUsers +
+                '}';
     }
 }

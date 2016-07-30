@@ -28,27 +28,28 @@ public class AvailabilityTest {
     public static final LocalDateTime DIFFERENT_END_DATE = LocalDateTime.of(2000, 1, 2, 0, 0, 0);
 
     Availability availability;
-    Availability availabilityWithSameValues;
-    Availability availabilityWithDifferentTitle,
-            availabilityWithDifferentStatus, availabilityWithDifferentOwnerName, availabilityWithDifferentOwnerEmail;
+    Availability sameValues;
+    Availability differentTitle, differentStatus, differentOwnerName, differentOwnerEmail,
+            differentSharedUsers;
     Set<User> sharedList, differentSharedList;
 
     @Before
     public void setup(){
         sharedList = new HashSet<User>();
         differentSharedList = new HashSet<User>();
-        differentSharedList.add(new User("email","name","facebookId"));
-        differentSharedList.add(new User("another email","name","facebookId"));
+        differentSharedList.add(new User("email", "name", "facebookId"));
+        differentSharedList.add(new User("another email", "name", "facebookId"));
 
         Date dt = new Date();
         LocalDateTime.ofInstant(dt.toInstant(), ZoneId.systemDefault());
 
-        availability = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS);
-        availabilityWithSameValues = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS);
-        availabilityWithDifferentTitle = new Availability(DIFFERENT_TITLE, OWNER_EMAIL, OWNER_NAME, STATUS);
-        availabilityWithDifferentOwnerEmail = new Availability(TITLE,DIFFERENT_OWNER_EMAIL, OWNER_NAME, STATUS);
-        availabilityWithDifferentOwnerName = new Availability(TITLE, OWNER_EMAIL, DIFFERENT_OWNER_NAME, STATUS);
-        availabilityWithDifferentStatus = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, DIFFERENT_STATUS);
+        availability = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, sharedList);
+        sameValues = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, sharedList);
+        differentTitle = new Availability(DIFFERENT_TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, sharedList);
+        differentOwnerEmail = new Availability(TITLE,DIFFERENT_OWNER_EMAIL, OWNER_NAME, STATUS, sharedList);
+        differentOwnerName = new Availability(TITLE, OWNER_EMAIL, DIFFERENT_OWNER_NAME, STATUS, sharedList);
+        differentStatus = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, DIFFERENT_STATUS, sharedList);
+        differentSharedUsers = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, differentSharedList);
     }
 
     @Test
@@ -57,25 +58,27 @@ public class AvailabilityTest {
         assertEquals(availability.getOwnerEmail(),OWNER_EMAIL);
         assertEquals(availability.getOwnerName(),OWNER_NAME);
         assertEquals(availability.getTitle(),TITLE);
+        assertEquals(availability.getSharedWithUsers(),sharedList);
     }
 
     @Test
     public void shouldBeEqualForSameObject(){
-        Availability availabilty = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS);
+        Availability availabilty = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, sharedList);
         assertEquals(availabilty, availabilty);
     }
 
     @Test
     public void shouldBeEqualForSameContent(){
-        assertEquals(availability, availabilityWithSameValues);
+        assertEquals(availability, sameValues);
     }
 
     @Test
     public void shouldNotBeEqual(){
-        assertNotEquals(availability, availabilityWithDifferentTitle);
-        assertNotEquals(availability, availabilityWithDifferentOwnerEmail);
-        assertNotEquals(availability, availabilityWithDifferentOwnerName);
-        assertNotEquals(availability, availabilityWithDifferentTitle);
+        assertNotEquals(availability, differentTitle);
+        assertNotEquals(availability, differentOwnerEmail);
+        assertNotEquals(availability, differentOwnerName);
+        assertNotEquals(availability, differentTitle);
+        assertNotEquals(availability, differentSharedUsers);
     }
 
     @Test
@@ -91,14 +94,15 @@ public class AvailabilityTest {
     @Test
     public void shouldHaveSameHashCodes(){
         assertEquals(availability.hashCode(), availability.hashCode());
-        assertEquals(availability.hashCode(), availabilityWithSameValues.hashCode());
+        assertEquals(availability.hashCode(), sameValues.hashCode());
     }
 
     @Test
     public void shouldHaveDifferentHashCodes(){
-        assertNotEquals(availability.hashCode(), availabilityWithDifferentOwnerName.hashCode());
-        assertNotEquals(availability.hashCode(), availabilityWithDifferentStatus.hashCode());
-        assertNotEquals(availability.hashCode(), availabilityWithDifferentOwnerEmail.hashCode());
-        assertNotEquals(availability.hashCode(), availabilityWithDifferentTitle.hashCode());
+        assertNotEquals(availability.hashCode(), differentOwnerName.hashCode());
+        assertNotEquals(availability.hashCode(), differentStatus.hashCode());
+        assertNotEquals(availability.hashCode(), differentOwnerEmail.hashCode());
+        assertNotEquals(availability.hashCode(), differentTitle.hashCode());
+        assertNotEquals(availability.hashCode(), differentSharedList.hashCode());
     }
 }
