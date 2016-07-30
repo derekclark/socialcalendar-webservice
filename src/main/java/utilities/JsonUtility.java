@@ -1,5 +1,7 @@
 package utilities;
 
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.annotate.JsonMethod;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 
@@ -9,6 +11,7 @@ public class JsonUtility {
     public String toJson (Object object) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(SerializationConfig.Feature.INDENT_OUTPUT);
+        objectMapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
         return objectMapper.writeValueAsString(object);
     }
 
