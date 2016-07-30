@@ -24,8 +24,7 @@ public class AvailabilityRepresentationTest {
 
     @Before
     public void setup(){
-        Availability availability = new Availability(TITLE, EMAIL, NAME, STATUS, sharedList);
-        representation = new AvailabilityRepresentation(availability);
+        representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS, sharedList);
     }
 
     @Test
