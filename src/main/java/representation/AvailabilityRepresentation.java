@@ -63,4 +63,15 @@ public class AvailabilityRepresentation {
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "AvailabilityRepresentation{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", ownerEmail='" + ownerEmail + '\'' +
+                ", ownerName='" + ownerName + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }
