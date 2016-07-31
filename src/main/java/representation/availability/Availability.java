@@ -14,6 +14,18 @@ public class Availability {
     Set<User> sharedWithUsers;
     DateTime startDateTime, endDateTime;
 
+    public Availability(int id, String title, String ownerEmail, String ownerName,
+                        String status, Set<User> sharedWithUsers, DateTime startDateTime, DateTime endDateTime) {
+        this.id = id;
+        this.title = title;
+        this.ownerEmail = ownerEmail;
+        this.ownerName = ownerName;
+        this.status = status;
+        this.sharedWithUsers = sharedWithUsers;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+    }
+
     public Availability(String title, String ownerEmail, String ownerName, String status, Set<User> sharedWithUsers) {
         this.title = title;
         this.ownerEmail = ownerEmail;
