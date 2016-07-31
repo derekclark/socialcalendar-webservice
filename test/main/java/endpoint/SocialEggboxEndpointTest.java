@@ -152,18 +152,14 @@ public class SocialEggboxEndpointTest {
 
     @Test
     public void createAvailabilityShouldReturn200Status() throws IOException {
-        AvailabilityRepresentation representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS,
-                sharedList, START_DATE_TIME, END_DATE_TIME);
-        Response response = endpointV1.createAvailability(representation);
+        Response response = createAvailability();
         assertEquals(HTTP_STATUS_OK, response.getStatus());
     }
 
     @Test
     public void createAvailabilityShouldReturnAvailabilityInBody() throws IOException {
-        AvailabilityRepresentation representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS,
-                sharedList, START_DATE_TIME, END_DATE_TIME);
-        Response response = endpointV1.createAvailability(representation);
-        Availability expectedAvailability = new Availability(1,TITLE,EMAIL,NAME,STATUS);
+        Response response = createAvailability();
+        Availability expectedAvailability = new Availability(getIdFromResponse(response),TITLE,EMAIL,NAME,STATUS);
         AvailabilityRepresentation expectedRepresentation = new AvailabilityRepresentation(expectedAvailability);
         assertEquals(expectedRepresentation, response.getEntity());
     }
@@ -176,13 +172,21 @@ public class SocialEggboxEndpointTest {
 
     @Test
     public void getAvailabilityShouldReturn200StatusIfExists() throws IOException {
-        AvailabilityRepresentation representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS,
-                sharedList, START_DATE_TIME, END_DATE_TIME);
-        Response response = endpointV1.createAvailability(representation);
-
-        response = endpointV1.getAvailabilityById(1);
+        Response response = createAvailability();
+        response = endpointV1.getAvailabilityById(getIdFromResponse(response));
 
         assertEquals(HTTP_STATUS_OK, response.getStatus());
+    }
+
+    private int getIdFromResponse(Response response) {
+        AvailabilityRepresentation representation = (AvailabilityRepresentation) response.getEntity();
+        return representation.getId();
+    }
+
+    private Response createAvailability() throws IOException {
+        AvailabilityRepresentation representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS,
+                sharedList, START_DATE_TIME, END_DATE_TIME);
+        return endpointV1.createAvailability(representation);
     }
 
 }

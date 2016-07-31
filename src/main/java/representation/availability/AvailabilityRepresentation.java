@@ -70,6 +70,10 @@ public class AvailabilityRepresentation {
         return endDateTime;
     }
 
+    public int getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "AvailabilityRepresentation{" +
