@@ -21,12 +21,13 @@ public class AvailabilityDAOTest {
     public static final String NAME = "ownerName";
     public static final String EMAIL = "ownerEmail";
     public static final String TITLE = "title";
-    public static final DateTime START_DATE_TIME = new DateTime(2016,1,1,12,0);
+    public static final DateTime START_DATE_TIME = new DateTime(2016,1,1,12,30,0);
+    public static final DateTime END_DATE_TIME = new DateTime(2016,1,1,13,45,0);
 
     @Before
     public void setup(){
         repo = new InMemoryDBCreator().create(DBAvailability.class);
-        availability = new Availability(TITLE, EMAIL, NAME, STATUS,null,START_DATE_TIME );
+        availability = new Availability(TITLE, EMAIL, NAME, STATUS,null,START_DATE_TIME,END_DATE_TIME);
         availabilityDAO = new AvailabilityDAO(repo);
     }
 
@@ -44,7 +45,7 @@ public class AvailabilityDAOTest {
     public void canRetrieveAvailabilityById(){
         int id = availabilityDAO.save(availability);
         Availability retrievedAvailability = availabilityDAO.read(id);
-        assertEquals(availability.getTitle(), retrievedAvailability.getTitle());
+        assertEquals(availability, retrievedAvailability);
     }
 
     @Test

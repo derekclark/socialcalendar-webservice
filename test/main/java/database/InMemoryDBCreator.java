@@ -1,8 +1,5 @@
 package database;
 
-//import io.dropwizard.java8.jdbi.args.LocalDateTimeArgumentFactory;
-//import io.dropwizard.java8.jdbi.args.LocalDateTimeMapper;
-
 import org.flywaydb.core.Flyway;
 import org.h2.jdbcx.JdbcDataSource;
 import org.skife.jdbi.v2.DBI;
@@ -18,8 +15,6 @@ public class InMemoryDBCreator {
         migrate(dataSource);
         dbi = new DBI(dataSource);
         dbi.registerArgumentFactory(new DateTimeArgumentFactory());
-//        dbi.registerArgumentFactory(new LocalDateTimeArgumentFactory());
-//        dbi.registerMapper(new LocalDateTimeMapper());
     }
 
     public <T> T create(Class<? extends T> clazz) {
