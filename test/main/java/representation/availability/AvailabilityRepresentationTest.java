@@ -78,7 +78,7 @@ public class AvailabilityRepresentationTest {
         differentSharedList.add(new User(EMAIL, NAME, FACEBOOK_ID));
         differentSharedList.add(new User("another email", NAME, FACEBOOK_ID));
         AvailabilityRepresentation differentSharedUsers = new AvailabilityRepresentation(TITLE, EMAIL,
-                NAME, STATUS, differentSharedList, START_DATE_TIME);
+                NAME, STATUS, differentSharedList, START_DATE_TIME, END_DATE_TIME);
 
         assertNotEquals(differentTitle, representation);
         assertNotEquals(differentEmail, representation);

@@ -17,7 +17,6 @@ import utilities.JsonUtility;
 
 import javax.ws.rs.core.Response;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -38,12 +37,11 @@ public class SocialEggboxEndpointTest {
             "  \"facebookId\" : \""+FACEBOOK_ID+"\"\n" +
             "}";
 
-    public static final LocalDateTime START_DATE = LocalDateTime.of(2015, 1, 2, 0, 0, 0);
-    public static final LocalDateTime END_DATE = LocalDateTime.now();
     public static final String STATUS = "status";
     public static final String TITLE = "title";
     Set<User> sharedList;
     public static final DateTime START_DATE_TIME = new DateTime(2016,1,1,12,0);
+    public static final DateTime END_DATE_TIME = new DateTime(2016,1,1,13,0);
 
     public static final String UNKNOWN_USER_ID = "unknownUserId";
     SocialEggboxEndpointV1 endpointV1;
@@ -155,7 +153,7 @@ public class SocialEggboxEndpointTest {
     @Test
     public void createAvailabilityShouldReturn200Status() throws IOException {
         AvailabilityRepresentation representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS,
-                sharedList, START_DATE_TIME);
+                sharedList, START_DATE_TIME, END_DATE_TIME);
         Response response = endpointV1.createAvailability(representation);
         assertEquals(HTTP_STATUS_OK, response.getStatus());
     }
@@ -163,7 +161,7 @@ public class SocialEggboxEndpointTest {
     @Test
     public void createAvailabilityShouldReturnAvailabilityInBody() throws IOException {
         AvailabilityRepresentation representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS,
-                sharedList, START_DATE_TIME);
+                sharedList, START_DATE_TIME, END_DATE_TIME);
         Response response = endpointV1.createAvailability(representation);
         Availability expectedAvailability = new Availability(1,TITLE,EMAIL,NAME,STATUS);
         AvailabilityRepresentation expectedRepresentation = new AvailabilityRepresentation(expectedAvailability);
