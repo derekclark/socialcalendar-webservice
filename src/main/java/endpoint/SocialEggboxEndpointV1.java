@@ -128,6 +128,7 @@ public class SocialEggboxEndpointV1 {
 
     private Availability decorateAvailabilityWithSavedId(Availability availability, int id) {
         return new Availability(id, availability.getTitle(),
-                    availability.getOwnerEmail(), availability.getOwnerName(),availability.getStatus());
+                    availability.getOwnerEmail(), availability.getOwnerName(),availability.getStatus(),
+                null, availability.getStartDateTime(), availability.getEndDateTime());
     }
 }

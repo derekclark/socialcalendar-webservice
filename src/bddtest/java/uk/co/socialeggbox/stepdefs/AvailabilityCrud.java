@@ -2,13 +2,12 @@ package uk.co.socialeggbox.stepdefs;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import representation.availability.Availability;
+import representation.availability.AvailabilityRepresentation;
 import uk.co.tpplc.http.Response;
 import uk.co.tpplc.http.SimpleHttpClient;
 import utilities.JsonUtility;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class AvailabilityCrud{
     public static final String STATUS = "status";
@@ -21,14 +20,17 @@ public class AvailabilityCrud{
             "\"ownerName\" : \"Derek\"," +
             "\"status\" : \"status\"," +
             "\"sharedWithUsers\" : [ ],"+
-            "  \"startDateTime\" : \"2016-01-01T12:30:00\"," +
-            "  \"endDateTime\" : \"2016-01-01T13:45:00\"" +
+            "  \"startDateTime\" : \"2016-01-01T12:30:00.000Z\"," +
+            "  \"endDateTime\" : \"2016-01-01T13:45:00Z\"" +
             "}";
     Response response;
+    int id;
 
     @Given("^a request is made to create an availability$")
     public void a_request_is_made_to_create_an_availability() throws Throwable {
         response = new SimpleHttpClient().post(URL, PAYLOAD);
+        AvailabilityRepresentation representation = new JsonUtility().unMarshallJson(response.getBody(), AvailabilityRepresentation.class);
+        id = representation.getId();
     }
 
     @Then("^http code status should be (\\d+)$")
@@ -36,10 +38,14 @@ public class AvailabilityCrud{
         assertEquals(HTTP_STATUS_OK,response.getStatus());
     }
 
-    @Then("^the payload is returned with an id greater than (\\d+)$")
-    public void the_payload_is_returned_with_an_id_greater_than(int arg1) throws Throwable {
+    @Then("^the payload is returned for the availability$")
+    public void the_payload_is_returned_for_the_availability() throws Throwable {
         System.out.println("response body="+response.getBody().toString());
-        Availability availability = new JsonUtility().unMarshallJson(response.getBody(), Availability.class);
-        assertTrue(availability.getId() > 0);
+        AvailabilityRepresentation availability = new JsonUtility().unMarshallJson(response.getBody(),
+                AvailabilityRepresentation.class);
+        assertEquals(availability.getId(), id);
+        assertEquals("2016-01-01T12:30:00.000Z",availability.getStartDateTime().toString());
+        assertEquals("2016-01-01T13:45:00.000Z",availability.getEndDateTime().toString());
+
     }
 }

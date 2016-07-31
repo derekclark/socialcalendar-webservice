@@ -73,3 +73,112 @@ org.codehaus.jackson.map.exc.UnrecognizedPropertyException: Unrecognized field "
 ```
  
 need setter for every field you wish to deserialise
+
+###Error No 3
+trying to deserialize payload to object for joda-time
+com.fasterxml.jackson.databind.JsonMappingException: Can not instantiate value of type [simple type, class org.joda.time.DateTime] from String value ('2014-08-20T11:51:31.233Z'); no single-String constructor/factory method
+ at [Source: { 
+  "timestamp" : "2014-08-20T11:51:31.233Z" 
+
+  You need to tell the jackson ObjectMapper how to handle JodaTime object. Do this by registering the JodaTime class with the ObjectMapper...
+
+  ```
+  mapper.registerModule(new JodaModule());
+  ```
+
+  Here is a full example
+  ```
+  import java.io.IOException;
+
+import org.joda.time.DateTime;
+import org.junit.Test;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
+
+public class JacksonTest {
+
+    private static final String json = "{ \n" +
+            "  \"timestamp\" : \"2014-08-20T11:51:31.233Z\" \n" +
+            "}";
+
+    @Test
+    public void test() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JodaModule());
+
+        System.out.println(mapper.readValue(json, GreetingResource.class));
+    }
+}
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(Include.NON_NULL)
+class GreetingResource {
+    @JsonProperty("timestamp")
+    private DateTime date;
+
+    public DateTime getDate() {
+        return date;
+    }
+
+    public void setDate(DateTime date) {
+        this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "GreetingResource{" +
+                "date=" + date +
+                '}';
+    }
+}
+```
+
+This will deserialize datetime into this format
+```
+2014-08-20T11:51:31.233Z
+```
+
+You could write your own serializer and deserializer if you wanted to alter the datetime format.
+```
+    @JsonSerialize(using = CustomDateSerializer.class)
+    public DateTime getEndDateTime() {
+        return endDateTime;
+    }
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    public void setEndDateTime(DateTime endDateTime) {
+        this.endDateTime = endDateTime;
+    }
+```
+
+```
+package utilities;
+
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import java.io.IOException;
+
+public class CustomDateSerializer extends JsonSerializer<DateTime> {
+
+    private static DateTimeFormatter formatter =
+            DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
+
+    @Override
+    public void serialize(DateTime value, JsonGenerator gen,
+                          SerializerProvider arg2)
+            throws IOException, JsonProcessingException {
+
+        gen.writeString(formatter.print(value));
+    }
+}
+```

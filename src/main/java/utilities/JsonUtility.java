@@ -17,6 +17,7 @@ public class JsonUtility {
 
     public <T> T unMarshallJson(String jsonString, Class<T> clazz) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JodaModule());
         return objectMapper.readValue(jsonString, clazz);
     }
 

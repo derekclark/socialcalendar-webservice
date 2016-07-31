@@ -160,7 +160,8 @@ public class SocialEggboxEndpointTest {
     @Test
     public void createAvailabilityShouldReturnAvailabilityInBody() throws IOException {
         Response response = createAvailability();
-        Availability expectedAvailability = new Availability(getIdFromResponse(response),TITLE,EMAIL,NAME,STATUS);
+        Availability expectedAvailability = new Availability(getIdFromResponse(response),TITLE,EMAIL,NAME,STATUS,
+                null, START_DATE_TIME, END_DATE_TIME);
         AvailabilityRepresentation expectedRepresentation = new AvailabilityRepresentation(expectedAvailability);
         assertEquals(expectedRepresentation, response.getEntity());
     }
