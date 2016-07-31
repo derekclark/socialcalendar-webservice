@@ -72,17 +72,29 @@ public class SocialEggboxEndpointV1 {
             return okAvailabilitySave(representation);
     }
 
-    private Response okOnRead(User user){
+    @GET
+    @Path("availability/{id}")
+    public Response getAvailabilityById(@PathParam("id") int id) {
+        Availability availability = availabilityRepository.read(id);
+        if (availability != null){
+            return okOnRead(availability);
+        }
+        else {
+            return null;
+        }
+    }
+
+    private <T> Response okOnRead(T clazz){
         try {
-            return Response.status(HTTP_STATUS_OK).entity(marshall(user)).build();
+            return Response.status(HTTP_STATUS_OK).entity(marshall(clazz)).build();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    private String marshall(User user) throws IOException {
-        return new JsonUtility().toJson(user);
+    private <T> String marshall(T clazz) throws IOException {
+        return new JsonUtility().toJson(clazz);
     }
 
     private Response notFoundStatus(){

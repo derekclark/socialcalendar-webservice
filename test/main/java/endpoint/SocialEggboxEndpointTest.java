@@ -172,8 +172,17 @@ public class SocialEggboxEndpointTest {
     public void createAvailabilityWithEmptyPayloadShouldReturn400Status() throws IOException {
         Response response = endpointV1.createAvailability(null);
         assertEquals(HTTP_STATUS_BAD_REQUEST, response.getStatus());
-
     }
 
+    @Test
+    public void getAvailabilityShouldReturn200StatusIfExists() throws IOException {
+        AvailabilityRepresentation representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS,
+                sharedList, START_DATE_TIME, END_DATE_TIME);
+        Response response = endpointV1.createAvailability(representation);
+
+        response = endpointV1.getAvailabilityById(1);
+
+        assertEquals(HTTP_STATUS_OK, response.getStatus());
+    }
 
 }
