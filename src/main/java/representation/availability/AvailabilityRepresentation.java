@@ -2,8 +2,10 @@ package representation.availability;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.DateTime;
 import representation.user.User;
+import utilities.CustomDateSerializer;
 
 import java.util.Set;
 
@@ -58,10 +60,12 @@ public class AvailabilityRepresentation {
         return new Availability(title, ownerEmail, ownerName, status, sharedWithUsers, startDateTime, endDateTime);
     }
 
+    @JsonSerialize(using = CustomDateSerializer.class)
     public DateTime getStartDateTime() {
         return startDateTime;
     }
 
+    @JsonSerialize(using = CustomDateSerializer.class)
     public DateTime getEndDateTime() {
         return endDateTime;
     }

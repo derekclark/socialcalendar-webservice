@@ -14,15 +14,21 @@ public class AvailabilityCrud{
     public static final String NAME = "Derek";
     public static final String URL = "http://localhost:9000/social/v1/availability/";
     public static final int HTTP_STATUS_OK = 200;
+    public static final String TITLE = "new event";
+    public static final String EMAIL = "decla";
+    public static final String START_DATE_TIME = "2016-01-01T12:30:00.000";
+    public static final String END_DATE_TIME = "2016-01-01T13:45:00.000";
     public static final String PAYLOAD = "{" +
-            "\"title\" : \"new event\"," +
-            "\"ownerEmail\" : \"decla\"," +
-            "\"ownerName\" : \"Derek\"," +
-            "\"status\" : \"status\"," +
+            "\"title\" : \"" + TITLE + "\"," +
+            "\"ownerEmail\" : \"" + EMAIL + "\"," +
+            "\"ownerName\" : \"" + NAME + "\"," +
+            "\"status\" : \""+STATUS+"\"," +
             "\"sharedWithUsers\" : [ ],"+
-            "  \"startDateTime\" : \"2016-01-01T12:30:00.000Z\"," +
-            "  \"endDateTime\" : \"2016-01-01T13:45:00Z\"" +
+            "  \"startDateTime\" : \"" + START_DATE_TIME + "\"," +
+            "  \"endDateTime\" : \"" + END_DATE_TIME + "\"" +
             "}";
+
+
     Response response;
     int id;
 
@@ -40,12 +46,17 @@ public class AvailabilityCrud{
 
     @Then("^the payload is returned for the availability$")
     public void the_payload_is_returned_for_the_availability() throws Throwable {
-        System.out.println("response body="+response.getBody().toString());
-        AvailabilityRepresentation availability = new JsonUtility().unMarshallJson(response.getBody(),
-                AvailabilityRepresentation.class);
-        assertEquals(availability.getId(), id);
-        assertEquals("2016-01-01T12:30:00.000Z",availability.getStartDateTime().toString());
-        assertEquals("2016-01-01T13:45:00.000Z",availability.getEndDateTime().toString());
+        String expectedPayload = "{" +
+                "\"title\":\"" + TITLE + "\"," +
+                "\"ownerEmail\":\"" + EMAIL + "\"," +
+                "\"ownerName\":\"" + NAME + "\"," +
+                "\"status\":\""+STATUS+"\"," +
+                "\"sharedWithUsers\":null,"+
+                "\"startDateTime\":\"" + START_DATE_TIME + "\"," +
+                "\"endDateTime\":\"" + END_DATE_TIME + "\"," +
+                "\"id\":"+id+
+                "}";
 
+        assertEquals(expectedPayload, response.getBody());
     }
 }
