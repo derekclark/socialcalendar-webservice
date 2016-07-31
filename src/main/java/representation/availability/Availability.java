@@ -138,6 +138,8 @@ public class Availability {
                 ", ownerName='" + ownerName + '\'' +
                 ", status='" + status + '\'' +
                 ", sharedWithUsers=" + sharedWithUsers +
+                ", startDateTime=" + startDateTime +
+                ", endDateTime=" + endDateTime +
                 '}';
     }
 }
