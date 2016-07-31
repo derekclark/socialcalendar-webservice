@@ -22,11 +22,12 @@ public class AvailabilityTest {
     public static final String DIFFERENT_OWNER_EMAIL = "different";
     public static final String DIFFERENT_OWNER_NAME = "different";
     public static final DateTime START_DATE_TIME = new DateTime(2016,1,1,12,0);
+    public static final DateTime END_DATE_TIME = new DateTime(2016,1,1,13,0);
 
     Availability availability;
     Availability sameValues;
     Availability differentTitle, differentStatus, differentOwnerName, differentOwnerEmail,
-            differentSharedUsers, differentStartDate;
+            differentSharedUsers, differentStartDate, differentEndDate;
     Set<User> sharedList, differentSharedList;
 
     @Before
@@ -36,29 +37,40 @@ public class AvailabilityTest {
         differentSharedList.add(new User("email", "name", "facebookId"));
         differentSharedList.add(new User("another email", "name", "facebookId"));
 
-        availability = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, sharedList, START_DATE_TIME);
-        sameValues = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, sharedList, START_DATE_TIME);
-        differentTitle = new Availability(DIFFERENT_TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, sharedList, START_DATE_TIME);
-        differentOwnerEmail = new Availability(TITLE,DIFFERENT_OWNER_EMAIL, OWNER_NAME, STATUS, sharedList, START_DATE_TIME);
-        differentOwnerName = new Availability(TITLE, OWNER_EMAIL, DIFFERENT_OWNER_NAME, STATUS, sharedList, START_DATE_TIME);
-        differentStatus = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, DIFFERENT_STATUS, sharedList, START_DATE_TIME);
-        differentSharedUsers = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, differentSharedList, START_DATE_TIME);
-        differentStartDate = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, sharedList, null);
+        availability = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, sharedList,
+                START_DATE_TIME, END_DATE_TIME);
+        sameValues = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, sharedList,
+                START_DATE_TIME, END_DATE_TIME);
+        differentTitle = new Availability(DIFFERENT_TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, sharedList,
+                START_DATE_TIME, END_DATE_TIME);
+        differentOwnerEmail = new Availability(TITLE,DIFFERENT_OWNER_EMAIL, OWNER_NAME, STATUS, sharedList,
+                START_DATE_TIME, END_DATE_TIME);
+        differentOwnerName = new Availability(TITLE, OWNER_EMAIL, DIFFERENT_OWNER_NAME, STATUS, sharedList,
+                START_DATE_TIME, END_DATE_TIME);
+        differentStatus = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, DIFFERENT_STATUS, sharedList,
+                START_DATE_TIME, END_DATE_TIME);
+        differentSharedUsers = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, differentSharedList,
+                START_DATE_TIME, END_DATE_TIME);
+        differentStartDate = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, sharedList, null,
+                END_DATE_TIME);
+        differentEndDate = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, sharedList, START_DATE_TIME, null);
     }
 
     @Test
     public void canCreateAvailability(){
-        assertEquals(availability.getStatus(),STATUS);
-        assertEquals(availability.getOwnerEmail(),OWNER_EMAIL);
-        assertEquals(availability.getOwnerName(),OWNER_NAME);
-        assertEquals(availability.getTitle(),TITLE);
-        assertEquals(availability.getSharedWithUsers(),sharedList);
-        assertEquals(availability.getStartDateTime(), START_DATE_TIME);
+        assertEquals(STATUS, availability.getStatus());
+        assertEquals(OWNER_EMAIL, availability.getOwnerEmail());
+        assertEquals(OWNER_NAME, availability.getOwnerName());
+        assertEquals(TITLE, availability.getTitle());
+        assertEquals(sharedList, availability.getSharedWithUsers());
+        assertEquals(START_DATE_TIME, availability.getStartDateTime());
+        assertEquals(END_DATE_TIME, availability.getEndDateTime());
     }
 
     @Test
     public void shouldBeEqualForSameObject(){
-        Availability availabilty = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, sharedList, START_DATE_TIME);
+        Availability availabilty = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, sharedList,
+                START_DATE_TIME, END_DATE_TIME);
         assertEquals(availabilty, availabilty);
     }
 
@@ -75,6 +87,7 @@ public class AvailabilityTest {
         assertNotEquals(availability, differentTitle);
         assertNotEquals(availability, differentSharedUsers);
         assertNotEquals(availability, differentStartDate);
+        assertNotEquals(availability, differentEndDate);
     }
 
     @Test
@@ -101,5 +114,6 @@ public class AvailabilityTest {
         assertNotEquals(availability.hashCode(), differentTitle.hashCode());
         assertNotEquals(availability.hashCode(), differentSharedList.hashCode());
         assertNotEquals(availability.hashCode(), differentStartDate.hashCode());
+        assertNotEquals(availability.hashCode(), differentEndDate.hashCode());
     }
 }

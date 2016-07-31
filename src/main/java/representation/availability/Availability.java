@@ -12,7 +12,7 @@ public class Availability {
     private String ownerName;
     private String status;
     Set<User> sharedWithUsers;
-    DateTime startDateTime;
+    DateTime startDateTime, endDateTime;
 
     public Availability(String title, String ownerEmail, String ownerName, String status, Set<User> sharedWithUsers) {
         this.title = title;
@@ -52,6 +52,17 @@ public class Availability {
         this.startDateTime = startDateTime;
     }
 
+    public Availability(String title, String ownerEmail, String ownerName, String status, Set<User> sharedWithUsers,
+                        DateTime startDateTime, DateTime endDateTime) {
+        this.title = title;
+        this.ownerEmail = ownerEmail;
+        this.ownerName = ownerName;
+        this.status = status;
+        this.sharedWithUsers = sharedWithUsers;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+    }
+
     public int getId() {
         return id;
     }
@@ -80,6 +91,10 @@ public class Availability {
         return startDateTime;
     }
 
+    public DateTime getEndDateTime() {
+        return endDateTime;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -88,6 +103,7 @@ public class Availability {
         Availability that = (Availability) o;
 
         if (id != that.id) return false;
+        if (endDateTime != null ? !endDateTime.equals(that.endDateTime) : that.endDateTime != null) return false;
         if (ownerEmail != null ? !ownerEmail.equals(that.ownerEmail) : that.ownerEmail != null) return false;
         if (ownerName != null ? !ownerName.equals(that.ownerName) : that.ownerName != null) return false;
         if (sharedWithUsers != null ? !sharedWithUsers.equals(that.sharedWithUsers) : that.sharedWithUsers != null)
@@ -109,6 +125,7 @@ public class Availability {
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (sharedWithUsers != null ? sharedWithUsers.hashCode() : 0);
         result = 31 * result + (startDateTime != null ? startDateTime.hashCode() : 0);
+        result = 31 * result + (endDateTime != null ? endDateTime.hashCode() : 0);
         return result;
     }
 
