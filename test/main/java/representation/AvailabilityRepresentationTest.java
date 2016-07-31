@@ -87,7 +87,7 @@ public class AvailabilityRepresentationTest {
     @Test
     public void testJsonRepresentation() throws IOException {
         DateTimeFormatter formatter =
-                DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ssz");
+                DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
 
         String startDateTime = formatter.print(START_DATE_TIME);
         String expectedJson = "{" + NEWLINE +

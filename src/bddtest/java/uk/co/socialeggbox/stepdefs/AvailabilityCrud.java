@@ -21,7 +21,8 @@ public class AvailabilityCrud{
             "\"ownerName\" : \"Derek\"," +
             "\"status\" : \"status\"," +
             "\"sharedWithUsers\" : [ ],"+
-            "  \"startDateTime\" : \"2016-01-01T12:00:00GMT\"" +
+            "  \"startDateTime\" : \"2016-01-01T12:00:00\"" +
+//            "  \"startDateTime\" : null" +
             "}";
     Response response;
 

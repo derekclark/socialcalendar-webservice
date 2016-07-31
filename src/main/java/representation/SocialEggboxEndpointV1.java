@@ -99,6 +99,9 @@ public class SocialEggboxEndpointV1 {
 
     private Response okAvailabilitySave(AvailabilityRepresentation representation) throws IOException {
         Availability availability = representation.asAvailability();
+
+//        System.out.println("***************STARTDATE="+availability.getStartDateTime());
+
         int id = availabilityRepository.save(availability);
         Availability availabilityDecoratedWithNewId = decorateAvailabilityWithSavedId(availability, id);
         return Response.status(HTTP_STATUS_OK).entity
