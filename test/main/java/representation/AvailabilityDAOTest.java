@@ -2,6 +2,7 @@ package representation;
 
 import database.DBAvailability;
 import database.InMemoryDBCreator;
+import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,11 +21,12 @@ public class AvailabilityDAOTest {
     public static final String NAME = "ownerName";
     public static final String EMAIL = "ownerEmail";
     public static final String TITLE = "title";
+    public static final DateTime START_DATE_TIME = new DateTime(2016,1,1,12,0);
 
     @Before
     public void setup(){
         repo = new InMemoryDBCreator().create(DBAvailability.class);
-        availability = new Availability(TITLE, EMAIL, NAME, STATUS);
+        availability = new Availability(TITLE, EMAIL, NAME, STATUS,null,START_DATE_TIME );
         availabilityDAO = new AvailabilityDAO(repo);
     }
 

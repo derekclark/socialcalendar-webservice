@@ -17,6 +17,7 @@ public class InMemoryDBCreator {
         JdbcDataSource dataSource = createDataSource();
         migrate(dataSource);
         dbi = new DBI(dataSource);
+        dbi.registerArgumentFactory(new DateTimeArgumentFactory());
 //        dbi.registerArgumentFactory(new LocalDateTimeArgumentFactory());
 //        dbi.registerMapper(new LocalDateTimeMapper());
     }

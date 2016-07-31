@@ -90,7 +90,7 @@ public class AvailabilityRepresentationTest {
                 "  \"ownerName\" : \""+NAME+"\"," + NEWLINE +
                 "  \"status\" : \""+STATUS+"\"," + NEWLINE +
                 "  \"sharedWithUsers\" : [ ],"+ NEWLINE +
-                "  \"startDateTime\" : \"2016-01-01:12:00\","+ NEWLINE +
+                "  \"startDateTime\" : \"2016-01-01T12:00:00GMT\","+ NEWLINE +
                 "  \"id\" : 0" + NEWLINE +
                 "}";
 

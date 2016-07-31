@@ -1,10 +1,12 @@
 package database;
 
 
+import org.joda.time.DateTime;
 import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 import representation.Availability;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -15,6 +17,9 @@ public class AvailabilityMapper implements ResultSetMapper<Availability>{
         String ownerName = r.getString("owner_name");
         String ownerEmail = r.getString("owner_email");
         String status = r.getString("status");
-        return new Availability(title, ownerEmail, ownerName, status);
+        Date startDate = r.getDate("start_date");
+        DateTime sDate = new DateTime(startDate.getTime());
+
+        return new Availability(title, ownerEmail, ownerName, status, null, sDate);
     }
 }

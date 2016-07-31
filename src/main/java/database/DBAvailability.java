@@ -6,9 +6,9 @@ import representation.Availability;
 
 @RegisterMapper(AvailabilityMapper.class)
 public interface DBAvailability {
-    @SqlUpdate("INSERT INTO AVAILABILITY (owner_name, owner_email, status, title) " +
+    @SqlUpdate("INSERT INTO AVAILABILITY (owner_name, owner_email, status, title, start_date) " +
             "VALUES (:availability.ownerName," +
-            ":availability.ownerEmail, :availability.status, :availability.title)")
+            ":availability.ownerEmail, :availability.status, :availability.title, :availability.startDateTime)")
     @GetGeneratedKeys()
     int create(@BindBean("availability") Availability availability);
 

@@ -13,7 +13,7 @@ import java.io.IOException;
 public class CustomDateSerializer extends JsonSerializer<DateTime> {
 
     private static DateTimeFormatter formatter =
-            DateTimeFormat.forPattern("yyyy-MM-dd:HH:mm");
+            DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ssz");
 
     @Override
     public void serialize(DateTime value, JsonGenerator gen,

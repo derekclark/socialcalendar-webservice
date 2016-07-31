@@ -3,6 +3,7 @@ package config;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import database.DBAvailability;
 import database.DBUser;
+import database.DateTimeArgumentFactory;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.setup.Environment;
 import org.flywaydb.core.Flyway;
@@ -24,6 +25,7 @@ public class DatabaseConfiguration extends DataSourceFactory{
 
     public AvailabilityDAO createAvailabilityRepository(Environment environment) {
         DBI dbi = getDBI(environment);
+        dbi.registerArgumentFactory(new DateTimeArgumentFactory());
         return new AvailabilityDAO(dbi.onDemand(DBAvailability.class));
     }
 

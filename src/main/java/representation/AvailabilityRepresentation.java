@@ -24,20 +24,6 @@ public class AvailabilityRepresentation {
     @JsonProperty("startDateTime")
     private DateTime startDateTime;
 
-//    @JsonCreator
-//    public AvailabilityRepresentation(@JsonProperty("title")String title,
-//                                      @JsonProperty("ownerEmail")String ownerEmail,
-//                                      @JsonProperty("ownerName")String ownerName,
-//                                      @JsonProperty("status")String status,
-//                                      @JsonProperty("sharedWithUsers") Set<User> sharedWithUsers) {
-//        this.title = title;
-//        this.ownerEmail = ownerEmail;
-//        this.ownerName = ownerName;
-//        this.status = status;
-//        this.sharedWithUsers = sharedWithUsers;
-//    }
-
-
     @JsonCreator
     public AvailabilityRepresentation(@JsonProperty("title")String title,
                                       @JsonProperty("ownerEmail")String ownerEmail,

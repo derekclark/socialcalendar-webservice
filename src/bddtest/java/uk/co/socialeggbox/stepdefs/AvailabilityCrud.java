@@ -20,8 +20,8 @@ public class AvailabilityCrud{
             "\"ownerEmail\" : \"decla\"," +
             "\"ownerName\" : \"Derek\"," +
             "\"status\" : \"status\"," +
-            "\"sharedWithUsers\" : [ ]"+
-            "  \"startDateTime\" : \"2016-01-01:12:00\"" +
+            "\"sharedWithUsers\" : [ ],"+
+            "  \"startDateTime\" : \"2016-01-01T12:00:00GMT\"" +
             "}";
     Response response;
 
