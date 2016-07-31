@@ -80,7 +80,7 @@ public class SocialEggboxEndpointV1 {
             return okOnRead(availability);
         }
         else {
-            return null;
+            return notFoundStatus();
         }
     }
 

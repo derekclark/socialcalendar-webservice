@@ -39,6 +39,7 @@ public class SocialEggboxEndpointTest {
 
     public static final String STATUS = "status";
     public static final String TITLE = "title";
+    public static final int NON_EXISTENT_ID = 9999;
     Set<User> sharedList;
     public static final DateTime START_DATE_TIME = new DateTime(2016,1,1,12,0);
     public static final DateTime END_DATE_TIME = new DateTime(2016,1,1,13,0);
@@ -174,8 +175,14 @@ public class SocialEggboxEndpointTest {
     public void getAvailabilityShouldReturn200StatusIfExists() throws IOException {
         Response response = createAvailability();
         response = endpointV1.getAvailabilityById(getIdFromResponse(response));
-
         assertEquals(HTTP_STATUS_OK, response.getStatus());
+    }
+
+    @Test
+    public void getAvailabilityShouldReturn400StatusIfNotExists() throws IOException {
+        createAvailability();
+        Response response = endpointV1.getAvailabilityById(NON_EXISTENT_ID);
+        assertEquals(HTTP_STATUS_NOT_FOUND, response.getStatus());
     }
 
     private int getIdFromResponse(Response response) {
