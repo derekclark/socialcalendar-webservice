@@ -4,7 +4,7 @@ import cucumber.api.java.After;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import representation.User;
+import representation.user.User;
 import uk.co.tpplc.http.Response;
 import uk.co.tpplc.http.SimpleHttpClient;
 import utilities.JsonUtility;

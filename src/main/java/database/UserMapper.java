@@ -2,7 +2,7 @@ package database;
 
 import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
-import representation.User;
+import representation.user.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

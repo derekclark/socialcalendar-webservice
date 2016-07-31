@@ -2,7 +2,7 @@ package uk.co.socialeggbox.stepdefs;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import representation.Availability;
+import representation.availability.Availability;
 import uk.co.tpplc.http.Response;
 import uk.co.tpplc.http.SimpleHttpClient;
 import utilities.JsonUtility;
@@ -22,7 +22,6 @@ public class AvailabilityCrud{
             "\"status\" : \"status\"," +
             "\"sharedWithUsers\" : [ ],"+
             "  \"startDateTime\" : \"2016-01-01T12:00:00\"" +
-//            "  \"startDateTime\" : null" +
             "}";
     Response response;
 

@@ -1,9 +1,10 @@
-package representation;
+package representation.availability;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.DateTime;
+import representation.user.User;
 import utilities.CustomDateSerializer;
 
 import java.util.Set;

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.dropwizard.setup.Environment;
 import org.junit.Before;
 import org.junit.Test;
-import representation.UserDAO;
+import representation.user.UserDAO;
 
 import static org.junit.Assert.assertNotNull;
 

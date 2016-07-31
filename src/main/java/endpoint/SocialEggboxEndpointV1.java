@@ -1,5 +1,11 @@
-package representation;
+package endpoint;
 
+import representation.availability.Availability;
+import representation.availability.AvailabilityDAO;
+import representation.availability.AvailabilityRepresentation;
+import representation.user.User;
+import representation.user.UserDAO;
+import representation.user.UserRepresentation;
 import utilities.JsonUtility;
 
 import javax.ws.rs.*;

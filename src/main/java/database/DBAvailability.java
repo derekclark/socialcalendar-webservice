@@ -2,7 +2,7 @@ package database;
 
 import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
-import representation.Availability;
+import representation.availability.Availability;
 
 @RegisterMapper(AvailabilityMapper.class)
 public interface DBAvailability {

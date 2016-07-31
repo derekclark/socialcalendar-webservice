@@ -9,8 +9,8 @@ import io.dropwizard.setup.Environment;
 import org.flywaydb.core.Flyway;
 import org.h2.jdbcx.JdbcDataSource;
 import org.skife.jdbi.v2.DBI;
-import representation.AvailabilityDAO;
-import representation.UserDAO;
+import representation.availability.AvailabilityDAO;
+import representation.user.UserDAO;
 
 import javax.sql.DataSource;
 

@@ -1,4 +1,4 @@
-package representation;
+package representation.user;
 
 import database.DBUser;
 

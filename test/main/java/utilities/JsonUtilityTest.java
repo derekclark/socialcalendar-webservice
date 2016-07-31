@@ -1,7 +1,7 @@
 package utilities;
 
 import org.junit.Test;
-import representation.User;
+import representation.user.User;
 
 import java.io.IOException;
 

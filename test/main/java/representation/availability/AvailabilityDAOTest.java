@@ -1,4 +1,4 @@
-package representation;
+package representation.availability;
 
 import database.DBAvailability;
 import database.InMemoryDBCreator;

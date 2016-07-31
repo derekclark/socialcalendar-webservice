@@ -3,9 +3,9 @@ package config;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
 import io.dropwizard.setup.Environment;
-import representation.AvailabilityDAO;
-import representation.SocialEggboxEndpointV1;
-import representation.UserDAO;
+import representation.availability.AvailabilityDAO;
+import endpoint.SocialEggboxEndpointV1;
+import representation.user.UserDAO;
 
 public class SocialEggboxConfiguration extends Configuration{
     @JsonProperty("database")

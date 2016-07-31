@@ -1,6 +1,7 @@
-package representation;
+package representation.availability;
 
 import org.joda.time.DateTime;
+import representation.user.User;
 
 import java.util.Set;
 

@@ -1,4 +1,4 @@
-package representation;
+package representation.user;
 
 public class User {
     private String email, name, facebookId;

@@ -4,7 +4,7 @@ package database;
 import org.joda.time.DateTime;
 import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
-import representation.Availability;
+import representation.availability.Availability;
 
 import java.sql.Date;
 import java.sql.ResultSet;

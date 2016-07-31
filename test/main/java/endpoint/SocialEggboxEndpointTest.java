@@ -1,4 +1,4 @@
-package representation;
+package endpoint;
 
 import database.DBAvailability;
 import database.DBUser;
@@ -7,6 +7,12 @@ import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import representation.availability.Availability;
+import representation.availability.AvailabilityDAO;
+import representation.availability.AvailabilityRepresentation;
+import representation.user.User;
+import representation.user.UserDAO;
+import representation.user.UserRepresentation;
 import utilities.JsonUtility;
 
 import javax.ws.rs.core.Response;

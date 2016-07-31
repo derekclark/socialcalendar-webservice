@@ -1,9 +1,10 @@
-package representation;
+package representation.availability;
 
 
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
+import representation.user.User;
 
 import java.util.HashSet;
 import java.util.Set;

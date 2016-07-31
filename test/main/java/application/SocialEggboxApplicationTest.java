@@ -7,7 +7,7 @@ import config.SocialEggboxConfiguration;
 import io.dropwizard.setup.Environment;
 import org.junit.Before;
 import org.junit.Test;
-import representation.SocialEggboxEndpointV1;
+import endpoint.SocialEggboxEndpointV1;
 
 import java.util.Set;
 

@@ -1,10 +1,11 @@
-package representation;
+package representation.availability;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.junit.Before;
 import org.junit.Test;
+import representation.user.User;
 import utilities.JsonUtility;
 
 import java.io.IOException;

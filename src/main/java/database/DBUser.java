@@ -2,7 +2,7 @@ package database;
 
 import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
-import representation.User;
+import representation.user.User;
 
 @RegisterMapper(UserMapper.class)
 
