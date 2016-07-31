@@ -24,6 +24,9 @@ public class AvailabilityRepresentation {
     private Set<User> sharedWithUsers;
     @JsonProperty("startDateTime")
     private DateTime startDateTime;
+    @JsonProperty("endDateTime")
+    private DateTime endDateTime;
+
 
     @JsonCreator
     public AvailabilityRepresentation(@JsonProperty("title")String title,
@@ -40,6 +43,22 @@ public class AvailabilityRepresentation {
         this.startDateTime = startDateTime;
     }
 
+    public AvailabilityRepresentation(@JsonProperty("title")String title,
+                                      @JsonProperty("ownerEmail")String ownerEmail,
+                                      @JsonProperty("ownerName")String ownerName,
+                                      @JsonProperty("status")String status,
+                                      @JsonProperty("sharedWithUsers") Set<User> sharedWithUsers,
+                                      @JsonProperty("startDateTime") DateTime startDateTime,
+                                      @JsonProperty("endDateTime") DateTime endDateTime) {
+        this.title = title;
+        this.ownerEmail = ownerEmail;
+        this.ownerName = ownerName;
+        this.status = status;
+        this.sharedWithUsers = sharedWithUsers;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+    }
+
 
     public AvailabilityRepresentation(Availability availability){
         this.id = availability.getId();
@@ -49,15 +68,35 @@ public class AvailabilityRepresentation {
         this.status = availability.getStatus();
         this.sharedWithUsers = availability.getSharedWithUsers();
         this.startDateTime = availability.getStartDateTime();
+        this.endDateTime = availability.getEndDateTime();
     }
 
     public Availability asAvailability() {
-        return new Availability(title, ownerEmail, ownerName, status, sharedWithUsers, startDateTime);
+        return new Availability(title, ownerEmail, ownerName, status, sharedWithUsers, startDateTime, endDateTime);
     }
 
     @JsonSerialize(using = CustomDateSerializer.class)
     public DateTime getStartDateTime() {
         return startDateTime;
+    }
+
+    @JsonSerialize(using = CustomDateSerializer.class)
+    public DateTime getEndDateTime() {
+        return endDateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "AvailabilityRepresentation{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", ownerEmail='" + ownerEmail + '\'' +
+                ", ownerName='" + ownerName + '\'' +
+                ", status='" + status + '\'' +
+                ", sharedWithUsers=" + sharedWithUsers +
+                ", startDateTime=" + startDateTime +
+                ", endDateTime=" + endDateTime +
+                '}';
     }
 
     @Override
@@ -68,6 +107,7 @@ public class AvailabilityRepresentation {
         AvailabilityRepresentation that = (AvailabilityRepresentation) o;
 
         if (id != that.id) return false;
+        if (endDateTime != null ? !endDateTime.equals(that.endDateTime) : that.endDateTime != null) return false;
         if (ownerEmail != null ? !ownerEmail.equals(that.ownerEmail) : that.ownerEmail != null) return false;
         if (ownerName != null ? !ownerName.equals(that.ownerName) : that.ownerName != null) return false;
         if (sharedWithUsers != null ? !sharedWithUsers.equals(that.sharedWithUsers) : that.sharedWithUsers != null)
@@ -89,17 +129,7 @@ public class AvailabilityRepresentation {
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (sharedWithUsers != null ? sharedWithUsers.hashCode() : 0);
         result = 31 * result + (startDateTime != null ? startDateTime.hashCode() : 0);
+        result = 31 * result + (endDateTime != null ? endDateTime.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "AvailabilityRepresentation{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", ownerEmail='" + ownerEmail + '\'' +
-                ", ownerName='" + ownerName + '\'' +
-                ", status='" + status + '\'' +
-                '}';
     }
 }

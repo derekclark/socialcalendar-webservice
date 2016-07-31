@@ -22,6 +22,7 @@ public class AvailabilityRepresentationTest {
     public static final String STATUS = "status";
     public static final String FACEBOOK_ID = "facebookId";
     public static final DateTime START_DATE_TIME = new DateTime(2016,1,1,12,0);
+    public static final DateTime END_DATE_TIME = new DateTime(2016,1,1,13,0);
 
     public static final String NEWLINE = "\n";
     AvailabilityRepresentation representation;
@@ -30,20 +31,22 @@ public class AvailabilityRepresentationTest {
 
     @Before
     public void setup(){
-        representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS, sharedList, START_DATE_TIME);
+        representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS, sharedList, START_DATE_TIME,
+                END_DATE_TIME);
     }
 
     @Test
     public void returnsAvailability(){
         Availability availability = representation.asAvailability();
         Availability expectedAvailability = new Availability(TITLE,
-                EMAIL,NAME, STATUS, sharedList, START_DATE_TIME);
+                EMAIL,NAME, STATUS, sharedList, START_DATE_TIME, END_DATE_TIME);
         assertEquals(expectedAvailability, availability);
     }
 
     @Test
     public void buildRepresentationFromAvailabilityObject(){
-        Availability availability = new Availability(TITLE, EMAIL, NAME, STATUS, sharedList, START_DATE_TIME);
+        Availability availability = new Availability(TITLE, EMAIL, NAME, STATUS, sharedList,
+                START_DATE_TIME, END_DATE_TIME);
         AvailabilityRepresentation availabilityRepresentation = new AvailabilityRepresentation(availability);
         assertEquals(availability, availabilityRepresentation.asAvailability());
     }
@@ -51,7 +54,7 @@ public class AvailabilityRepresentationTest {
     @Test
     public void shouldBeEqual(){
         AvailabilityRepresentation sameContent = new AvailabilityRepresentation(TITLE, EMAIL,
-                NAME, STATUS, sharedList, START_DATE_TIME);
+                NAME, STATUS, sharedList, START_DATE_TIME, END_DATE_TIME);
         assertEquals(sameContent, representation);
         assertEquals(representation, representation);
     }
@@ -59,15 +62,17 @@ public class AvailabilityRepresentationTest {
     @Test
     public void shouldNotBeEqual(){
         AvailabilityRepresentation differentTitle = new AvailabilityRepresentation("", EMAIL,
-                NAME, STATUS, sharedList, START_DATE_TIME);
+                NAME, STATUS, sharedList, START_DATE_TIME, END_DATE_TIME);
         AvailabilityRepresentation differentEmail = new AvailabilityRepresentation(TITLE, "",
-                NAME, STATUS, sharedList, START_DATE_TIME);
+                NAME, STATUS, sharedList, START_DATE_TIME, END_DATE_TIME);
         AvailabilityRepresentation differentName = new AvailabilityRepresentation(TITLE, EMAIL,
-                "", STATUS, sharedList, START_DATE_TIME);
+                "", STATUS, sharedList, START_DATE_TIME, END_DATE_TIME);
         AvailabilityRepresentation differentStatus = new AvailabilityRepresentation(TITLE, EMAIL,
-                NAME, "", sharedList, START_DATE_TIME);
+                NAME, "", sharedList, START_DATE_TIME, END_DATE_TIME);
         AvailabilityRepresentation differentStartDate = new AvailabilityRepresentation(TITLE, EMAIL,
-                NAME, STATUS, sharedList, null);
+                NAME, STATUS, sharedList, null, END_DATE_TIME);
+        AvailabilityRepresentation differentEndDate = new AvailabilityRepresentation(TITLE, EMAIL,
+                NAME, STATUS, sharedList, START_DATE_TIME, null);
 
         Set<User> differentSharedList = new HashSet<User>();
         differentSharedList.add(new User(EMAIL, NAME, FACEBOOK_ID));
@@ -81,6 +86,7 @@ public class AvailabilityRepresentationTest {
         assertNotEquals(differentStatus, representation);
         assertNotEquals(differentSharedUsers, representation);
         assertNotEquals(differentStartDate, representation);
+        assertNotEquals(differentEndDate, representation);
         assertNotEquals("", representation);
         assertNotEquals(null, representation);
     }
@@ -91,6 +97,8 @@ public class AvailabilityRepresentationTest {
                 DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
 
         String startDateTime = formatter.print(START_DATE_TIME);
+        String endDateTime = formatter.print(END_DATE_TIME);
+
         String expectedJson = "{" + NEWLINE +
                 "  \"title\" : \""+TITLE+"\"," + NEWLINE +
                 "  \"ownerEmail\" : \""+EMAIL+"\"," + NEWLINE +
@@ -98,10 +106,12 @@ public class AvailabilityRepresentationTest {
                 "  \"status\" : \""+STATUS+"\"," + NEWLINE +
                 "  \"sharedWithUsers\" : [ ],"+ NEWLINE +
                 "  \"startDateTime\" : \""+startDateTime+"\","+ NEWLINE +
+                "  \"endDateTime\" : \""+endDateTime+"\","+ NEWLINE +
                 "  \"id\" : 0" + NEWLINE +
                 "}";
 
-        Availability availability = new Availability(TITLE, EMAIL, NAME, STATUS, sharedList, START_DATE_TIME);
+        Availability availability = new Availability(TITLE, EMAIL, NAME, STATUS, sharedList,
+                START_DATE_TIME, END_DATE_TIME);
         AvailabilityRepresentation representation = new AvailabilityRepresentation(availability);
         String actualJson = new JsonUtility().toJson(representation);
         assertEquals(expectedJson, actualJson);
