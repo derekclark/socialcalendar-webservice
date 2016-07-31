@@ -1,6 +1,8 @@
 package representation;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.Before;
 import org.junit.Test;
 import utilities.JsonUtility;
@@ -84,13 +86,17 @@ public class AvailabilityRepresentationTest {
 
     @Test
     public void testJsonRepresentation() throws IOException {
+        DateTimeFormatter formatter =
+                DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ssz");
+
+        String startDateTime = formatter.print(START_DATE_TIME);
         String expectedJson = "{" + NEWLINE +
                 "  \"title\" : \""+TITLE+"\"," + NEWLINE +
                 "  \"ownerEmail\" : \""+EMAIL+"\"," + NEWLINE +
                 "  \"ownerName\" : \""+NAME+"\"," + NEWLINE +
                 "  \"status\" : \""+STATUS+"\"," + NEWLINE +
                 "  \"sharedWithUsers\" : [ ],"+ NEWLINE +
-                "  \"startDateTime\" : \"2016-01-01T12:00:00GMT\","+ NEWLINE +
+                "  \"startDateTime\" : \""+startDateTime+"\","+ NEWLINE +
                 "  \"id\" : 0" + NEWLINE +
                 "}";
 
