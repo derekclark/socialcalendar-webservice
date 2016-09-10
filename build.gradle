@@ -135,17 +135,18 @@ task cucumber(type: JavaExec){
             "-DserverUrl=${hostname()}:9000",
             "-DrunInMemory=${runInMemory}"
     ]
-    args = [
-            '-p',
-            'pretty',
-            '-p',
-            'json:build/reports/cucumberResults.json',
-            '--glue',
-            'uk.co.socialeggbox.stepdefs',
-            'src/bddtest/resources',
-            '--tags',
-            '~@wip'
-    ]
+        def tempArgs = []
+        tempArgs.addAll('-p', 'pretty', '-p', 'json:build/reports/cucumberResults.json')
+        tempArgs.addAll('--glue', 'uk.co.socialeggbox.stepdefs')
+        tempArgs.add('src/bddtest/resources')
+        if (project.hasProperty('cucumberTags')) {
+	       String[] tags = project.property('cucumberTags').split(',')
+               for (tag in tags) {
+	               tempArgs.addAll(['--tags    ', tag]);
+	       }
+        }
+        println("args=" + "${tempArgs}")
+        args = tempArgs
 }
 
 
