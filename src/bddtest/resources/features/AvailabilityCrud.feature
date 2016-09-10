@@ -1,5 +1,6 @@
 Feature: Availability CRUD
 
+  @availability
   Scenario: Create a new Availability
     Given a request is made to create an availability
     Then http code status should be 200
