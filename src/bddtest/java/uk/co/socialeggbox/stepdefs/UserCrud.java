@@ -64,4 +64,17 @@ public class UserCrud {
         response = new SimpleHttpClient().get(URL+email);
         assertEquals(HTTP_STATUS_NOT_FOUND, response.getStatus());
     }
+
+    @Given("^a request is made to save user with email \"(.*?)\", name \"(.*?)\" and facebookId \"(.*?)\"$")
+    public void a_request_is_made_to_save_user_with_email_name_and_facebookId(String email,
+                                                                              String name,
+                                                                              String facebookId) throws Throwable {
+        String payload = "{\n" +
+                "  \"email\" : \""+email+"\",\n" +
+                "  \"name\" : \""+name+"\",\n" +
+                "  \"facebookId\" : \""+facebookId+"\"\n" +
+                "}";
+
+        response = new SimpleHttpClient().post(URL, payload);
+    }
 }

@@ -112,7 +112,7 @@ public class SocialEggboxEndpointV1 {
     private Response okUserSave(UserRepresentation userRepresentation) throws IOException {
         User user = userRepresentation.asUser();
         userRepository.save(user);
-        return Response.status(HTTP_STATUS_OK).entity(user).build();
+        return Response.status(HTTP_STATUS_OK).entity(marshall(user)).build();
     }
 
     private Response okAvailabilitySave(AvailabilityRepresentation representation) throws IOException {
