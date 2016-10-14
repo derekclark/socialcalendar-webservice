@@ -52,6 +52,9 @@ public class SocialEggboxEndpointTest {
     User savedUser = new User(EMAIL, NAME, FACEBOOK_ID);
     User user = new User(EMAIL, NAME, FACEBOOK_ID);
     UserRepresentation userRepresentation;
+    Availability availability = new Availability(1,TITLE, EMAIL, NAME, STATUS, null, START_DATE_TIME, END_DATE_TIME);
+    AvailabilityRepresentation availabilityRepresentation;
+
 
     @Before
     public void setup(){
@@ -61,6 +64,7 @@ public class SocialEggboxEndpointTest {
         endpointV1 = new SocialEggboxEndpointV1(getUserDAO(),getAvailabilityDAO());
         userRepresentation = new UserRepresentation(user);
 
+        availabilityRepresentation = new AvailabilityRepresentation(availability);
         Set<User> sharedList = new HashSet<User>();
         sharedList.add(new User(EMAIL, NAME, FACEBOOK_ID));
 
@@ -126,8 +130,15 @@ public class SocialEggboxEndpointTest {
     @Test
     public void shouldReturnSavedUserPayload() throws IOException {
         Response response = endpointV1.saveUser(userRepresentation);
-        assertEquals(user, response.getEntity());
+        String expectedPayload = "{" + "\n" +
+                "  \"email\" : \"email\"," + "\n" +
+                "  \"name\" : \"name\"," + "\n" +
+                "  \"facebookId\" : \"facebookId\"" + "\n" +
+                "}";
+
+        assertEquals(expectedPayload, response.getEntity());
     }
+
 
     @Test
     public void checkUserIsSaved() throws IOException {
@@ -185,6 +196,25 @@ public class SocialEggboxEndpointTest {
         Response response = endpointV1.getAvailabilityById(NON_EXISTENT_ID);
         assertEquals(HTTP_STATUS_NOT_FOUND, response.getStatus());
     }
+
+    @Test
+    public void shouldReturnSavedAvailabilityPayload() throws IOException {
+        Response response = endpointV1.createAvailability(availabilityRepresentation);
+        String expectedPayload = "{" + "\n" +
+                "  \"title\" : \"title\"," + "\n" +
+                "  \"ownerEmail\" : \"email\","+ "\n" +
+                "  \"ownerName\" : \"name\","+ "\n" +
+                "  \"status\" : \"status\"," + "\n" +
+                "  \"sharedWithUsers\" : null," + "\n" +
+                "  \"startDateTime\" : \"2016-01-01T12:00:00.000\","+ "\n" +
+                "  \"endDateTime\" : \"2016-01-01T13:00:00.000\","+ "\n" +
+                "  \"id\" : 1"+ "\n" +
+                "}";
+
+        assertEquals(expectedPayload, response.getEntity());
+    }
+
+
 
     private int getIdFromResponse(Response response) {
         AvailabilityRepresentation representation = (AvailabilityRepresentation) response.getEntity();

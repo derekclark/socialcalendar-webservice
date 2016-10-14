@@ -44,6 +44,7 @@ public class AvailabilityDAOTest {
     @Test
     public void canRetrieveAvailabilityById(){
         int id = availabilityDAO.save(availability);
+        availability.setId(id);
         Availability retrievedAvailability = availabilityDAO.read(id);
         assertEquals(availability, retrievedAvailability);
     }

@@ -46,23 +46,26 @@ public class AvailabilityCrud{
     }
 
     @Then("^http code status should be (\\d+)$")
-    public void http_code_status_should_be(int arg1) throws Throwable {
-        assertEquals(HTTP_STATUS_OK,response.getStatus());
+    public void http_code_status_should_be(int expectedStatus) throws Throwable {
+        assertEquals(expectedStatus, response.getStatus());
     }
 
     @Then("^the payload is returned for the availability$")
     public void the_payload_is_returned_for_the_availability() throws Throwable {
         String expectedPayload = "{\n" +
-                "  \"id\" : "+id+ "\",\n" +
                 "  \"title\" : \"" + TITLE + "\",\n" +
                 "  \"ownerEmail\" : \"" + EMAIL + "\",\n" +
                 "  \"ownerName\" : \"" + NAME + "\",\n" +
                 "  \"status\" : \""+STATUS+"\",\n" +
                 "  \"sharedWithUsers\" : null,\n"+
                 "  \"startDateTime\" : \"" + START_DATE_TIME + "\",\n" +
-                "  \"endDateTime\" : \"" + END_DATE_TIME + "\"\n" +
+                "  \"endDateTime\" : \"" + END_DATE_TIME + "\",\n" +
+                "  \"id\" : "+id+ "\n" +
                 "}";
 
+        System.out.println("**********************************CHECKS");
+        System.out.println(expectedPayload);
+        System.out.println(response.getBody());
         assertEquals(expectedPayload, response.getBody());
     }
 

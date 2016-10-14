@@ -77,11 +77,20 @@ public class SocialEggboxEndpointV1 {
     public Response getAvailabilityById(@PathParam("id") int id) {
         Availability availability = availabilityRepository.read(id);
         if (availability != null){
-            return okOnRead(availability);
+            return okOnAvailabilityRead(availability);
         }
         else {
             return notFoundStatus();
         }
+    }
+
+    private Response okOnAvailabilityRead(Availability availability){
+        try {
+            return Response.status(HTTP_STATUS_OK).entity(marshall(new AvailabilityRepresentation(availability))).build();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private <T> Response okOnRead(T clazz){
@@ -123,7 +132,7 @@ public class SocialEggboxEndpointV1 {
         int id = availabilityRepository.save(availability);
         Availability availabilityDecoratedWithNewId = decorateAvailabilityWithSavedId(availability, id);
         return Response.status(HTTP_STATUS_OK).entity
-                (new AvailabilityRepresentation(availabilityDecoratedWithNewId)).build();
+                (marshall(new AvailabilityRepresentation(availabilityDecoratedWithNewId))).build();
     }
 
     private Availability decorateAvailabilityWithSavedId(Availability availability, int id) {
