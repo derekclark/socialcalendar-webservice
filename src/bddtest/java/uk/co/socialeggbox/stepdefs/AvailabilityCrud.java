@@ -52,15 +52,15 @@ public class AvailabilityCrud{
 
     @Then("^the payload is returned for the availability$")
     public void the_payload_is_returned_for_the_availability() throws Throwable {
-        String expectedPayload = "{" +
-                "\"title\":\"" + TITLE + "\"," +
-                "\"ownerEmail\":\"" + EMAIL + "\"," +
-                "\"ownerName\":\"" + NAME + "\"," +
-                "\"status\":\""+STATUS+"\"," +
-                "\"sharedWithUsers\":null,"+
-                "\"startDateTime\":\"" + START_DATE_TIME + "\"," +
-                "\"endDateTime\":\"" + END_DATE_TIME + "\"," +
-                "\"id\":"+id+
+        String expectedPayload = "{\n" +
+                "  \"id\" : "+id+ "\",\n" +
+                "  \"title\" : \"" + TITLE + "\",\n" +
+                "  \"ownerEmail\" : \"" + EMAIL + "\",\n" +
+                "  \"ownerName\" : \"" + NAME + "\",\n" +
+                "  \"status\" : \""+STATUS+"\",\n" +
+                "  \"sharedWithUsers\" : null,\n"+
+                "  \"startDateTime\" : \"" + START_DATE_TIME + "\",\n" +
+                "  \"endDateTime\" : \"" + END_DATE_TIME + "\"\n" +
                 "}";
 
         assertEquals(expectedPayload, response.getBody());

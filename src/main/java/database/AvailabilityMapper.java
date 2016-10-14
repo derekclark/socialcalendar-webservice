@@ -20,8 +20,9 @@ public class AvailabilityMapper implements ResultSetMapper<Availability>{
 
         DateTime sDate = getDateTime(r, "start_date");
         DateTime eDate = getDateTime(r, "end_date");
+        int id = r.getInt("id");
 
-        return new Availability(title, ownerEmail, ownerName, status, null, sDate, eDate);
+        return new Availability(id, title, ownerEmail, ownerName, status, null, sDate, eDate);
     }
 
     private DateTime getDateTime(ResultSet r, String dateDescription) throws SQLException {
