@@ -63,9 +63,6 @@ public class AvailabilityCrud{
                 "  \"id\" : "+id+ "\n" +
                 "}";
 
-        System.out.println("**********************************CHECKS");
-        System.out.println(expectedPayload);
-        System.out.println(response.getBody());
         assertEquals(expectedPayload, response.getBody());
     }
 
