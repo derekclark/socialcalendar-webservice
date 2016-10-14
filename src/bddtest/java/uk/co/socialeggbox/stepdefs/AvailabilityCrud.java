@@ -1,14 +1,15 @@
 package uk.co.socialeggbox.stepdefs;
 
+
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.http.HttpResponse;
 import representation.availability.AvailabilityRepresentation;
-import uk.co.tpplc.http.Response;
-import uk.co.tpplc.http.SimpleHttpClient;
 import utilities.JsonUtility;
 
 import static org.junit.Assert.assertEquals;
+import static uk.co.socialeggbox.stepdefs.HttpCall.*;
 
 public class AvailabilityCrud{
     public static final String STATUS = "status";
@@ -30,7 +31,8 @@ public class AvailabilityCrud{
             "}";
 
 
-    Response response;
+    HttpResponse httpResponse;
+    String responseBody;
     int id;
 
     @Given("^a request is made to create an availability$")
@@ -39,16 +41,19 @@ public class AvailabilityCrud{
     }
 
     private void postAvailability() throws java.io.IOException {
-        response = new SimpleHttpClient().post(URL, PAYLOAD);
+        httpResponse = post(URL, PAYLOAD);
+        responseBody = new HttpCall().getResponseBody(httpResponse);
         AvailabilityRepresentation representation =
-                new JsonUtility().unMarshallJson(response.getBody(), AvailabilityRepresentation.class);
+                new JsonUtility().unMarshallJson(responseBody,
+                        AvailabilityRepresentation.class);
         id = representation.getId();
     }
 
     @Then("^http code status should be (\\d+)$")
     public void http_code_status_should_be(int expectedStatus) throws Throwable {
-        assertEquals(expectedStatus, response.getStatus());
+        assertEquals(expectedStatus, getResponseCode(httpResponse));
     }
+
 
     @Then("^the payload is returned for the availability$")
     public void the_payload_is_returned_for_the_availability() throws Throwable {
@@ -63,7 +68,7 @@ public class AvailabilityCrud{
                 "  \"id\" : "+id+ "\n" +
                 "}";
 
-        assertEquals(expectedPayload, response.getBody());
+        assertEquals(expectedPayload, responseBody);
     }
 
     @Given("^an availability exists$")
@@ -73,6 +78,11 @@ public class AvailabilityCrud{
 
     @When("^a request is made to get that availability$")
     public void a_request_is_made_to_get_that_availability() throws Throwable {
-        response = new SimpleHttpClient().get(URL + id);
+        httpResponse = get(URL + id);
     }
+
+
+
+
+
 }

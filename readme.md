@@ -188,3 +188,8 @@ public class CustomDateSerializer extends JsonSerializer<DateTime> {
     }
 }
 ```
+
+## TO DO LIST
+share availability with a user
+share availability with multiple users
+

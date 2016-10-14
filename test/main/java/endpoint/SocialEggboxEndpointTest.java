@@ -4,6 +4,7 @@ import database.DBAvailability;
 import database.DBUser;
 import database.InMemoryDBCreator;
 import org.joda.time.DateTime;
+import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -174,7 +175,7 @@ public class SocialEggboxEndpointTest {
         Availability expectedAvailability = new Availability(getIdFromResponse(response),TITLE,EMAIL,NAME,STATUS,
                 null, START_DATE_TIME, END_DATE_TIME);
         AvailabilityRepresentation expectedRepresentation = new AvailabilityRepresentation(expectedAvailability);
-        assertEquals(expectedRepresentation, response.getEntity());
+        assertEquals(new JsonUtility().toJson(expectedRepresentation), response.getEntity());
     }
 
     @Test
@@ -186,6 +187,7 @@ public class SocialEggboxEndpointTest {
     @Test
     public void getAvailabilityShouldReturn200StatusIfExists() throws IOException {
         Response response = createAvailability();
+        System.out.println(getIdFromResponse(response));
         response = endpointV1.getAvailabilityById(getIdFromResponse(response));
         assertEquals(HTTP_STATUS_OK, response.getStatus());
     }
@@ -214,11 +216,9 @@ public class SocialEggboxEndpointTest {
         assertEquals(expectedPayload, response.getEntity());
     }
 
-
-
     private int getIdFromResponse(Response response) {
-        AvailabilityRepresentation representation = (AvailabilityRepresentation) response.getEntity();
-        return representation.getId();
+        JSONObject obj = new JSONObject(response.getEntity().toString());
+        return (Integer) (obj.get("id"));
     }
 
     private Response createAvailability() throws IOException {
