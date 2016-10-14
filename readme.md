@@ -2,6 +2,8 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/derekclark/socialcalendar-webservice/badge.svg?branch=master)](https://coveralls.io/github/derekclark/socialcalendar-webservice?branch=master)
 
+[![Coverage Status](https://travis-ci.org/derekclark/socialcalendar-webservice.svg?branch=master)](https://travis-ci.org/derekclark/socialcalendar-webservice.svg?branch=master)
+
 This service uses the dropwizard framework. See [here] (http://www.dropwizard.io/0.9.3/docs/getting-started.html) as to how to get started with dropwizard.
 
 
