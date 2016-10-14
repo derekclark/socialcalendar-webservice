@@ -1,5 +1,7 @@
 [![Dependency Status](https://www.versioneye.com/user/projects/5800a283a23d52004d0e29e9/badge.svg)](https://www.versioneye.com/user/projects/5800a283a23d52004d0e29e9)
 
+[![Coverage Status](https://coveralls.io/repos/github/derekclark/socialcalendar-webservice/badge.svg?branch=master)](https://coveralls.io/github/derekclark/socialcalendar-webservice?branch=master)
+
 This service uses the dropwizard framework. See [here] (http://www.dropwizard.io/0.9.3/docs/getting-started.html) as to how to get started with dropwizard.
 
 
