@@ -2,6 +2,7 @@ package uk.co.socialeggbox.stepdefs;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import representation.availability.AvailabilityRepresentation;
 import uk.co.tpplc.http.Response;
 import uk.co.tpplc.http.SimpleHttpClient;
@@ -34,8 +35,13 @@ public class AvailabilityCrud{
 
     @Given("^a request is made to create an availability$")
     public void a_request_is_made_to_create_an_availability() throws Throwable {
+        postAvailability();
+    }
+
+    private void postAvailability() throws java.io.IOException {
         response = new SimpleHttpClient().post(URL, PAYLOAD);
-        AvailabilityRepresentation representation = new JsonUtility().unMarshallJson(response.getBody(), AvailabilityRepresentation.class);
+        AvailabilityRepresentation representation =
+                new JsonUtility().unMarshallJson(response.getBody(), AvailabilityRepresentation.class);
         id = representation.getId();
     }
 
@@ -58,5 +64,15 @@ public class AvailabilityCrud{
                 "}";
 
         assertEquals(expectedPayload, response.getBody());
+    }
+
+    @Given("^an availability exists$")
+    public void an_availability_exists() throws Throwable {
+        postAvailability();
+    }
+
+    @When("^a request is made to get that availability$")
+    public void a_request_is_made_to_get_that_availability() throws Throwable {
+        response = new SimpleHttpClient().get(URL + id);
     }
 }
