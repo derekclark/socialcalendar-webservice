@@ -14,7 +14,6 @@ import representation.availability.AvailabilityRepresentation;
 import representation.user.User;
 import representation.user.UserDAO;
 import representation.user.UserRepresentation;
-import utilities.JsonUtility;
 
 import javax.ws.rs.core.Response;
 import java.io.IOException;
@@ -23,6 +22,7 @@ import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static utilities.JsonUtility.toJson;
 
 public class SocialEggboxEndpointTest {
     public static final int HTTP_STATUS_OK = 200;
@@ -146,7 +146,7 @@ public class SocialEggboxEndpointTest {
         endpointV1.saveUser(userRepresentation);
         Response response = endpointV1.getUserById(EMAIL);
         assertEquals(HTTP_STATUS_OK, response.getStatus());
-        String expectedPayload = new JsonUtility().toJson(user);
+        String expectedPayload = toJson(user);
         assertEquals(expectedPayload, response.getEntity());
     }
 
@@ -175,7 +175,7 @@ public class SocialEggboxEndpointTest {
         Availability expectedAvailability = new Availability(getIdFromResponse(response),TITLE,EMAIL,NAME,STATUS,
                 null, START_DATE_TIME, END_DATE_TIME);
         AvailabilityRepresentation expectedRepresentation = new AvailabilityRepresentation(expectedAvailability);
-        assertEquals(new JsonUtility().toJson(expectedRepresentation), response.getEntity());
+        assertEquals(toJson(expectedRepresentation), response.getEntity());
     }
 
     @Test

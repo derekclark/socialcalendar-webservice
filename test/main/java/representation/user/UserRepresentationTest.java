@@ -2,12 +2,12 @@ package representation.user;
 
 import org.junit.Before;
 import org.junit.Test;
-import utilities.JsonUtility;
 
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static utilities.JsonUtility.toJson;
 
 public class UserRepresentationTest {
     public static final String EMAIL = "email";
@@ -42,7 +42,7 @@ public class UserRepresentationTest {
                 "  \"facebookId\" : \""+FACEBOOK_ID+"\"" + NEWLINE +
                 "}";
         UserRepresentation representation = new UserRepresentation(user);
-        String actualJson = new JsonUtility().toJson(representation);
+        String actualJson = toJson(representation);
         assertEquals(expectedJson, actualJson);
     }
 

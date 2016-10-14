@@ -6,10 +6,10 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.http.HttpResponse;
 import representation.availability.AvailabilityRepresentation;
-import utilities.JsonUtility;
 
 import static org.junit.Assert.assertEquals;
 import static uk.co.socialeggbox.stepdefs.HttpCall.*;
+import static utilities.JsonUtility.unMarshallJson;
 
 public class AvailabilityCrud{
     public static final String STATUS = "status";
@@ -44,7 +44,7 @@ public class AvailabilityCrud{
         httpResponse = post(URL, PAYLOAD);
         responseBody = new HttpCall().getResponseBody(httpResponse);
         AvailabilityRepresentation representation =
-                new JsonUtility().unMarshallJson(responseBody,
+                unMarshallJson(responseBody,
                         AvailabilityRepresentation.class);
         id = representation.getId();
     }

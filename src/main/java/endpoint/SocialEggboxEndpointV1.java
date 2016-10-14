@@ -6,11 +6,12 @@ import representation.availability.AvailabilityRepresentation;
 import representation.user.User;
 import representation.user.UserDAO;
 import representation.user.UserRepresentation;
-import utilities.JsonUtility;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+
+import static utilities.JsonUtility.toJson;
 
 @Path("/social/v1/")
 @Produces("application/json")
@@ -94,7 +95,7 @@ public class SocialEggboxEndpointV1 {
     }
 
     private <T> String marshall(T clazz) throws IOException {
-        return new JsonUtility().toJson(clazz);
+        return toJson(clazz);
     }
 
     private Response notFoundStatus(){

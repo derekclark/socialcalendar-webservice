@@ -6,7 +6,6 @@ import org.joda.time.format.DateTimeFormatter;
 import org.junit.Before;
 import org.junit.Test;
 import representation.user.User;
-import utilities.JsonUtility;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -14,6 +13,7 @@ import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static utilities.JsonUtility.toJson;
 
 public class AvailabilityRepresentationTest {
     public static final String TITLE = "title";
@@ -113,7 +113,7 @@ public class AvailabilityRepresentationTest {
         Availability availability = new Availability(TITLE, EMAIL, NAME, STATUS, sharedList,
                 START_DATE_TIME, END_DATE_TIME);
         AvailabilityRepresentation representation = new AvailabilityRepresentation(availability);
-        String actualJson = new JsonUtility().toJson(representation);
+        String actualJson = toJson(representation);
         assertEquals(expectedJson, actualJson);
     }
 

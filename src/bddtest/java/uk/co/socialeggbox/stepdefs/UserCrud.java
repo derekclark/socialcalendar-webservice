@@ -6,10 +6,10 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.http.HttpResponse;
 import representation.user.User;
-import utilities.JsonUtility;
 
 import static org.junit.Assert.assertEquals;
 import static uk.co.socialeggbox.stepdefs.HttpCall.*;
+import static utilities.JsonUtility.toJson;
 
 public class UserCrud {
     public static final String URL = "http://localhost:9000/social/v1/user/";
@@ -32,7 +32,7 @@ public class UserCrud {
     @Given("^user exists with email \"(.*?)\", name \"(.*?)\" and facebookId \"(.*?)\"$")
     public void user_exists_with_email_name_and_facebookId(String email,
                                                            String name, String facebookId) throws Throwable {
-        httpResponse = post(URL, new JsonUtility().toJson(new User(email, name, facebookId)));
+        httpResponse = post(URL, toJson(new User(email, name, facebookId)));
         assertEquals(HTTP_STATUS_OK, getResponseCode(httpResponse));
     }
 
