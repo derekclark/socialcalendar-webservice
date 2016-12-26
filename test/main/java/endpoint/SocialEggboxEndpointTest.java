@@ -56,7 +56,6 @@ public class SocialEggboxEndpointTest {
     Availability availability = new Availability(1,TITLE, EMAIL, NAME, STATUS, null, START_DATE_TIME, END_DATE_TIME);
     AvailabilityRepresentation availabilityRepresentation;
 
-
     @Before
     public void setup(){
         userRepo = new InMemoryDBCreator().create(DBUser.class);
@@ -68,20 +67,6 @@ public class SocialEggboxEndpointTest {
         availabilityRepresentation = new AvailabilityRepresentation(availability);
         Set<User> sharedList = new HashSet<User>();
         sharedList.add(new User(EMAIL, NAME, FACEBOOK_ID));
-
-    }
-
-    private void saveUser(User user){
-        userRepo.create(user);
-    }
-
-    private UserDAO getUserDAO() {
-        return new UserDAO(userRepo);
-    }
-
-    private AvailabilityDAO getAvailabilityDAO(){
-        return new AvailabilityDAO(availabilityRepo);
-
     }
 
     @After
@@ -140,18 +125,8 @@ public class SocialEggboxEndpointTest {
         assertEquals(expectedPayload, response.getEntity());
     }
 
-
     @Test
-    public void checkUserIsSaved() throws IOException {
-        endpointV1.saveUser(userRepresentation);
-        Response response = endpointV1.getUserById(EMAIL);
-        assertEquals(HTTP_STATUS_OK, response.getStatus());
-        String expectedPayload = toJson(user);
-        assertEquals(expectedPayload, response.getEntity());
-    }
-
-    @Test
-    public void deleteExistingUserShouldReturn200Status(){
+    public void deleteUserShouldReturn200Status(){
         saveUser(savedUser);
         Response response = endpointV1.deleteUser(EMAIL);
         assertEquals(HTTP_STATUS_OK, response.getStatus());
@@ -227,4 +202,16 @@ public class SocialEggboxEndpointTest {
         return endpointV1.createAvailability(representation);
     }
 
+    private void saveUser(User user){
+        userRepo.create(user);
+    }
+
+    private UserDAO getUserDAO() {
+        return new UserDAO(userRepo);
+    }
+
+    private AvailabilityDAO getAvailabilityDAO(){
+        return new AvailabilityDAO(availabilityRepo);
+
+    }
 }
