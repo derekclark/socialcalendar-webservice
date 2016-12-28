@@ -12,18 +12,22 @@ import java.util.EnumSet;
 public class SocialEggboxApplication  extends Application<SocialEggboxConfiguration> {
     public void run(SocialEggboxConfiguration config, Environment environment) {
         environment.jersey().register(config.createEndpointV1(environment));
-        enableCORSHeaders(environment);
+        allowAccessForAll(environment);
     }
 
-    private void enableCORSHeaders(Environment environment) {
-        final FilterRegistration.Dynamic cors =
-                environment.servlets().addFilter("CORS", CrossOriginFilter.class);
+    private void allowAccessForAll(Environment environment) {
+        FilterRegistration.Dynamic filter = environment.servlets().addFilter(
+                "CORS", CrossOriginFilter.class);
+        filter.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM,
+                "GET");
+        filter.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");
+        filter.setInitParameter(
+                CrossOriginFilter.ACCESS_CONTROL_ALLOW_ORIGIN_HEADER, "*");
+        filter.setInitParameter("allowedHeaders",
+                "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin");
+        filter.setInitParameter("allowCredentials", "true");
 
-        cors.setInitParameter("allowedOrigins", "*");
-        cors.setInitParameter("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin");
-        cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
-        
-        cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+        filter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
     }
 
     public static void main(String[] args) throws Exception{

@@ -29,14 +29,6 @@ public class SocialEggboxEndpointV1 {
         this.availabilityRepository = availabilityRepository;
     }
 
-    @OPTIONS
-    @Path("availability")
-    public Response getOptions(){
-        return Response.status(HTTP_STATUS_OK).header("Access-Control-Allow-Methods","GET,HEAD,OPTIONS,POST,PUT")
-                .header("Access-Control-Allow-Origin","*")
-                .entity(null).build();
-    }
-
     @GET
     @Path("user/{id}")
     public Response getUserById(@PathParam("id") String userId) {

@@ -191,25 +191,6 @@ public class SocialEggboxEndpointTest {
         assertEquals(expectedPayload, response.getEntity());
     }
 
-    @Test
-    public void shouldReturnOptions(){
-        Response response = endpointV1.getOptions();
-        shouldAllowAccessForAllMethods(response);
-        shouldAllowAccessFromAnyOrigin(response);
-    }
-
-    private boolean shouldAllowAccessForAllMethods(Response response){
-        String methodsAllowed = response.getHeaderString("Access-Control-Allow-Methods");
-        assertEquals(methodsAllowed, "GET,HEAD,OPTIONS,POST,PUT");
-        return true;
-    }
-
-    private boolean shouldAllowAccessFromAnyOrigin(Response response){
-        String originAllowed = response.getHeaderString("Access-Control-Allow-Origin");
-        assertEquals(originAllowed, "*");
-        return true;
-    }
-
     private int getIdFromResponse(Response response) {
         JSONObject obj = new JSONObject(response.getEntity().toString());
         return (Integer) (obj.get("id"));
