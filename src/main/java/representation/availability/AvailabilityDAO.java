@@ -2,7 +2,7 @@ package representation.availability;
 
 import database.DBAvailability;
 
-import javax.ws.rs.core.Response;
+import java.util.List;
 
 public class AvailabilityDAO {
     private DBAvailability dbAvailability;
@@ -23,7 +23,7 @@ public class AvailabilityDAO {
         return dbAvailability.deleteById(id);
     }
 
-    public Response getMyAvailabilities(String userId) {
+    public List<Availability> getMyAvailabilities(String userId) {
         return null;
     }
 }

@@ -210,6 +210,7 @@ public class SocialEggboxEndpointTest {
     private boolean returnsMyExpectedAvailabilities(Response response) throws IOException {
         String expectedPayload = serializeList(expectedAvailabilityList);
         assertEquals(expectedPayload, response.getEntity());
+        assertEquals(200, response.getStatus());
         return true;
     }
 
@@ -230,8 +231,8 @@ public class SocialEggboxEndpointTest {
         expectedAvailabilityList.add(availability2);
 
         serializeList(expectedAvailabilityList);
-        Response expectedResponse = Response.status(200).entity(toJson(expectedAvailabilityList)).build();
-        when(mockedAvailabilityDAO.getMyAvailabilities(anyString())).thenReturn(expectedResponse);
+
+        when(mockedAvailabilityDAO.getMyAvailabilities(anyString())).thenReturn(expectedAvailabilityList);
 
         endpointV1 = new SocialEggboxEndpointV1(getUserDAO(),mockedAvailabilityDAO);
     }

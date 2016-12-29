@@ -10,6 +10,7 @@ import representation.user.UserRepresentation;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.util.List;
 
 import static utilities.JsonUtility.toJson;
 
@@ -88,7 +89,13 @@ public class SocialEggboxEndpointV1 {
     @GET
     @Path("availability/{userId}")
     public Response getMyAvailabilities(@PathParam("userId") String userId) {
-        return availabilityRepository.getMyAvailabilities(userId);
+        List<Availability> list = availabilityRepository.getMyAvailabilities(userId);
+        try {
+            return Response.status(HTTP_STATUS_OK).entity(marshall(list)).build();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private <T> Response okOnRead(T clazz){
