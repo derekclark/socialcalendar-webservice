@@ -17,11 +17,17 @@ import representation.user.UserRepresentation;
 
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static utilities.JsonUtility.toJson;
 
 public class SocialEggboxEndpointTest {
@@ -41,6 +47,7 @@ public class SocialEggboxEndpointTest {
     public static final String STATUS = "status";
     public static final String TITLE = "title";
     public static final int NON_EXISTENT_ID = 9999;
+    public static final String ME = "me";
     Set<User> sharedList;
     public static final DateTime START_DATE_TIME = new DateTime(2016,1,1,12,0);
     public static final DateTime END_DATE_TIME = new DateTime(2016,1,1,13,0);
@@ -189,6 +196,50 @@ public class SocialEggboxEndpointTest {
                 "}";
 
         assertEquals(expectedPayload, response.getEntity());
+    }
+
+    @Test
+    public void shouldReturnMyAvailabilities() throws IOException {
+        mockAvailabilityListResponse();
+        Response response = endpointV1.getMyAvailabilities(ME);
+        assertTrue(returnsMyExpectedAvailabilities(response));
+    }
+
+    private boolean returnsMyExpectedAvailabilities(Response response){
+        String expectedPayload = "[ {\n" +
+                "  \"id\" : 1,\n" +
+                "  \"title\" : \"title\",\n" +
+                "  \"ownerEmail\" : \"email\",\n" +
+                "  \"ownerName\" : \"name\",\n" +
+                "  \"status\" : null,\n" +
+                "  \"sharedWithUsers\" : null,\n" +
+                "  \"startDateTime\" : null,\n" +
+                "  \"endDateTime\" : null\n" +
+                "}, {\n" +
+                "  \"id\" : 2,\n" +
+                "  \"title\" : \"title\",\n" +
+                "  \"ownerEmail\" : \"email\",\n" +
+                "  \"ownerName\" : \"name\",\n" +
+                "  \"status\" : null,\n" +
+                "  \"sharedWithUsers\" : null,\n" +
+                "  \"startDateTime\" : null,\n" +
+                "  \"endDateTime\" : null\n" +
+                "} ]";
+        assertEquals(expectedPayload, response.getEntity());
+
+        return true;
+    }
+
+    private void mockAvailabilityListResponse() throws IOException {
+        AvailabilityDAO mockedAvailabilityDAO = mock(AvailabilityDAO.class);
+        List<Availability> expectedList = new ArrayList<Availability>();
+        expectedList.add(new Availability(1, "title", "email", "name", null));
+        expectedList.add(new Availability(2, "title", "email", "name", null));
+
+        Response expectedResponse = Response.status(200).entity(toJson(expectedList)).build();
+        when(mockedAvailabilityDAO.getMyAvailabilities(anyString())).thenReturn(expectedResponse);
+
+        endpointV1 = new SocialEggboxEndpointV1(getUserDAO(),mockedAvailabilityDAO);
     }
 
     private int getIdFromResponse(Response response) {

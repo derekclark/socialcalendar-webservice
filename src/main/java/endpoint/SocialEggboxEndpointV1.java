@@ -85,6 +85,12 @@ public class SocialEggboxEndpointV1 {
         }
     }
 
+    @GET
+    @Path("availability/{userId}")
+    public Response getMyAvailabilities(@PathParam("userId") String userId) {
+        return availabilityRepository.getMyAvailabilities(userId);
+    }
+
     private <T> Response okOnRead(T clazz){
         try {
             return Response.status(HTTP_STATUS_OK).entity(marshall(clazz)).build();

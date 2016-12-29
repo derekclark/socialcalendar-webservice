@@ -2,6 +2,8 @@ package representation.availability;
 
 import database.DBAvailability;
 
+import javax.ws.rs.core.Response;
+
 public class AvailabilityDAO {
     private DBAvailability dbAvailability;
 
@@ -19,5 +21,9 @@ public class AvailabilityDAO {
 
     public int deleteById(int id) {
         return dbAvailability.deleteById(id);
+    }
+
+    public Response getMyAvailabilities(String userId) {
+        return null;
     }
 }
