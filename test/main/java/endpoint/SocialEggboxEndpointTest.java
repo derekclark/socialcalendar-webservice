@@ -1,5 +1,7 @@
 package endpoint;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import database.DBAvailability;
 import database.DBUser;
 import database.InMemoryDBCreator;
@@ -22,9 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -62,6 +62,8 @@ public class SocialEggboxEndpointTest {
     UserRepresentation userRepresentation;
     Availability availability = new Availability(1,TITLE, EMAIL, NAME, STATUS, null, START_DATE_TIME, END_DATE_TIME);
     AvailabilityRepresentation availabilityRepresentation;
+    List<Availability> expectedAvailabilityList;
+    private Availability availability1, availability2;
 
     @Before
     public void setup(){
@@ -205,38 +207,30 @@ public class SocialEggboxEndpointTest {
         assertTrue(returnsMyExpectedAvailabilities(response));
     }
 
-    private boolean returnsMyExpectedAvailabilities(Response response){
-        String expectedPayload = "[ {\n" +
-                "  \"id\" : 1,\n" +
-                "  \"title\" : \"title\",\n" +
-                "  \"ownerEmail\" : \"email\",\n" +
-                "  \"ownerName\" : \"name\",\n" +
-                "  \"status\" : null,\n" +
-                "  \"sharedWithUsers\" : null,\n" +
-                "  \"startDateTime\" : null,\n" +
-                "  \"endDateTime\" : null\n" +
-                "}, {\n" +
-                "  \"id\" : 2,\n" +
-                "  \"title\" : \"title\",\n" +
-                "  \"ownerEmail\" : \"email\",\n" +
-                "  \"ownerName\" : \"name\",\n" +
-                "  \"status\" : null,\n" +
-                "  \"sharedWithUsers\" : null,\n" +
-                "  \"startDateTime\" : null,\n" +
-                "  \"endDateTime\" : null\n" +
-                "} ]";
+    private boolean returnsMyExpectedAvailabilities(Response response) throws IOException {
+        String expectedPayload = serializeList(expectedAvailabilityList);
         assertEquals(expectedPayload, response.getEntity());
-
         return true;
+    }
+
+    private String serializeList(List<Availability> availabilityList) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        return mapper.writeValueAsString(availabilityList);
     }
 
     private void mockAvailabilityListResponse() throws IOException {
         AvailabilityDAO mockedAvailabilityDAO = mock(AvailabilityDAO.class);
-        List<Availability> expectedList = new ArrayList<Availability>();
-        expectedList.add(new Availability(1, "title", "email", "name", null));
-        expectedList.add(new Availability(2, "title", "email", "name", null));
+        expectedAvailabilityList = new ArrayList<Availability>();
 
-        Response expectedResponse = Response.status(200).entity(toJson(expectedList)).build();
+        availability1 = new Availability(1, "title", "email", "name", null);
+        availability2 = new Availability(2, "title", "email", "name", null);
+
+        expectedAvailabilityList.add(availability1);
+        expectedAvailabilityList.add(availability2);
+
+        serializeList(expectedAvailabilityList);
+        Response expectedResponse = Response.status(200).entity(toJson(expectedAvailabilityList)).build();
         when(mockedAvailabilityDAO.getMyAvailabilities(anyString())).thenReturn(expectedResponse);
 
         endpointV1 = new SocialEggboxEndpointV1(getUserDAO(),mockedAvailabilityDAO);
