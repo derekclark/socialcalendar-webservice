@@ -1,6 +1,7 @@
 package uk.co.socialeggbox.stepdefs;
 
 
+import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -81,6 +82,23 @@ public class AvailabilityCrud{
         httpResponse = get(URL + id);
     }
 
+    @Given("^an availabilities exist for a user$")
+    public void an_availabilities_exist_for_a_user() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @When("^a request is made to get all that user's availabilities$")
+    public void a_request_is_made_to_get_all_that_user_s_availabilities() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^the payload contains all the availabilities for that user$")
+    public void the_payload_contains_all_the_availabilities_for_that_user() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
 
 
 

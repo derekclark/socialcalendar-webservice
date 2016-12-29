@@ -87,7 +87,7 @@ public class SocialEggboxEndpointV1 {
     }
 
     @GET
-    @Path("availability/{userId}")
+    @Path("users/{userId}/availabilities")
     public Response getMyAvailabilities(@PathParam("userId") String userId) {
         List<Availability> list = availabilityRepository.getMyAvailabilities(userId);
         try {
