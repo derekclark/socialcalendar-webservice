@@ -24,6 +24,6 @@ public class AvailabilityDAO {
     }
 
     public List<Availability> getMyAvailabilities(String userId) {
-        return null;
+        return dbAvailability.findByUserId(userId);
     }
 }

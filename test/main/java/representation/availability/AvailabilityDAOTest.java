@@ -7,6 +7,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -57,4 +60,13 @@ public class AvailabilityDAOTest {
         assertNull(availability);
     }
 
+    @Test
+    public void returnsAllMyAvailabilities(){
+        int id = availabilityDAO.save(availability);
+        availability.setId(id);
+        List<Availability> actualList = availabilityDAO.getMyAvailabilities(EMAIL);
+        List<Availability> expectedList = new ArrayList<Availability>();
+        expectedList.add(availability);
+        assertEquals(expectedList, actualList);
+    }
 }
