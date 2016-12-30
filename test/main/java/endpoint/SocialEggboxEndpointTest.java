@@ -208,7 +208,26 @@ public class SocialEggboxEndpointTest {
     }
 
     private boolean returnsMyExpectedAvailabilities(Response response) throws IOException {
-        String expectedPayload = serializeList(expectedAvailabilityList);
+        String expectedPayload = "[ {\n" +
+                "  \"title\" : \"title\",\n" +
+                "  \"ownerEmail\" : \"email\",\n" +
+                "  \"ownerName\" : \"name\",\n" +
+                "  \"status\" : null,\n" +
+                "  \"sharedWithUsers\" : null,\n" +
+                "  \"startDateTime\" : \"2016-01-01T12:00:00.000\",\n" +
+                "  \"endDateTime\" : \"2016-01-01T13:00:00.000\",\n" +
+                "  \"id\" : 1\n" +
+                "}, {\n" +
+                "  \"title\" : \"title\",\n" +
+                "  \"ownerEmail\" : \"email\",\n" +
+                "  \"ownerName\" : \"name\",\n" +
+                "  \"status\" : null,\n" +
+                "  \"sharedWithUsers\" : null,\n" +
+                "  \"startDateTime\" : \"2016-01-01T12:00:00.000\",\n" +
+                "  \"endDateTime\" : \"2016-01-01T13:00:00.000\",\n" +
+                "  \"id\" : 2\n" +
+                "} ]";
+
         assertEquals(expectedPayload, response.getEntity());
         assertEquals(200, response.getStatus());
         return true;
@@ -224,8 +243,8 @@ public class SocialEggboxEndpointTest {
         AvailabilityDAO mockedAvailabilityDAO = mock(AvailabilityDAO.class);
         expectedAvailabilityList = new ArrayList<Availability>();
 
-        availability1 = new Availability(1, "title", "email", "name", null);
-        availability2 = new Availability(2, "title", "email", "name", null);
+        availability1 = new Availability(1, "title", "email", "name", null, null, START_DATE_TIME, END_DATE_TIME);
+        availability2 = new Availability(2, "title", "email", "name", null, null, START_DATE_TIME, END_DATE_TIME);
 
         expectedAvailabilityList.add(availability1);
         expectedAvailabilityList.add(availability2);
