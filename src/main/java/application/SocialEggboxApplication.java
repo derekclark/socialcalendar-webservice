@@ -19,7 +19,7 @@ public class SocialEggboxApplication  extends Application<SocialEggboxConfigurat
         FilterRegistration.Dynamic filter = environment.servlets().addFilter(
                 "CORS", CrossOriginFilter.class);
         filter.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM,
-                "GET");
+                "GET,POST,PUT,DELETE");
         filter.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");
         filter.setInitParameter(
                 CrossOriginFilter.ACCESS_CONTROL_ALLOW_ORIGIN_HEADER, "*");
