@@ -104,7 +104,6 @@ public class AvailabilityCrud{
     public void an_availabilities_exist_for_a_user() throws Throwable {
         int id = 0;
 
-
         String payload = "{" +
                 "\"title\" : \"" + TITLE + "\"," +
                 "\"ownerEmail\" : \"" + uniqueUserId + "\"," +
@@ -150,29 +149,23 @@ public class AvailabilityCrud{
     @Then("^the payload contains all the availabilities for that user$")
     public void the_payload_contains_all_the_availabilities_for_that_user() throws Throwable {
         String expectedPayload = "[ {\n" +
-                "  \"id\" : "+idList.get(0)+ ",\n" +
                 "  \"title\" : \"" + TITLE + "\",\n" +
                 "  \"ownerEmail\" : \"" + uniqueUserId + "\",\n" +
                 "  \"ownerName\" : \"" + NAME + "\",\n" +
                 "  \"status\" : \""+STATUS+"\",\n" +
                 "  \"sharedWithUsers\" : null,\n"+
-                "  \"startDateTime\" : " + "1451651400000" + ",\n" +
-                "  \"endDateTime\" : " + "1451655900000" + "\n" +
-
-//                "  \"startDateTime\" : \"" + START_DATE_TIME + "\",\n" +
-//                "  \"endDateTime\" : \"" + END_DATE_TIME + "\"\n" +
+                "  \"startDateTime\" : \"" + START_DATE_TIME + "\",\n" +
+                "  \"endDateTime\" : \"" + END_DATE_TIME + "\",\n" +
+                "  \"id\" : "+idList.get(0)+ "\n" +
                 "}, {\n" +
-                "  \"id\" : "+idList.get(1)+ ",\n" +
                 "  \"title\" : \"" + TITLE + "\",\n" +
                 "  \"ownerEmail\" : \"" + uniqueUserId + "\",\n" +
                 "  \"ownerName\" : \"" + NAME + "\",\n" +
                 "  \"status\" : \""+STATUS+"\",\n" +
                 "  \"sharedWithUsers\" : null,\n"+
-                "  \"startDateTime\" : " + "1451651400000" + ",\n" +
-                "  \"endDateTime\" : " + "1451655900000" + "\n" +
-
-//                "  \"startDateTime\" : \"" + START_DATE_TIME + "\",\n" +
-//                "  \"endDateTime\" : \"" + END_DATE_TIME + "\"\n" +
+                "  \"startDateTime\" : \"" + START_DATE_TIME + "\",\n" +
+                "  \"endDateTime\" : \"" + END_DATE_TIME + "\",\n" +
+                "  \"id\" : "+idList.get(1)+ "\n" +
                 "} ]";
 
         System.out.println("expected..." + expectedPayload);
