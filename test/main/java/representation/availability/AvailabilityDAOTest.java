@@ -17,6 +17,7 @@ import static org.junit.Assert.assertNotNull;
 public class AvailabilityDAOTest {
     public static final String FACEBOOK_ID = "facebookId";
     public static final String ANOTHER_EMAIL = "another email";
+    public static final String ME = "me";
     DBAvailability repo;
     Availability availability;
     AvailabilityDAO availabilityDAO;
@@ -62,11 +63,20 @@ public class AvailabilityDAOTest {
 
     @Test
     public void returnsAllMyAvailabilities(){
+        List<Availability> expectedListOfMyAvailabilities = new ArrayList<Availability>();
+        expectedListOfMyAvailabilities.add(saveAvailability(ME));
+        saveAvailability("not me");
+        expectedListOfMyAvailabilities.add(saveAvailability(ME));
+
+        List<Availability> actualList = availabilityDAO.getMyAvailabilities(ME);
+        assertEquals(expectedListOfMyAvailabilities, actualList);
+    }
+
+    private Availability saveAvailability(String owner) {
+        Availability availability = new Availability("title",owner,"name",
+                null,null, START_DATE_TIME, END_DATE_TIME);
         int id = availabilityDAO.save(availability);
         availability.setId(id);
-        List<Availability> actualList = availabilityDAO.getMyAvailabilities(EMAIL);
-        List<Availability> expectedList = new ArrayList<Availability>();
-        expectedList.add(availability);
-        assertEquals(expectedList, actualList);
+        return availability;
     }
 }

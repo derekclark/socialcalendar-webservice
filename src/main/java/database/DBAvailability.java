@@ -21,6 +21,6 @@ public interface DBAvailability {
     @SqlUpdate("DELETE FROM AVAILABILITY WHERE `id`= :id")
     int deleteById(@Bind("id") int id);
 
-    @SqlQuery("SELECT * FROM AVAILABILITY")
+    @SqlQuery("SELECT * FROM AVAILABILITY WHERE owner_email = :owner_email")
     List<Availability> findByUserId(@Bind("owner_email") String owner_email);
 }
