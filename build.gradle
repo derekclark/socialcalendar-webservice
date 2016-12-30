@@ -43,11 +43,11 @@ configurations {
 
     compile.extendsFrom common
 
-  //  testCompile.extendsFrom commonTest
+    testCompile.extendsFrom commonTest
 
-//    bddtestCompile.extendsFrom compile
+    bddtestCompile.extendsFrom compile
 
-//    bddtestRuntime.extendsFrom runtime, bddtestCompile
+    bddtestRuntime.extendsFrom runtime, bddtestCompile
 
 
   bddtestCompile.extendsFrom compile
@@ -114,7 +114,8 @@ dependencies {
    bddtestCompile 'info.cukes:cucumber-junit:1.2.0'
    bddtestCompile  group: 'io.dropwizard',                     name: 'dropwizard-testing',         version: '0.8.1'
    bddtestCompile	group: 'org.apache.httpcomponents',			name: 'httpclient',					version: '4.2.3'
-   bddtestCompile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.3.5'
+   bddtestCompile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.3.5'// https://mvnrepository.com/artifact/org.apache.commons/commons-io
+   bddtestCompile group: 'org.apache.commons', name: 'commons-io', version: '1.3.2'
 
 }
 

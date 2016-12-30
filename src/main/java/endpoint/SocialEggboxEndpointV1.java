@@ -89,7 +89,9 @@ public class SocialEggboxEndpointV1 {
     @GET
     @Path("users/{userId}/availabilities")
     public Response getMyAvailabilities(@PathParam("userId") String userId) {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!in endpoint" + userId);
         List<Availability> list = availabilityRepository.getMyAvailabilities(userId);
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!list=" + list.size());
         try {
             return Response.status(HTTP_STATUS_OK).entity(marshall(list)).build();
         } catch (IOException e) {

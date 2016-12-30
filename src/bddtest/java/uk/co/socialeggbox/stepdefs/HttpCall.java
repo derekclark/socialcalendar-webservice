@@ -1,5 +1,6 @@
 package uk.co.socialeggbox.stepdefs;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
@@ -11,7 +12,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 public class HttpCall {
-    static public HttpResponse post(String url, String payload){
+    static public MyHttpResponse post(String url, String payload){
         HttpPost httpPost = new HttpPost(url);
         StringEntity entity = null;
         try {
@@ -21,13 +22,22 @@ public class HttpCall {
         }
         httpPost.setEntity(entity);
         httpPost.setHeader("Content-Type","application/json");
+
         return makeCall(httpPost);
     }
 
-    private static HttpResponse makeCall(HttpRequestBase httpRequest){
+    private static MyHttpResponse makeCall(HttpRequestBase httpRequest){
         try (CloseableHttpClient httpClient = HttpClients.custom().build()){
             try (CloseableHttpResponse httpResponse = httpClient.execute(httpRequest)) {
-                return httpResponse;
+                HttpEntity entity = httpResponse.getEntity();
+                String body="";
+                try {
+                    body = EntityUtils.toString(entity);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                MyHttpResponse myHttpResponse = new MyHttpResponse(httpResponse.getStatusLine().getStatusCode(), body);
+                return myHttpResponse;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -36,13 +46,15 @@ public class HttpCall {
         return null;
     }
 
-    static public HttpResponse get(String url){
+    static public MyHttpResponse get(String url){
         HttpGet httpGet = new HttpGet(url);
         httpGet.setHeader("Content-Type","application/json");
+
+        String body="";
         return makeCall(httpGet);
     }
 
-    static public HttpResponse delete(String url){
+    static public MyHttpResponse delete(String url){
         HttpDelete httpDelete = new HttpDelete(url);
         httpDelete.setHeader("Content-Type","application/json");
         return makeCall(httpDelete);

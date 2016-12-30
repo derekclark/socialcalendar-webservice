@@ -2,10 +2,10 @@ Feature: User CRUD
 
   @user
   Scenario: Get User By Id
-    Given user exists with email "decla", name "derek" and facebookId "1234"
+    Given user exists with email "decla", name "derek" and facebookId "555"
     When a request is made to get user with email "decla"
     Then a http code status of 200 is returned
-    Then the payload is returned with email "decla", name "derek", facebookId "1234"
+    Then the payload is returned with email "decla", name "derek", facebookId "555"
 
   @user
   Scenario: Save User
