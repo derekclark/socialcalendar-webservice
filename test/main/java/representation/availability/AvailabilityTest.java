@@ -14,8 +14,8 @@ import static org.junit.Assert.assertNotEquals;
 
 public class AvailabilityTest {
     public static final String STATUS = "status";
-    public static final String OWNER_NAME = "ownerName";
-    public static final String OWNER_EMAIL = "ownerEmail";
+    public static final String OWNER_NAME = "name";
+    public static final String OWNER_EMAIL = "email";
     public static final String TITLE = "title";
     public static final String DIFFERENT_TITLE = "different";
     public static final String DIFFERENT_STATUS = "different";
@@ -37,23 +37,19 @@ public class AvailabilityTest {
         differentSharedList.add(new User("email", "name", "facebookId"));
         differentSharedList.add(new User("another email", "name", "facebookId"));
 
-        availability = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, sharedList,
-                START_DATE_TIME, END_DATE_TIME);
-        sameValues = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, sharedList,
-                START_DATE_TIME, END_DATE_TIME);
-        differentTitle = new Availability(DIFFERENT_TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, sharedList,
-                START_DATE_TIME, END_DATE_TIME);
-        differentOwnerEmail = new Availability(TITLE,DIFFERENT_OWNER_EMAIL, OWNER_NAME, STATUS, sharedList,
-                START_DATE_TIME, END_DATE_TIME);
-        differentOwnerName = new Availability(TITLE, OWNER_EMAIL, DIFFERENT_OWNER_NAME, STATUS, sharedList,
-                START_DATE_TIME, END_DATE_TIME);
-        differentStatus = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, DIFFERENT_STATUS, sharedList,
-                START_DATE_TIME, END_DATE_TIME);
-        differentSharedUsers = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, differentSharedList,
-                START_DATE_TIME, END_DATE_TIME);
-        differentStartDate = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, sharedList, null,
-                END_DATE_TIME);
-        differentEndDate = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, sharedList, START_DATE_TIME, null);
+        availability = getAvailability();
+        sameValues = getAvailability();
+        differentTitle = new SampleAvailabilityBuilder().withTitle(DIFFERENT_TITLE).build();
+        differentOwnerEmail = new SampleAvailabilityBuilder().withOwnerEmail(DIFFERENT_OWNER_EMAIL).build();
+        differentOwnerName = new SampleAvailabilityBuilder().withOwnerName(DIFFERENT_OWNER_NAME).build();
+        differentStatus = new SampleAvailabilityBuilder().withStatus(DIFFERENT_STATUS).build();
+        differentSharedUsers = new SampleAvailabilityBuilder().withSharedUsers(differentSharedList).build();
+        differentStartDate = new SampleAvailabilityBuilder().withStartDateTime(null).build();
+        differentEndDate = new SampleAvailabilityBuilder().withEndDateTime(null).build();
+    }
+
+    private Availability getAvailability() {
+        return new SampleAvailabilityBuilder().build();
     }
 
     @Test
