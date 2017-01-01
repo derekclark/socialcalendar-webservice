@@ -16,12 +16,12 @@ public class SampleAvailabilityBuilder extends AvailabilityBuilder {
 
     private int id = ID;
     private String title = TITLE;
-    private String ownerEmail = "email";
-    private String ownerName = "name";
-    private String status = "status";
+    private String ownerEmail = EMAIL;
+    private String ownerName = NAME;
+    private String status = STATUS;
     private Set<User> sharedWithUsers = null;
-    private DateTime startDateTime = new DateTime(2016,1,1,12,0);
-    private DateTime endDateTime = new DateTime(2016,1,1,13,0);
+    private DateTime startDateTime = START_DATE_TIME;
+    private DateTime endDateTime = END_DATE_TIME;
 
     public SampleAvailabilityBuilder() {
         withId(id);
