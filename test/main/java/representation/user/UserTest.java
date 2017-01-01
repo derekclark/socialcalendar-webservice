@@ -5,11 +5,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static representation.user.SampleUserBuilder.*;
 
 public class UserTest {
-    public static final String EMAIL = "email";
-    public static final String NAME = "name";
-    public static final String FACEBOOK_ID = "facebookId";
     public static final String DIFFERENT_EMAIL = "differentEmail";
     public static final String DIFFERENT_NAME = "differentName";
     public static final String DIFFERENT_FACEBOOK_ID = "differentFacebookId";
@@ -19,18 +17,18 @@ public class UserTest {
 
     @Before
     public void setup(){
-        user = new User(EMAIL, NAME, FACEBOOK_ID);
-        userWithSameValues = new User(EMAIL, NAME, FACEBOOK_ID);
-        userWithDifferentFacebookId = new User(EMAIL, NAME, DIFFERENT_FACEBOOK_ID);
-        userWithDifferentEmail = new User(DIFFERENT_EMAIL, NAME, FACEBOOK_ID);
-        userWithDifferentName = new User(EMAIL, DIFFERENT_NAME, FACEBOOK_ID);
+        user = new SampleUserBuilder().build();
+        userWithSameValues = new SampleUserBuilder().build();
+        userWithDifferentFacebookId = new SampleUserBuilder().withFacebookId(DIFFERENT_FACEBOOK_ID).build();
+        userWithDifferentEmail = new SampleUserBuilder().withEmail(DIFFERENT_EMAIL).build();
+        userWithDifferentName = new SampleUserBuilder().withName(DIFFERENT_NAME).build();
     }
 
     @Test
     public void canCreateUser(){
         assertEquals(EMAIL,user.getEmail());
         assertEquals(NAME, user.getName());
-        assertEquals(FACEBOOK_ID, user.getFacebookId());
+        assertEquals(FACEBOOKID, user.getFacebookId());
     }
 
     @Test
