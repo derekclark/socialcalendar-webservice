@@ -52,24 +52,24 @@ public class AvailabilityRepresentationTest {
 
     @Test
     public void shouldNotBeEqual(){
-        AvailabilityRepresentation differentTitle = new AvailabilityRepresentation("", EMAIL,
-                NAME, STATUS, sharedList, START_DATE_TIME, END_DATE_TIME);
-        AvailabilityRepresentation differentEmail = new AvailabilityRepresentation(TITLE, "",
-                NAME, STATUS, sharedList, START_DATE_TIME, END_DATE_TIME);
-        AvailabilityRepresentation differentName = new AvailabilityRepresentation(TITLE, EMAIL,
-                "", STATUS, sharedList, START_DATE_TIME, END_DATE_TIME);
-        AvailabilityRepresentation differentStatus = new AvailabilityRepresentation(TITLE, EMAIL,
-                NAME, "", sharedList, START_DATE_TIME, END_DATE_TIME);
-        AvailabilityRepresentation differentStartDate = new AvailabilityRepresentation(TITLE, EMAIL,
-                NAME, STATUS, sharedList, null, END_DATE_TIME);
-        AvailabilityRepresentation differentEndDate = new AvailabilityRepresentation(TITLE, EMAIL,
-                NAME, STATUS, sharedList, START_DATE_TIME, null);
+        AvailabilityRepresentation differentTitle =
+                new AvailabilityRepresentation(new SampleAvailabilityBuilder().withTitle("").build());
+        AvailabilityRepresentation differentEmail =
+                new AvailabilityRepresentation(new SampleAvailabilityBuilder().withOwnerEmail("").build());
+        AvailabilityRepresentation differentName =
+                new AvailabilityRepresentation(new SampleAvailabilityBuilder().withOwnerName("").build());
+        AvailabilityRepresentation differentStatus =
+                new AvailabilityRepresentation(new SampleAvailabilityBuilder().withStatus("").build());
+        AvailabilityRepresentation differentStartDate =
+                new AvailabilityRepresentation(new SampleAvailabilityBuilder().withStartDateTime(null).build());
+        AvailabilityRepresentation differentEndDate =
+                new AvailabilityRepresentation(new SampleAvailabilityBuilder().withEndDateTime(null).build());
 
         Set<User> differentSharedList = new HashSet<User>();
         differentSharedList.add(new User(EMAIL, NAME, FACEBOOK_ID));
         differentSharedList.add(new User("another email", NAME, FACEBOOK_ID));
-        AvailabilityRepresentation differentSharedUsers = new AvailabilityRepresentation(TITLE, EMAIL,
-                NAME, STATUS, differentSharedList, START_DATE_TIME, END_DATE_TIME);
+        AvailabilityRepresentation differentSharedUsers =
+                new AvailabilityRepresentation(new SampleAvailabilityBuilder().withSharedUsers(differentSharedList).build());
 
         assertNotEquals(differentTitle, representation);
         assertNotEquals(differentEmail, representation);
