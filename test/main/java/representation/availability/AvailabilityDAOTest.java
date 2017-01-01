@@ -15,12 +15,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class AvailabilityDAOTest {
-    public static final String FACEBOOK_ID = "facebookId";
-    public static final String ANOTHER_EMAIL = "another email";
-    public static final String ME = "me";
-    DBAvailability repo;
-    Availability availability;
-    AvailabilityDAO availabilityDAO;
+    private DBAvailability repo;
+    private Availability availability;
+    private AvailabilityDAO availabilityDAO;
     public static final String STATUS = "status";
     public static final String NAME = "ownerName";
     public static final String EMAIL = "ownerEmail";
@@ -64,11 +61,11 @@ public class AvailabilityDAOTest {
     @Test
     public void returnsAllMyAvailabilities(){
         List<Availability> expectedListOfMyAvailabilities = new ArrayList<Availability>();
-        expectedListOfMyAvailabilities.add(saveAvailability(ME));
+        expectedListOfMyAvailabilities.add(saveAvailability(EMAIL));
         saveAvailability("not me");
-        expectedListOfMyAvailabilities.add(saveAvailability(ME));
+        expectedListOfMyAvailabilities.add(saveAvailability(EMAIL));
 
-        List<Availability> actualList = availabilityDAO.getMyAvailabilities(ME);
+        List<Availability> actualList = availabilityDAO.getMyAvailabilities(EMAIL);
         assertEquals(expectedListOfMyAvailabilities, actualList);
     }
 
