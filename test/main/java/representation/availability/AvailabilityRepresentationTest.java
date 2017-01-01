@@ -1,6 +1,5 @@
 package representation.availability;
 
-import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.junit.Before;
@@ -13,48 +12,40 @@ import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static representation.availability.SampleAvailabilityBuilder.*;
 import static utilities.JsonUtility.toJson;
 
 public class AvailabilityRepresentationTest {
-    public static final String TITLE = "title";
-    public static final String EMAIL = "email";
-    public static final String NAME = "name";
-    public static final String STATUS = "status";
     public static final String FACEBOOK_ID = "facebookId";
-    public static final DateTime START_DATE_TIME = new DateTime(2016,1,1,12,0);
-    public static final DateTime END_DATE_TIME = new DateTime(2016,1,1,13,0);
 
     public static final String NEWLINE = "\n";
-    AvailabilityRepresentation representation;
+    private AvailabilityRepresentation representation;
+    private Availability availability;
 
     Set<User> sharedList = new HashSet<>();
 
     @Before
     public void setup(){
-        representation = new AvailabilityRepresentation(TITLE, EMAIL, NAME, STATUS, sharedList, START_DATE_TIME,
-                END_DATE_TIME);
+        availability = new SampleAvailabilityBuilder().build();
+        representation = new AvailabilityRepresentation(availability);
     }
 
     @Test
     public void returnsAvailability(){
         Availability availability = representation.asAvailability();
-        Availability expectedAvailability = new Availability(TITLE,
-                EMAIL,NAME, STATUS, sharedList, START_DATE_TIME, END_DATE_TIME);
+        Availability expectedAvailability = new SampleAvailabilityBuilder().build();
         assertEquals(expectedAvailability, availability);
     }
 
     @Test
     public void buildRepresentationFromAvailabilityObject(){
-        Availability availability = new Availability(TITLE, EMAIL, NAME, STATUS, sharedList,
-                START_DATE_TIME, END_DATE_TIME);
         AvailabilityRepresentation availabilityRepresentation = new AvailabilityRepresentation(availability);
         assertEquals(availability, availabilityRepresentation.asAvailability());
     }
 
     @Test
     public void shouldBeEqual(){
-        AvailabilityRepresentation sameContent = new AvailabilityRepresentation(TITLE, EMAIL,
-                NAME, STATUS, sharedList, START_DATE_TIME, END_DATE_TIME);
+        AvailabilityRepresentation sameContent = new AvailabilityRepresentation(availability);
         assertEquals(sameContent, representation);
         assertEquals(representation, representation);
     }
@@ -110,8 +101,6 @@ public class AvailabilityRepresentationTest {
                 "  \"id\" : 0" + NEWLINE +
                 "}";
 
-        Availability availability = new Availability(TITLE, EMAIL, NAME, STATUS, sharedList,
-                START_DATE_TIME, END_DATE_TIME);
         AvailabilityRepresentation representation = new AvailabilityRepresentation(availability);
         String actualJson = toJson(representation);
         assertEquals(expectedJson, actualJson);

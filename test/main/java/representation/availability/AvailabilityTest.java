@@ -30,8 +30,8 @@ public class AvailabilityTest {
     public void setup(){
         sharedList = new HashSet<User>();
         differentSharedList = new HashSet<User>();
-        differentSharedList.add(new User(OWNER_EMAIL, OWNER_NAME, FACEBOOK_ID));
-        differentSharedList.add(new User(ANOTHER_EMAIL, OWNER_NAME, FACEBOOK_ID));
+        differentSharedList.add(new User(EMAIL, NAME, FACEBOOK_ID));
+        differentSharedList.add(new User(ANOTHER_EMAIL, NAME, FACEBOOK_ID));
 
         availability = getAvailability();
         sameValues = getAvailability();
@@ -51,8 +51,8 @@ public class AvailabilityTest {
     @Test
     public void canCreateAvailability(){
         assertEquals(STATUS, availability.getStatus());
-        assertEquals(OWNER_EMAIL, availability.getOwnerEmail());
-        assertEquals(OWNER_NAME, availability.getOwnerName());
+        assertEquals(EMAIL, availability.getOwnerEmail());
+        assertEquals(NAME, availability.getOwnerName());
         assertEquals(TITLE, availability.getTitle());
         assertEquals(sharedList, availability.getSharedWithUsers());
         assertEquals(START_DATE_TIME, availability.getStartDateTime());
@@ -61,7 +61,7 @@ public class AvailabilityTest {
 
     @Test
     public void shouldBeEqualForSameObject(){
-        Availability availabilty = new Availability(TITLE, OWNER_EMAIL, OWNER_NAME, STATUS, sharedList,
+        Availability availabilty = new Availability(TITLE, EMAIL, NAME, STATUS, sharedList,
                 START_DATE_TIME, END_DATE_TIME);
         assertEquals(availabilty, availabilty);
     }
