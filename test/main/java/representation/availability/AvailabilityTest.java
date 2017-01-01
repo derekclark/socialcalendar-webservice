@@ -24,11 +24,11 @@ public class AvailabilityTest {
     Availability sameValues;
     Availability differentTitle, differentStatus, differentOwnerName, differentOwnerEmail,
             differentSharedUsers, differentStartDate, differentEndDate;
-    Set<User> sharedList, differentSharedList;
+    Set<User> sharedList=null;
+    Set<User> differentSharedList;
 
     @Before
     public void setup(){
-        sharedList = new HashSet<User>();
         differentSharedList = new HashSet<User>();
         differentSharedList.add(new User(EMAIL, NAME, FACEBOOK_ID));
         differentSharedList.add(new User(ANOTHER_EMAIL, NAME, FACEBOOK_ID));

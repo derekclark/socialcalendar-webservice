@@ -3,7 +3,6 @@ package representation.availability;
 import org.joda.time.DateTime;
 import representation.user.User;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class SampleAvailabilityBuilder extends AvailabilityBuilder {
@@ -20,7 +19,7 @@ public class SampleAvailabilityBuilder extends AvailabilityBuilder {
     private String ownerEmail = "email";
     private String ownerName = "name";
     private String status = "status";
-    private Set<User> sharedWithUsers = new HashSet<>();
+    private Set<User> sharedWithUsers = null;
     private DateTime startDateTime = new DateTime(2016,1,1,12,0);
     private DateTime endDateTime = new DateTime(2016,1,1,13,0);
 

@@ -95,7 +95,7 @@ public class AvailabilityRepresentationTest {
                 "  \"ownerEmail\" : \""+EMAIL+"\"," + NEWLINE +
                 "  \"ownerName\" : \""+NAME+"\"," + NEWLINE +
                 "  \"status\" : \""+STATUS+"\"," + NEWLINE +
-                "  \"sharedWithUsers\" : [ ],"+ NEWLINE +
+                "  \"sharedWithUsers\" : null,"+ NEWLINE +
                 "  \"startDateTime\" : \""+startDateTime+"\","+ NEWLINE +
                 "  \"endDateTime\" : \""+endDateTime+"\","+ NEWLINE +
                 "  \"id\" : 0" + NEWLINE +
