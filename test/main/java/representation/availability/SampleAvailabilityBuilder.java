@@ -7,8 +7,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class SampleAvailabilityBuilder extends AvailabilityBuilder {
-    private int id = 0;
-    private String title = "title";
+    public static final int ID=0;
+    public static final String STATUS = "status";
+    public static final String OWNER_NAME = "name";
+    public static final String OWNER_EMAIL = "email";
+    public static final String TITLE = "title";
+    public static final DateTime START_DATE_TIME = new DateTime(2016,1,1,12,0);
+    public static final DateTime END_DATE_TIME = new DateTime(2016,1,1,13,0);
+
+    private int id = ID;
+    private String title = TITLE;
     private String ownerEmail = "email";
     private String ownerName = "name";
     private String status = "status";

@@ -1,7 +1,6 @@
 package representation.availability;
 
 
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import representation.user.User;
@@ -11,18 +10,15 @@ import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static representation.availability.SampleAvailabilityBuilder.*;
 
 public class AvailabilityTest {
-    public static final String STATUS = "status";
-    public static final String OWNER_NAME = "name";
-    public static final String OWNER_EMAIL = "email";
-    public static final String TITLE = "title";
     public static final String DIFFERENT_TITLE = "different";
     public static final String DIFFERENT_STATUS = "different";
     public static final String DIFFERENT_OWNER_EMAIL = "different";
     public static final String DIFFERENT_OWNER_NAME = "different";
-    public static final DateTime START_DATE_TIME = new DateTime(2016,1,1,12,0);
-    public static final DateTime END_DATE_TIME = new DateTime(2016,1,1,13,0);
+    public static final String FACEBOOK_ID = "facebookId";
+    public static final String ANOTHER_EMAIL = "another email";
 
     Availability availability;
     Availability sameValues;
@@ -34,8 +30,8 @@ public class AvailabilityTest {
     public void setup(){
         sharedList = new HashSet<User>();
         differentSharedList = new HashSet<User>();
-        differentSharedList.add(new User("email", "name", "facebookId"));
-        differentSharedList.add(new User("another email", "name", "facebookId"));
+        differentSharedList.add(new User(OWNER_EMAIL, OWNER_NAME, FACEBOOK_ID));
+        differentSharedList.add(new User(ANOTHER_EMAIL, OWNER_NAME, FACEBOOK_ID));
 
         availability = getAvailability();
         sameValues = getAvailability();
