@@ -3,6 +3,7 @@ package representation.availability;
 
 import org.junit.Before;
 import org.junit.Test;
+import representation.TestConstants;
 import representation.user.User;
 
 import java.util.HashSet;
@@ -10,7 +11,6 @@ import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static representation.availability.SampleAvailabilityBuilder.*;
 
 public class AvailabilityTest {
     public static final String DIFFERENT_TITLE = "different";
@@ -30,8 +30,8 @@ public class AvailabilityTest {
     @Before
     public void setup(){
         differentSharedList = new HashSet<User>();
-        differentSharedList.add(new User(EMAIL, NAME, FACEBOOK_ID));
-        differentSharedList.add(new User(ANOTHER_EMAIL, NAME, FACEBOOK_ID));
+        differentSharedList.add(new User(TestConstants.EMAIL, TestConstants.NAME, FACEBOOK_ID));
+        differentSharedList.add(new User(ANOTHER_EMAIL, TestConstants.NAME, FACEBOOK_ID));
 
         availability = getAvailability();
         sameValues = getAvailability();
@@ -50,19 +50,19 @@ public class AvailabilityTest {
 
     @Test
     public void canCreateAvailability(){
-        assertEquals(STATUS, availability.getStatus());
-        assertEquals(EMAIL, availability.getOwnerEmail());
-        assertEquals(NAME, availability.getOwnerName());
-        assertEquals(TITLE, availability.getTitle());
+        assertEquals(TestConstants.STATUS, availability.getStatus());
+        assertEquals(TestConstants.EMAIL, availability.getOwnerEmail());
+        assertEquals(TestConstants.NAME, availability.getOwnerName());
+        assertEquals(TestConstants.TITLE, availability.getTitle());
         assertEquals(sharedList, availability.getSharedWithUsers());
-        assertEquals(START_DATE_TIME, availability.getStartDateTime());
-        assertEquals(END_DATE_TIME, availability.getEndDateTime());
+        assertEquals(TestConstants.START_DATE_TIME, availability.getStartDateTime());
+        assertEquals(TestConstants.END_DATE_TIME, availability.getEndDateTime());
     }
 
     @Test
     public void shouldBeEqualForSameObject(){
-        Availability availabilty = new Availability(TITLE, EMAIL, NAME, STATUS, sharedList,
-                START_DATE_TIME, END_DATE_TIME);
+        Availability availabilty = new Availability(TestConstants.TITLE, TestConstants.EMAIL, TestConstants.NAME, TestConstants.STATUS, sharedList,
+                TestConstants.START_DATE_TIME, TestConstants.END_DATE_TIME);
         assertEquals(availabilty, availabilty);
     }
 

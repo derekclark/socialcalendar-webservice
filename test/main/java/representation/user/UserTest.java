@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static representation.user.SampleUserBuilder.*;
+import static representation.TestConstants.*;
 
 public class UserTest {
     public static final String DIFFERENT_EMAIL = "differentEmail";

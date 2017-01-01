@@ -4,6 +4,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.junit.Before;
 import org.junit.Test;
+import representation.TestConstants;
 import representation.user.User;
 
 import java.io.IOException;
@@ -12,7 +13,6 @@ import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static representation.availability.SampleAvailabilityBuilder.*;
 import static utilities.JsonUtility.toJson;
 
 public class AvailabilityRepresentationTest {
@@ -66,8 +66,8 @@ public class AvailabilityRepresentationTest {
                 new AvailabilityRepresentation(new SampleAvailabilityBuilder().withEndDateTime(null).build());
 
         Set<User> differentSharedList = new HashSet<User>();
-        differentSharedList.add(new User(EMAIL, NAME, FACEBOOK_ID));
-        differentSharedList.add(new User("another email", NAME, FACEBOOK_ID));
+        differentSharedList.add(new User(TestConstants.EMAIL, TestConstants.NAME, FACEBOOK_ID));
+        differentSharedList.add(new User("another email", TestConstants.NAME, FACEBOOK_ID));
         AvailabilityRepresentation differentSharedUsers =
                 new AvailabilityRepresentation(new SampleAvailabilityBuilder().withSharedUsers(differentSharedList).build());
 
@@ -87,14 +87,14 @@ public class AvailabilityRepresentationTest {
         DateTimeFormatter formatter =
                 DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
-        String startDateTime = formatter.print(START_DATE_TIME);
-        String endDateTime = formatter.print(END_DATE_TIME);
+        String startDateTime = formatter.print(TestConstants.START_DATE_TIME);
+        String endDateTime = formatter.print(TestConstants.END_DATE_TIME);
 
         String expectedJson = "{" + NEWLINE +
-                "  \"title\" : \""+TITLE+"\"," + NEWLINE +
-                "  \"ownerEmail\" : \""+EMAIL+"\"," + NEWLINE +
-                "  \"ownerName\" : \""+NAME+"\"," + NEWLINE +
-                "  \"status\" : \""+STATUS+"\"," + NEWLINE +
+                "  \"title\" : \""+ TestConstants.TITLE+"\"," + NEWLINE +
+                "  \"ownerEmail\" : \""+ TestConstants.EMAIL+"\"," + NEWLINE +
+                "  \"ownerName\" : \""+ TestConstants.NAME+"\"," + NEWLINE +
+                "  \"status\" : \""+ TestConstants.STATUS+"\"," + NEWLINE +
                 "  \"sharedWithUsers\" : null,"+ NEWLINE +
                 "  \"startDateTime\" : \""+startDateTime+"\","+ NEWLINE +
                 "  \"endDateTime\" : \""+endDateTime+"\","+ NEWLINE +

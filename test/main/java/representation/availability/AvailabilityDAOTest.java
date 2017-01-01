@@ -5,6 +5,7 @@ import database.InMemoryDBCreator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import representation.TestConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,6 @@ import java.util.List;
 import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static representation.availability.SampleAvailabilityBuilder.*;
 
 public class AvailabilityDAOTest {
     public static final String ANOTHER_EMAIL = "not me";
@@ -56,11 +56,11 @@ public class AvailabilityDAOTest {
     @Test
     public void returnsAllMyAvailabilities(){
         List<Availability> expectedListOfMyAvailabilities = new ArrayList<Availability>();
-        expectedListOfMyAvailabilities.add(saveAvailabilityWithOwner(EMAIL));
+        expectedListOfMyAvailabilities.add(saveAvailabilityWithOwner(TestConstants.EMAIL));
         saveAvailabilityWithOwner(ANOTHER_EMAIL);
-        expectedListOfMyAvailabilities.add(saveAvailabilityWithOwner(EMAIL));
+        expectedListOfMyAvailabilities.add(saveAvailabilityWithOwner(TestConstants.EMAIL));
 
-        List<Availability> actualList = availabilityDAO.getMyAvailabilities(EMAIL);
+        List<Availability> actualList = availabilityDAO.getMyAvailabilities(TestConstants.EMAIL);
         assertEquals(expectedListOfMyAvailabilities, actualList);
     }
 
