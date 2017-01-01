@@ -2,7 +2,6 @@ package representation.availability;
 
 import database.DBAvailability;
 import database.InMemoryDBCreator;
-import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,22 +12,18 @@ import java.util.List;
 import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static representation.availability.SampleAvailabilityBuilder.*;
 
 public class AvailabilityDAOTest {
+    public static final String ANOTHER_EMAIL = "not me";
     private DBAvailability repo;
     private Availability availability;
     private AvailabilityDAO availabilityDAO;
-    public static final String STATUS = "status";
-    public static final String NAME = "ownerName";
-    public static final String EMAIL = "ownerEmail";
-    public static final String TITLE = "title";
-    public static final DateTime START_DATE_TIME = new DateTime(2016,1,1,12,30,0);
-    public static final DateTime END_DATE_TIME = new DateTime(2016,1,1,13,45,0);
 
     @Before
     public void setup(){
         repo = new InMemoryDBCreator().create(DBAvailability.class);
-        availability = new Availability(TITLE, EMAIL, NAME, STATUS,null,START_DATE_TIME,END_DATE_TIME);
+        availability = new SampleAvailabilityBuilder().build();
         availabilityDAO = new AvailabilityDAO(repo);
     }
 
@@ -61,17 +56,16 @@ public class AvailabilityDAOTest {
     @Test
     public void returnsAllMyAvailabilities(){
         List<Availability> expectedListOfMyAvailabilities = new ArrayList<Availability>();
-        expectedListOfMyAvailabilities.add(saveAvailability(EMAIL));
-        saveAvailability("not me");
-        expectedListOfMyAvailabilities.add(saveAvailability(EMAIL));
+        expectedListOfMyAvailabilities.add(saveAvailabilityWithOwner(EMAIL));
+        saveAvailabilityWithOwner(ANOTHER_EMAIL);
+        expectedListOfMyAvailabilities.add(saveAvailabilityWithOwner(EMAIL));
 
         List<Availability> actualList = availabilityDAO.getMyAvailabilities(EMAIL);
         assertEquals(expectedListOfMyAvailabilities, actualList);
     }
 
-    private Availability saveAvailability(String owner) {
-        Availability availability = new Availability("title",owner,"name",
-                null,null, START_DATE_TIME, END_DATE_TIME);
+    private Availability saveAvailabilityWithOwner(String owner) {
+        Availability availability = new SampleAvailabilityBuilder().withOwnerEmail(owner).build();
         int id = availabilityDAO.save(availability);
         availability.setId(id);
         return availability;
