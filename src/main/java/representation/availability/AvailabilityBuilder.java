@@ -6,12 +6,12 @@ import representation.user.User;
 import java.util.Set;
 
 public class AvailabilityBuilder {
-    private int id=0;
-    private String title="title";
-    private String ownerEmail="ownerEmail";
-    private String ownerName="name";
-    private String status="";
-    private Set<User> sharedWithUsers=null;
+    private int id;
+    private String title;
+    private String ownerEmail;
+    private String ownerName;
+    private String status;
+    private Set<User> sharedWithUsers;
     private DateTime startDateTime, endDateTime;
 
     public AvailabilityBuilder withId(int id){
